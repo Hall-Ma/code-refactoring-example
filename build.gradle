@@ -38,5 +38,3 @@ jacocoTestReport {
         html.enabled false
     }
 }
-
-build.dependsOn jacocoTestReport
