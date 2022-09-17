@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id "org.sonarqube" version "3.4.0.2513"
+    id 'jacoco'
 }
 
 group 'org.example'
@@ -24,5 +25,12 @@ sonarqube {
         property "sonar.projectKey", "Hall-Ma_code-refactoring-example"
         property "sonar.organization", "hall-ma"
         property "sonar.host.url", "https://sonarcloud.io"
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
     }
 }
