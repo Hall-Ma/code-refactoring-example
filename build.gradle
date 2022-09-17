@@ -28,6 +28,10 @@ sonarqube {
     }
 }
 
+tasks.named('sonarqube').configure {
+    dependsOn jacocoTestReport
+}
+
 jacocoTestReport {
     reports {
         xml.enabled true
