@@ -8,6 +8,7 @@ public class Game {
     public static final String SCIENCE = "Science";
     public static final String SPORTS = "Sports";
     public static final String ROCK = "Rock";
+    public static final String QUESTION = "Question";
     ArrayList players = new ArrayList();
     int[] places = new int[6];
     int[] purses = new int[6];
@@ -23,15 +24,15 @@ public class Game {
 
     public  Game(){
         for (int i = 0; i < 50; i++) {
-            popQuestions.addLast("Pop Question " + i);
-            scienceQuestions.addLast(("Science Question " + i));
-            sportsQuestions.addLast(("Sports Question " + i));
+            popQuestions.addLast(POP + " " + QUESTION + " " + i);
+            scienceQuestions.addLast((SCIENCE + " " + QUESTION + " " + i));
+            sportsQuestions.addLast((SPORTS + " " + QUESTION + " " + i));
             rockQuestions.addLast(createRockQuestion(i));
         }
     }
 
     public String createRockQuestion(int index){
-        return "Rock Question " + index;
+        return ROCK + " " + QUESTION + " " + index;
     }
 
     public boolean add(String playerName) {
@@ -158,8 +159,8 @@ public class Game {
     }
 
     public boolean wrongAnswer(){
-        System.out.println("Question was incorrectly answered");
-        System.out.println(players.get(currentPlayer)+ " was sent to the penalty box");
+        System.out.println(QUESTION + " was incorrectly answered");
+        System.out.println(players.get(currentPlayer) + " was sent to the penalty box");
         inPenaltyBox[currentPlayer] = true;
         int firstPlacing = 0;
 
