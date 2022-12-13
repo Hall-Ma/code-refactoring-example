@@ -25,14 +25,10 @@ public class Game {
     public  Game(){
         for (int i = 0; i < 50; i++) {
             popQuestions.addLast(POP + " " + QUESTION + " " + i);
-            scienceQuestions.addLast((SCIENCE + " " + QUESTION + " " + i));
-            sportsQuestions.addLast((SPORTS + " " + QUESTION + " " + i));
-            rockQuestions.addLast(createRockQuestion(i));
+            scienceQuestions.addLast(SCIENCE + " " + QUESTION + " " + i);
+            sportsQuestions.addLast(SPORTS + " " + QUESTION + " " + i);
+            rockQuestions.addLast(ROCK + " " + QUESTION + " " + i);
         }
-    }
-
-    public String createRockQuestion(int index){
-        return ROCK + " " + QUESTION + " " + index;
     }
 
     public boolean add(String playerName) {
