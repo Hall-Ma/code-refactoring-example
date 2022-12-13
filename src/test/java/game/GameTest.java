@@ -13,7 +13,7 @@ import static org.approvaltests.Approvals.NAMES;
 import static org.approvaltests.Approvals.verify;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class GameTest {
+class GameTest {
 
     ByteArrayOutputStream baos;
 
@@ -24,26 +24,26 @@ public class GameTest {
     }
 
     @Test
-    public void testPlayerSize() {
+    void testPlayerSize() {
         Game game = new Game();
-        game.players = new ArrayList();
+        game.players = new ArrayList<String>();
 
         assertEquals(0, game.howManyPlayers());
     }
 
     @Test
-    public void testAddPlayer() {
+    void testAddPlayer() {
         Game game = new Game();
 
-        assertEquals(game.howManyPlayers(), 0);
+        assertEquals(0, game.howManyPlayers());
 
         assertTrue(game.add("David"));
-        assertEquals(game.howManyPlayers(), 1);
+        assertEquals(1, game.howManyPlayers());
     }
 
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4, 5})
-    public void testRollOutSidePenaltyBox(int parameter) {
+    void testRollOutSidePenaltyBox(int parameter) {
         Game game = new Game();
         game.add("David");
 
@@ -53,7 +53,7 @@ public class GameTest {
     }
 
     @Test
-    public void testRollAndResetPlaces() {
+    void testRollAndResetPlaces() {
         Game game = new Game();
         game.add("David");
 
@@ -65,7 +65,7 @@ public class GameTest {
 
     @ParameterizedTest
     @ValueSource(ints = {2, 4})
-    public void testRollDontGetOutOfPenaltyBox(int parameter) {
+    void testRollDontGetOutOfPenaltyBox(int parameter) {
         Game game = new Game();
         game.add("David");
         game.wrongAnswer();
@@ -77,7 +77,7 @@ public class GameTest {
 
     @ParameterizedTest
     @ValueSource(ints = {1, 3, 5})
-    public void testRollGetOutOfPenaltyBox(int parameter) {
+    void testRollGetOutOfPenaltyBox(int parameter) {
         Game game = new Game();
         game.add("David");
         game.wrongAnswer();
@@ -88,7 +88,7 @@ public class GameTest {
     }
 
     @Test
-    public void testRollGetOutOfPenaltyBoxAndResetPlaces() {
+    void testRollGetOutOfPenaltyBoxAndResetPlaces() {
         Game game = new Game();
         game.add("David");
         game.wrongAnswer();
@@ -100,7 +100,7 @@ public class GameTest {
     }
 
     @Test
-    public void testCorrectAnswer() {
+    void testCorrectAnswer() {
         Game game = new Game();
         game.add("David");
 
@@ -111,7 +111,7 @@ public class GameTest {
     }
 
     @Test
-    public void testIsPlayerWinner() {
+    void testIsPlayerWinner() {
         Game game = new Game();
         game.add("David");
         boolean hasPlayerNotWon = true;
@@ -125,7 +125,7 @@ public class GameTest {
     }
 
     @Test
-    public void testPlayerCannotAnswerQuestion() {
+    void testPlayerCannotAnswerQuestion() {
         Game game = new Game();
         game.add("David");
         game.wrongAnswer();
@@ -138,7 +138,7 @@ public class GameTest {
     }
 
     @Test
-    public void testAnswerCorrectQuestionAfterGettingOutOfPenaltyBox() {
+    void testAnswerCorrectQuestionAfterGettingOutOfPenaltyBox() {
         Game game = new Game();
         game.add("David");
         game.wrongAnswer();
