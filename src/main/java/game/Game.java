@@ -54,6 +54,8 @@ public class Game {
     public void roll(int roll) {
         System.out.println(players.get(currentPlayer) + " is the current player");
         System.out.println("They have rolled a " + roll);
+        int numberOutOfPlaces = 11;
+        int maxNumberOfPlaces = 12;
 
         if (inPenaltyBox[currentPlayer]) {
             if (roll % 2 != 0) {
@@ -61,7 +63,8 @@ public class Game {
 
                 System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
                 places[currentPlayer] = places[currentPlayer] + roll;
-                if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
+                if (places[currentPlayer] > numberOutOfPlaces)
+                    places[currentPlayer] = places[currentPlayer] - maxNumberOfPlaces;
 
                 System.out.println(players.get(currentPlayer)
                         + "'s new location is "
@@ -76,7 +79,8 @@ public class Game {
         } else {
 
             places[currentPlayer] = places[currentPlayer] + roll;
-            if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
+            if (places[currentPlayer] > numberOutOfPlaces)
+                places[currentPlayer] = places[currentPlayer] - maxNumberOfPlaces;
 
             System.out.println(players.get(currentPlayer)
                     + "'s new location is "
@@ -113,23 +117,24 @@ public class Game {
     }
 
     public boolean wasCorrectlyAnswered() {
-        if (inPenaltyBox[currentPlayer]){
+        int firstPlacing = 0;
+        if (inPenaltyBox[this.currentPlayer]) {
             if (isGettingOutOfPenaltyBox) {
                 System.out.println("Answer was correct!!!!");
-                purses[currentPlayer]++;
-                System.out.println(players.get(currentPlayer)
+                purses[this.currentPlayer]++;
+                System.out.println(players.get(this.currentPlayer)
                         + " now has "
-                        + purses[currentPlayer]
+                        + purses[this.currentPlayer]
                         + " Gold Coins.");
 
                 boolean winner = didPlayerWin();
-                currentPlayer++;
-                if (currentPlayer == players.size()) currentPlayer = 0;
+                this.currentPlayer++;
+                if (this.currentPlayer == players.size()) this.currentPlayer = firstPlacing;
 
                 return winner;
             } else {
-                currentPlayer++;
-                if (currentPlayer == players.size()) currentPlayer = 0;
+                this.currentPlayer++;
+                if (this.currentPlayer == players.size()) this.currentPlayer = firstPlacing;
                 return true;
             }
 
@@ -138,15 +143,15 @@ public class Game {
         } else {
 
             System.out.println("Answer was corrent!!!!");
-            purses[currentPlayer]++;
-            System.out.println(players.get(currentPlayer)
+            purses[this.currentPlayer]++;
+            System.out.println(players.get(this.currentPlayer)
                     + " now has "
-                    + purses[currentPlayer]
+                    + purses[this.currentPlayer]
                     + " Gold Coins.");
 
             boolean winner = didPlayerWin();
-            currentPlayer++;
-            if (currentPlayer == players.size()) currentPlayer = 0;
+            this.currentPlayer++;
+            if (this.currentPlayer == players.size()) this.currentPlayer = firstPlacing;
 
             return winner;
         }
@@ -156,14 +161,16 @@ public class Game {
         System.out.println("Question was incorrectly answered");
         System.out.println(players.get(currentPlayer)+ " was sent to the penalty box");
         inPenaltyBox[currentPlayer] = true;
+        int firstPlacing = 0;
 
         currentPlayer++;
-        if (currentPlayer == players.size()) currentPlayer = 0;
+        if (currentPlayer == players.size()) currentPlayer = firstPlacing;
         return true;
     }
 
 
     private boolean didPlayerWin() {
-        return !(purses[currentPlayer] == 6);
+        int numberOfCoinsToWin = 6;
+        return !(purses[currentPlayer] == numberOfCoinsToWin);
     }
 }
