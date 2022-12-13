@@ -1,7 +1,0 @@
-David was added
-They are player number 1
-David is the current player
-They have rolled a 2
-David's new location is 2
-The category is Sports
-Sports Question 0

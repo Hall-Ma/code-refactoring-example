@@ -1,7 +1,0 @@
-David was added
-They are player number 1
-David is the current player
-They have rolled a 12
-David's new location is 0
-The category is Pop
-Pop Question 0
