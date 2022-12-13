@@ -7,7 +7,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
 
 import static org.approvaltests.Approvals.NAMES;
 import static org.approvaltests.Approvals.verify;
@@ -26,7 +25,6 @@ class GameTest {
     @Test
     void testPlayerSize() {
         Game game = new Game();
-        game.players = new ArrayList<String>();
 
         assertEquals(0, game.howManyPlayers());
     }
