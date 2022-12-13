@@ -4,27 +4,25 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Game {
-    public static final String QUESTION = "Question";
     ArrayList players = new ArrayList();
     int[] places = new int[6];
     int[] purses = new int[6];
     boolean[] inPenaltyBox = new boolean[6];
 
-    LinkedList popQuestions = new LinkedList();
-    LinkedList scienceQuestions = new LinkedList();
-    LinkedList sportsQuestions = new LinkedList();
-    LinkedList rockQuestions = new LinkedList();
+    LinkedList<Category> popQuestions;
+    LinkedList<Category> scienceQuestions;
+    LinkedList<Category> sportsQuestions;
+    LinkedList<Category> rockQuestions;
 
     int currentPlayer = 0;
     boolean isGettingOutOfPenaltyBox;
 
-    public  Game(){
-        for (int i = 0; i < 50; i++) {
-            popQuestions.addLast(Category.POP.getCategoryName() + " " + QUESTION + " " + i);
-            scienceQuestions.addLast(Category.SCIENCE.getCategoryName() + " " + QUESTION + " " + i);
-            sportsQuestions.addLast(Category.SPORTS.getCategoryName() + " " + QUESTION + " " + i);
-            rockQuestions.addLast(Category.ROCK.getCategoryName() + " " + QUESTION + " " + i);
-        }
+    public Game() {
+        QuestionGenerator questionGenerator = new QuestionGenerator();
+        this.popQuestions = questionGenerator.getPopQuestions();
+        this.scienceQuestions = questionGenerator.getScienceQuestions();
+        this.sportsQuestions = questionGenerator.getSportsQuestions();
+        this.rockQuestions = questionGenerator.getRockQuestions();
     }
 
     public boolean add(String playerName) {
@@ -145,7 +143,7 @@ public class Game {
     }
 
     public boolean wrongAnswer(){
-        System.out.println(QUESTION + " was incorrectly answered");
+        System.out.println("Question was incorrectly answered");
         System.out.println(players.get(currentPlayer) + " was sent to the penalty box");
         inPenaltyBox[currentPlayer] = true;
         int firstPlacing = 0;
