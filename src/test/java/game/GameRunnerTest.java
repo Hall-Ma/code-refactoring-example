@@ -1,11 +1,12 @@
 package game;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import runner.GameRunner;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameRunnerTest {
 
@@ -20,6 +21,6 @@ class GameRunnerTest {
         String[] splitOutput = byteStream.toString().split("\\n");
         String lastLine = splitOutput[splitOutput.length - 1];
 
-        Assertions.assertTrue(lastLine.contains("now has 6 Gold Coins."));
+        assertTrue(lastLine.contains("now has 6 Gold Coins."));
     }
 }
