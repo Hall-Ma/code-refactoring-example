@@ -97,9 +97,9 @@ public class Game {
 
 
     private Category currentCategory() {
-        if (Category.POP.getInts().contains(places[currentPlayer])) return Category.POP;
-        if (Category.SCIENCE.getInts().contains(places[currentPlayer])) return Category.SCIENCE;
-        if (Category.SPORTS.getInts().contains(places[currentPlayer])) return Category.SPORTS;
+        if (Category.POP.getNumberOfCategory().contains(places[currentPlayer])) return Category.POP;
+        if (Category.SCIENCE.getNumberOfCategory().contains(places[currentPlayer])) return Category.SCIENCE;
+        if (Category.SPORTS.getNumberOfCategory().contains(places[currentPlayer])) return Category.SPORTS;
         return Category.ROCK;
     }
 

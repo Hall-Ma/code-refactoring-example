@@ -11,18 +11,18 @@ public enum Category {
     ROCK("Rock", Arrays.asList(3, 7, 11));
 
     private final String name;
-    private final List<Integer> ints;
+    private final List<Integer> numbersRelatedToCategory;
 
     Category(final String name, List<Integer> ints) {
         this.name = name;
-        this.ints = ints;
+        this.numbersRelatedToCategory = ints;
     }
 
     public String getCategoryName() {
         return name;
     }
 
-    public List<Integer> getInts() {
-        return ints;
+    public List<Integer> getNumberOfCategory() {
+        return numbersRelatedToCategory;
     }
 }
