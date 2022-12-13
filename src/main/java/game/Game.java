@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Game {
-    public static final String POP = "Pop";
-    public static final String SCIENCE = "Science";
-    public static final String SPORTS = "Sports";
-    public static final String ROCK = "Rock";
     public static final String QUESTION = "Question";
     ArrayList players = new ArrayList();
     int[] places = new int[6];
@@ -24,10 +20,10 @@ public class Game {
 
     public  Game(){
         for (int i = 0; i < 50; i++) {
-            popQuestions.addLast(POP + " " + QUESTION + " " + i);
-            scienceQuestions.addLast(SCIENCE + " " + QUESTION + " " + i);
-            sportsQuestions.addLast(SPORTS + " " + QUESTION + " " + i);
-            rockQuestions.addLast(ROCK + " " + QUESTION + " " + i);
+            popQuestions.addLast(Category.POP.getCategoryName() + " " + QUESTION + " " + i);
+            scienceQuestions.addLast(Category.SCIENCE.getCategoryName() + " " + QUESTION + " " + i);
+            sportsQuestions.addLast(Category.SPORTS.getCategoryName() + " " + QUESTION + " " + i);
+            rockQuestions.addLast(Category.ROCK.getCategoryName() + " " + QUESTION + " " + i);
         }
     }
 
@@ -66,7 +62,7 @@ public class Game {
                 System.out.println(players.get(currentPlayer)
                         + "'s new location is "
                         + places[currentPlayer]);
-                System.out.println("The category is " + currentCategory());
+                System.out.println("The category is " + currentCategory().getCategoryName());
                 askQuestion();
             } else {
                 System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
@@ -82,35 +78,29 @@ public class Game {
             System.out.println(players.get(currentPlayer)
                     + "'s new location is "
                     + places[currentPlayer]);
-            System.out.println("The category is " + currentCategory());
+            System.out.println("The category is " + currentCategory().getCategoryName());
             askQuestion();
         }
 
     }
 
     private void askQuestion() {
-        if (currentCategory() == POP)
+        if (currentCategory() == Category.POP)
             System.out.println(popQuestions.removeFirst());
-        if (currentCategory() == SCIENCE)
+        if (currentCategory() == Category.SCIENCE)
             System.out.println(scienceQuestions.removeFirst());
-        if (currentCategory() == SPORTS)
+        if (currentCategory() == Category.SPORTS)
             System.out.println(sportsQuestions.removeFirst());
-        if (currentCategory() == ROCK)
+        if (currentCategory() == Category.ROCK)
             System.out.println(rockQuestions.removeFirst());
     }
 
 
-    private String currentCategory() {
-        if (places[currentPlayer] == 0) return POP;
-        if (places[currentPlayer] == 4) return POP;
-        if (places[currentPlayer] == 8) return POP;
-        if (places[currentPlayer] == 1) return SCIENCE;
-        if (places[currentPlayer] == 5) return SCIENCE;
-        if (places[currentPlayer] == 9) return SCIENCE;
-        if (places[currentPlayer] == 2) return SPORTS;
-        if (places[currentPlayer] == 6) return SPORTS;
-        if (places[currentPlayer] == 10) return SPORTS;
-        return ROCK;
+    private Category currentCategory() {
+        if (Category.POP.getInts().contains(places[currentPlayer])) return Category.POP;
+        if (Category.SCIENCE.getInts().contains(places[currentPlayer])) return Category.SCIENCE;
+        if (Category.SPORTS.getInts().contains(places[currentPlayer])) return Category.SPORTS;
+        return Category.ROCK;
     }
 
     public boolean wasCorrectlyAnswered() {
