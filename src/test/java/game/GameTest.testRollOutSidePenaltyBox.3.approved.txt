@@ -1,0 +1,7 @@
+David was added
+They are player number 1
+David is the current player
+They have rolled a 3
+David's new location is 3
+The category is Rock
+Rock Question 0

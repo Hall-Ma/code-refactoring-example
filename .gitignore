@@ -4,3 +4,6 @@
 # Build, Gradle
 build/
 .gradle/
+
+# Approval Tests
+*.received.txt
