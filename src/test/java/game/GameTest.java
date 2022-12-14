@@ -147,4 +147,16 @@ class GameTest {
         assertTrue(hasPlayerNotWon);
         verify(baos.toString());
     }
+
+    @Test
+    void testCurrentPlayerGetsCoinAfterCorrectAnswer() {
+        Game game = new Game();
+        game.add("David");
+        game.add("Julia");
+
+        boolean hasPlayerNotWon = game.wasCorrectlyAnswered();
+
+        assertTrue(hasPlayerNotWon);
+        verify(baos.toString());
+    }
 }
