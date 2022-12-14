@@ -45,7 +45,7 @@ public class Game {
                 System.out.println(getCurrentPlayer().getName() + " is getting out of the penalty box");
                 getCurrentPlayer().setPlace(roll);
                 System.out.println("The category is " + Category.getCategory(getCurrentPlayer().getPlace()).getCategoryName());
-                askQuestion();
+                askQuestion(getCurrentPlayer().getPlace());
             } else {
                 System.out.println(getCurrentPlayer().getName() + " is not getting out of the penalty box");
                 isGettingOutOfPenaltyBox = false;
@@ -54,7 +54,7 @@ public class Game {
         } else {
             getCurrentPlayer().setPlace(roll);
             System.out.println("The category is " + Category.getCategory(getCurrentPlayer().getPlace()).getCategoryName());
-            askQuestion();
+            askQuestion(getCurrentPlayer().getPlace());
         }
 
     }
@@ -63,14 +63,14 @@ public class Game {
         return this.players.get(this.indexOfCurrentPlayer);
     }
 
-    private void askQuestion() {
-        if (Category.getCategory(getCurrentPlayer().getPlace()) == Category.POP)
+    private void askQuestion(int place) {
+        if (Category.getCategory(place) == Category.POP)
             System.out.println(popQuestions.removeFirst());
-        if (Category.getCategory(getCurrentPlayer().getPlace()) == Category.SCIENCE)
+        if (Category.getCategory(place) == Category.SCIENCE)
             System.out.println(scienceQuestions.removeFirst());
-        if (Category.getCategory(getCurrentPlayer().getPlace()) == Category.SPORTS)
+        if (Category.getCategory(place) == Category.SPORTS)
             System.out.println(sportsQuestions.removeFirst());
-        if (Category.getCategory(getCurrentPlayer().getPlace()) == Category.ROCK)
+        if (Category.getCategory(place) == Category.ROCK)
             System.out.println(rockQuestions.removeFirst());
     }
 
