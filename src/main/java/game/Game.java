@@ -100,16 +100,14 @@ public class Game {
     }
 
     public boolean wasCorrectlyAnswered() {
-        setCurrentPlayersPlace();
-
         if (getPlayer().isInPenaltyBox() && !isGettingOutOfPenaltyBox) {
+            setCurrentPlayersPlace();
             return true;
         }
-
         System.out.println("Answer was correct!!!!");
         setPlayersPurse();
-        boolean winner = didPlayerWin();
-        return winner;
+        setCurrentPlayersPlace();
+        return didPlayerWin();
     }
 
     private void setPlayersPurse() {
