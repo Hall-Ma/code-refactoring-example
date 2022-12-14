@@ -100,31 +100,16 @@ public class Game {
     }
 
     public boolean wasCorrectlyAnswered() {
-        if (getPlayer().isInPenaltyBox()) {
-            if (isGettingOutOfPenaltyBox) {
-                System.out.println("Answer was correct!!!!");
-                setPlayersPurse();
+        setCurrentPlayersPlace();
 
-                boolean winner = didPlayerWin();
-                setCurrentPlayersPlace();
-
-                return winner;
-            } else {
-                setCurrentPlayersPlace();
-                return true;
-            }
-
-
-        } else {
-
-            System.out.println("Answer was corrent!!!!");
-            setPlayersPurse();
-
-            boolean winner = didPlayerWin();
-            setCurrentPlayersPlace();
-
-            return winner;
+        if (getPlayer().isInPenaltyBox() && !isGettingOutOfPenaltyBox) {
+            return true;
         }
+
+        System.out.println("Answer was correct!!!!");
+        setPlayersPurse();
+        boolean winner = didPlayerWin();
+        return winner;
     }
 
     private void setPlayersPurse() {
