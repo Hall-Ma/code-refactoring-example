@@ -34,16 +34,16 @@ public class Game {
         return players.size();
     }
 
-    public void roll(int roll) {
+    public void roll(int rolledNumber) {
         System.out.println(getCurrentPlayer().getName() + " is the current player");
-        System.out.println("They have rolled a " + roll);
+        System.out.println("They have rolled a " + rolledNumber);
 
         if (getCurrentPlayer().isInPenaltyBox()) {
-            if (roll % 2 != 0) {
+            if (rolledNumber % 2 != 0) {
                 isGettingOutOfPenaltyBox = true;
 
                 System.out.println(getCurrentPlayer().getName() + " is getting out of the penalty box");
-                getCurrentPlayer().setPlace(roll);
+                getCurrentPlayer().setPlace(rolledNumber);
                 System.out.println("The category is " + Category.getCategory(getCurrentPlayer().getPlace()).getCategoryName());
                 askQuestion(getCurrentPlayer().getPlace());
             } else {
@@ -52,7 +52,7 @@ public class Game {
             }
 
         } else {
-            getCurrentPlayer().setPlace(roll);
+            getCurrentPlayer().setPlace(rolledNumber);
             System.out.println("The category is " + Category.getCategory(getCurrentPlayer().getPlace()).getCategoryName());
             askQuestion(getCurrentPlayer().getPlace());
         }
