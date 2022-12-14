@@ -64,13 +64,14 @@ public class Game {
     }
 
     private void askQuestion(int place) {
-        if (Category.getCategory(place) == Category.POP)
+        Category category = Category.getCategory(place);
+        if (category == Category.POP)
             System.out.println(popQuestions.removeFirst());
-        if (Category.getCategory(place) == Category.SCIENCE)
+        if (category == Category.SCIENCE)
             System.out.println(scienceQuestions.removeFirst());
-        if (Category.getCategory(place) == Category.SPORTS)
+        if (category == Category.SPORTS)
             System.out.println(sportsQuestions.removeFirst());
-        if (Category.getCategory(place) == Category.ROCK)
+        if (category == Category.ROCK)
             System.out.println(rockQuestions.removeFirst());
     }
 
