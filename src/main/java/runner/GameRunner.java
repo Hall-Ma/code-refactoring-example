@@ -10,9 +10,9 @@ public class GameRunner {
     public static void main(String[] args) {
         Game aGame = new Game();
 
-        aGame.add("Chet");
-        aGame.add("Pat");
-        aGame.add("Sue");
+        aGame.addPlayer("Chet");
+        aGame.addPlayer("Pat");
+        aGame.addPlayer("Sue");
 
         Random rand = new Random();
 
@@ -21,7 +21,7 @@ public class GameRunner {
             aGame.roll(rand.nextInt(5) + 1);
 
             if (rand.nextInt(9) == 7) {
-                notAWinner = aGame.wrongAnswer();
+                notAWinner = aGame.wasIncorrectlyAnswered();
             } else {
                 notAWinner = aGame.wasCorrectlyAnswered();
             }
