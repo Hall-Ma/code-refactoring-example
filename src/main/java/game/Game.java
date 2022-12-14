@@ -35,47 +35,51 @@ public class Game {
     }
 
     public void roll(int roll) {
-        System.out.println(players.get(this.currentPlayer).getName() + " is the current player");
+        System.out.println(getPlayer().getName() + " is the current player");
         System.out.println("They have rolled a " + roll);
         int numberOutOfPlaces = 11;
         int maxNumberOfPlaces = 12;
         int newPlace;
 
-        if (players.get(this.currentPlayer).isInPenaltyBox()) {
+        if (getPlayer().isInPenaltyBox()) {
             if (roll % 2 != 0) {
                 isGettingOutOfPenaltyBox = true;
 
-                System.out.println(this.players.get(this.currentPlayer).getName() + " is getting out of the penalty box");
-                newPlace = this.players.get(this.currentPlayer).getPlace() + roll;
-                this.players.get(this.currentPlayer).setPlace(newPlace);
-                if (this.players.get(this.currentPlayer).getPlace() > numberOutOfPlaces)
+                System.out.println(getPlayer().getName() + " is getting out of the penalty box");
+                newPlace = getPlayer().getPlace() + roll;
+                getPlayer().setPlace(newPlace);
+                if (getPlayer().getPlace() > numberOutOfPlaces)
                     newPlace -= maxNumberOfPlaces;
-                this.players.get(this.currentPlayer).setPlace(newPlace);
+                getPlayer().setPlace(newPlace);
 
-                System.out.println(players.get(this.currentPlayer).getName()
+                System.out.println(getPlayer().getName()
                         + "'s new location is "
-                        + this.players.get(this.currentPlayer).getPlace());
+                        + getPlayer().getPlace());
                 System.out.println("The category is " + currentCategory().getCategoryName());
                 askQuestion();
             } else {
-                System.out.println(this.players.get(this.currentPlayer).getName() + " is not getting out of the penalty box");
+                System.out.println(getPlayer().getName() + " is not getting out of the penalty box");
                 isGettingOutOfPenaltyBox = false;
             }
 
         } else {
-            newPlace = this.players.get(this.currentPlayer).getPlace() + roll;
-            this.players.get(this.currentPlayer).setPlace(newPlace);
-            if (this.players.get(this.currentPlayer).getPlace() > numberOutOfPlaces)
+            newPlace = getPlayer().getPlace() + roll;
+            getPlayer().setPlace(newPlace);
+            if (getPlayer().getPlace() > numberOutOfPlaces)
                 newPlace -= maxNumberOfPlaces;
-            this.players.get(0).setPlace(newPlace);
+            getPlayer().setPlace(newPlace);
 
-            System.out.println(players.get(this.currentPlayer).getName()
+            System.out.println(getPlayer().getName()
                     + "'s new location is "
-                    + this.players.get(this.currentPlayer).getPlace());
+                    + getPlayer().getPlace());
             System.out.println("The category is " + currentCategory().getCategoryName());
             askQuestion();
         }
 
+    }
+
+    private Player getPlayer() {
+        return this.players.get(this.currentPlayer);
     }
 
     private void askQuestion() {
@@ -91,11 +95,11 @@ public class Game {
 
 
     private Category currentCategory() {
-        if (Category.POP.getNumberOfCategory().contains(this.players.get(this.currentPlayer).getPlace()))
+        if (Category.POP.getNumberOfCategory().contains(getPlayer().getPlace()))
             return Category.POP;
-        if (Category.SCIENCE.getNumberOfCategory().contains(this.players.get(this.currentPlayer).getPlace()))
+        if (Category.SCIENCE.getNumberOfCategory().contains(getPlayer().getPlace()))
             return Category.SCIENCE;
-        if (Category.SPORTS.getNumberOfCategory().contains(this.players.get(this.currentPlayer).getPlace()))
+        if (Category.SPORTS.getNumberOfCategory().contains(getPlayer().getPlace()))
             return Category.SPORTS;
         return Category.ROCK;
     }
@@ -103,14 +107,14 @@ public class Game {
     public boolean wasCorrectlyAnswered() {
         int firstPlacing = 0;
         int newPurse;
-        if (this.players.get(this.currentPlayer).isInPenaltyBox()) {
+        if (getPlayer().isInPenaltyBox()) {
             if (isGettingOutOfPenaltyBox) {
                 System.out.println("Answer was correct!!!!");
-                newPurse = this.players.get(this.currentPlayer).getPurse() + 1;
-                this.players.get(this.currentPlayer).setPurse(newPurse);
-                System.out.println(players.get(this.currentPlayer).getName()
+                newPurse = getPlayer().getPurse() + 1;
+                getPlayer().setPurse(newPurse);
+                System.out.println(getPlayer().getName()
                         + " now has "
-                        + this.players.get(currentPlayer).getPurse()
+                        + getPlayer().getPurse()
                         + " Gold Coins.");
 
                 boolean winner = didPlayerWin();
@@ -125,16 +129,15 @@ public class Game {
             }
 
 
-
         } else {
 
             System.out.println("Answer was corrent!!!!");
-            newPurse = this.players.get(this.currentPlayer).getPurse() + 1;
-            this.players.get(this.currentPlayer).setPurse(newPurse);
+            newPurse = getPlayer().getPurse() + 1;
+            getPlayer().setPurse(newPurse);
 
-            System.out.println(players.get(this.currentPlayer).getName()
+            System.out.println(getPlayer().getName()
                     + " now has "
-                    + this.players.get(this.currentPlayer).getPurse()
+                    + getPlayer().getPurse()
                     + " Gold Coins.");
 
             boolean winner = didPlayerWin();
@@ -147,8 +150,8 @@ public class Game {
 
     public boolean wrongAnswer() {
         System.out.println("Question was incorrectly answered");
-        System.out.println(players.get(this.currentPlayer).getName() + " was sent to the penalty box");
-        this.players.get(this.currentPlayer).setInPenaltyBox(true);
+        System.out.println(getPlayer().getName() + " was sent to the penalty box");
+        getPlayer().setInPenaltyBox(true);
         int firstPlacing = 0;
 
         this.currentPlayer++;
@@ -159,6 +162,6 @@ public class Game {
 
     private boolean didPlayerWin() {
         int numberOfCoinsToWin = 6;
-        return !(this.players.get(this.currentPlayer).getPurse() == numberOfCoinsToWin);
+        return !(getPlayer().getPurse() == numberOfCoinsToWin);
     }
 }
