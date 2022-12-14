@@ -56,4 +56,9 @@ public class Player {
     public void setInPenaltyBox(boolean inPenaltyBox) {
         this.inPenaltyBox = inPenaltyBox;
     }
+
+    public boolean didPlayerWin() {
+        int numberOfCoinsToWin = 6;
+        return !(this.purse == numberOfCoinsToWin);
+    }
 }

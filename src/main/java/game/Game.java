@@ -93,7 +93,7 @@ public class Game {
         System.out.println("Answer was correct!!!!");
         getPlayer().addCoin();
         setCurrentPlayersPlace();
-        return didPlayerWin(getPlayer());
+        return getPlayer().didPlayerWin();
     }
 
     public boolean wrongAnswer() {
@@ -109,12 +109,6 @@ public class Game {
         int firstPlacing = 0;
         this.currentPlayer++;
         if (this.currentPlayer == players.size()) this.currentPlayer = firstPlacing;
-    }
-
-
-    private boolean didPlayerWin(Player player) {
-        int numberOfCoinsToWin = 6;
-        return !(player.getPurse() == numberOfCoinsToWin);
     }
 }
 
