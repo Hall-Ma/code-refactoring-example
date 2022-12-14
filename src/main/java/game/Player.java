@@ -14,6 +14,14 @@ public class Player {
         this.inPenaltyBox = false;
     }
 
+    public void addCoin() {
+        this.purse += 1;
+        System.out.println(this.name
+                + " now has "
+                + this.purse
+                + " Gold Coins.");
+    }
+
     public String getName() {
         return name;
     }
@@ -28,10 +36,6 @@ public class Player {
 
     public int getPurse() {
         return purse;
-    }
-
-    public void setPurse(int purse) {
-        this.purse = purse;
     }
 
     public boolean isInPenaltyBox() {

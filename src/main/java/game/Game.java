@@ -105,19 +105,9 @@ public class Game {
             return true;
         }
         System.out.println("Answer was correct!!!!");
-        setPlayersPurse();
+        getPlayer().addCoin();
         setCurrentPlayersPlace();
         return didPlayerWin();
-    }
-
-    private void setPlayersPurse() {
-        int newPurse;
-        newPurse = getPlayer().getPurse() + 1;
-        getPlayer().setPurse(newPurse);
-        System.out.println(getPlayer().getName()
-                + " now has "
-                + getPlayer().getPurse()
-                + " Gold Coins.");
     }
 
     public boolean wrongAnswer() {
