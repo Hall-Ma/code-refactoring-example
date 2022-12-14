@@ -25,4 +25,16 @@ public enum Category {
     public List<Integer> getNumberOfCategory() {
         return numbersRelatedToCategory;
     }
+
+    public static Category getCategory(int numberOfCategory) {
+        if (Category.POP.getNumberOfCategory().contains(numberOfCategory))
+            return Category.POP;
+        if (Category.SCIENCE.getNumberOfCategory().contains(numberOfCategory))
+            return Category.SCIENCE;
+        if (Category.SPORTS.getNumberOfCategory().contains(numberOfCategory))
+            return Category.SPORTS;
+        return Category.ROCK;
+    }
+
+
 }

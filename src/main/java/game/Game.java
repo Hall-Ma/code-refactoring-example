@@ -44,7 +44,7 @@ public class Game {
 
                 System.out.println(getCurrentPlayer().getName() + " is getting out of the penalty box");
                 getCurrentPlayer().setPlace(roll);
-                System.out.println("The category is " + getCurrentCategory().getCategoryName());
+                System.out.println("The category is " + Category.getCategory(getCurrentPlayer().getPlace()).getCategoryName());
                 askQuestion();
             } else {
                 System.out.println(getCurrentPlayer().getName() + " is not getting out of the penalty box");
@@ -53,7 +53,7 @@ public class Game {
 
         } else {
             getCurrentPlayer().setPlace(roll);
-            System.out.println("The category is " + getCurrentCategory().getCategoryName());
+            System.out.println("The category is " + Category.getCategory(getCurrentPlayer().getPlace()).getCategoryName());
             askQuestion();
         }
 
@@ -64,26 +64,16 @@ public class Game {
     }
 
     private void askQuestion() {
-        if (getCurrentCategory() == Category.POP)
+        if (Category.getCategory(getCurrentPlayer().getPlace()) == Category.POP)
             System.out.println(popQuestions.removeFirst());
-        if (getCurrentCategory() == Category.SCIENCE)
+        if (Category.getCategory(getCurrentPlayer().getPlace()) == Category.SCIENCE)
             System.out.println(scienceQuestions.removeFirst());
-        if (getCurrentCategory() == Category.SPORTS)
+        if (Category.getCategory(getCurrentPlayer().getPlace()) == Category.SPORTS)
             System.out.println(sportsQuestions.removeFirst());
-        if (getCurrentCategory() == Category.ROCK)
+        if (Category.getCategory(getCurrentPlayer().getPlace()) == Category.ROCK)
             System.out.println(rockQuestions.removeFirst());
     }
 
-
-    private Category getCurrentCategory() {
-        if (Category.POP.getNumberOfCategory().contains(getCurrentPlayer().getPlace()))
-            return Category.POP;
-        if (Category.SCIENCE.getNumberOfCategory().contains(getCurrentPlayer().getPlace()))
-            return Category.SCIENCE;
-        if (Category.SPORTS.getNumberOfCategory().contains(getCurrentPlayer().getPlace()))
-            return Category.SPORTS;
-        return Category.ROCK;
-    }
 
     public boolean wasCorrectlyAnswered() {
         if (getCurrentPlayer().isInPenaltyBox() && !isGettingOutOfPenaltyBox) {
