@@ -100,20 +100,17 @@ public class Game {
     }
 
     public boolean wasCorrectlyAnswered() {
-        int firstPlacing = 0;
         if (getPlayer().isInPenaltyBox()) {
             if (isGettingOutOfPenaltyBox) {
                 System.out.println("Answer was correct!!!!");
                 setPlayersPurse();
 
                 boolean winner = didPlayerWin();
-                this.currentPlayer++;
-                if (this.currentPlayer == players.size()) this.currentPlayer = firstPlacing;
+                setCurrentPlayersPlace();
 
                 return winner;
             } else {
-                this.currentPlayer++;
-                if (this.currentPlayer == players.size()) this.currentPlayer = firstPlacing;
+                setCurrentPlayersPlace();
                 return true;
             }
 
@@ -124,8 +121,7 @@ public class Game {
             setPlayersPurse();
 
             boolean winner = didPlayerWin();
-            this.currentPlayer++;
-            if (this.currentPlayer == players.size()) this.currentPlayer = firstPlacing;
+            setCurrentPlayersPlace();
 
             return winner;
         }
@@ -145,11 +141,15 @@ public class Game {
         System.out.println("Question was incorrectly answered");
         System.out.println(getPlayer().getName() + " was sent to the penalty box");
         getPlayer().setInPenaltyBox(true);
-        int firstPlacing = 0;
 
+        setCurrentPlayersPlace();
+        return true;
+    }
+
+    private void setCurrentPlayersPlace() {
+        int firstPlacing = 0;
         this.currentPlayer++;
         if (this.currentPlayer == players.size()) this.currentPlayer = firstPlacing;
-        return true;
     }
 
 
