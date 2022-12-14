@@ -101,16 +101,10 @@ public class Game {
 
     public boolean wasCorrectlyAnswered() {
         int firstPlacing = 0;
-        int newPurse;
         if (getPlayer().isInPenaltyBox()) {
             if (isGettingOutOfPenaltyBox) {
                 System.out.println("Answer was correct!!!!");
-                newPurse = getPlayer().getPurse() + 1;
-                getPlayer().setPurse(newPurse);
-                System.out.println(getPlayer().getName()
-                        + " now has "
-                        + getPlayer().getPurse()
-                        + " Gold Coins.");
+                setPlayersPurse();
 
                 boolean winner = didPlayerWin();
                 this.currentPlayer++;
@@ -127,13 +121,7 @@ public class Game {
         } else {
 
             System.out.println("Answer was corrent!!!!");
-            newPurse = getPlayer().getPurse() + 1;
-            getPlayer().setPurse(newPurse);
-
-            System.out.println(getPlayer().getName()
-                    + " now has "
-                    + getPlayer().getPurse()
-                    + " Gold Coins.");
+            setPlayersPurse();
 
             boolean winner = didPlayerWin();
             this.currentPlayer++;
@@ -141,6 +129,16 @@ public class Game {
 
             return winner;
         }
+    }
+
+    private void setPlayersPurse() {
+        int newPurse;
+        newPurse = getPlayer().getPurse() + 1;
+        getPlayer().setPurse(newPurse);
+        System.out.println(getPlayer().getName()
+                + " now has "
+                + getPlayer().getPurse()
+                + " Gold Coins.");
     }
 
     public boolean wrongAnswer() {
