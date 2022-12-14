@@ -43,7 +43,8 @@ public class Game {
                 isGettingOutOfPenaltyBox = true;
 
                 System.out.println(getPlayer().getName() + " is getting out of the penalty box");
-                setPlayersPlace(roll);
+                getPlayer().setPlace(roll);
+                System.out.println("The category is " + currentCategory().getCategoryName());
                 askQuestion();
             } else {
                 System.out.println(getPlayer().getName() + " is not getting out of the penalty box");
@@ -51,26 +52,11 @@ public class Game {
             }
 
         } else {
-            setPlayersPlace(roll);
+            getPlayer().setPlace(roll);
+            System.out.println("The category is " + currentCategory().getCategoryName());
             askQuestion();
         }
 
-    }
-
-    private void setPlayersPlace(int roll) {
-        int numberOutOfPlaces = 11;
-        int maxNumberOfPlaces = 12;
-        int newPlace;
-        newPlace = getPlayer().getPlace() + roll;
-        getPlayer().setPlace(newPlace);
-        if (getPlayer().getPlace() > numberOutOfPlaces)
-            newPlace -= maxNumberOfPlaces;
-        getPlayer().setPlace(newPlace);
-
-        System.out.println(getPlayer().getName()
-                + "'s new location is "
-                + getPlayer().getPlace());
-        System.out.println("The category is " + currentCategory().getCategoryName());
     }
 
     private Player getPlayer() {

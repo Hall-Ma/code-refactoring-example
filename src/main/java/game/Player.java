@@ -22,6 +22,19 @@ public class Player {
                 + " Gold Coins.");
     }
 
+    public void setPlace(int roll) {
+        int maxNumberOfPlaces = 12;
+        int newPlace = this.place + roll;
+
+        if (newPlace >= maxNumberOfPlaces) {
+            newPlace -= maxNumberOfPlaces;
+        }
+        this.place = newPlace;
+        System.out.println(this.name
+                + "'s new location is "
+                + this.place);
+    }
+
     public String getName() {
         return name;
     }
@@ -30,9 +43,7 @@ public class Player {
         return place;
     }
 
-    public void setPlace(int place) {
-        this.place = place;
-    }
+
 
     public int getPurse() {
         return purse;
