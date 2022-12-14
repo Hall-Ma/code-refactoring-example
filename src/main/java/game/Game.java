@@ -37,25 +37,13 @@ public class Game {
     public void roll(int roll) {
         System.out.println(getPlayer().getName() + " is the current player");
         System.out.println("They have rolled a " + roll);
-        int numberOutOfPlaces = 11;
-        int maxNumberOfPlaces = 12;
-        int newPlace;
 
         if (getPlayer().isInPenaltyBox()) {
             if (roll % 2 != 0) {
                 isGettingOutOfPenaltyBox = true;
 
                 System.out.println(getPlayer().getName() + " is getting out of the penalty box");
-                newPlace = getPlayer().getPlace() + roll;
-                getPlayer().setPlace(newPlace);
-                if (getPlayer().getPlace() > numberOutOfPlaces)
-                    newPlace -= maxNumberOfPlaces;
-                getPlayer().setPlace(newPlace);
-
-                System.out.println(getPlayer().getName()
-                        + "'s new location is "
-                        + getPlayer().getPlace());
-                System.out.println("The category is " + currentCategory().getCategoryName());
+                setPlayersPlace(roll);
                 askQuestion();
             } else {
                 System.out.println(getPlayer().getName() + " is not getting out of the penalty box");
@@ -63,19 +51,26 @@ public class Game {
             }
 
         } else {
-            newPlace = getPlayer().getPlace() + roll;
-            getPlayer().setPlace(newPlace);
-            if (getPlayer().getPlace() > numberOutOfPlaces)
-                newPlace -= maxNumberOfPlaces;
-            getPlayer().setPlace(newPlace);
-
-            System.out.println(getPlayer().getName()
-                    + "'s new location is "
-                    + getPlayer().getPlace());
-            System.out.println("The category is " + currentCategory().getCategoryName());
+            setPlayersPlace(roll);
             askQuestion();
         }
 
+    }
+
+    private void setPlayersPlace(int roll) {
+        int numberOutOfPlaces = 11;
+        int maxNumberOfPlaces = 12;
+        int newPlace;
+        newPlace = getPlayer().getPlace() + roll;
+        getPlayer().setPlace(newPlace);
+        if (getPlayer().getPlace() > numberOutOfPlaces)
+            newPlace -= maxNumberOfPlaces;
+        getPlayer().setPlace(newPlace);
+
+        System.out.println(getPlayer().getName()
+                + "'s new location is "
+                + getPlayer().getPlace());
+        System.out.println("The category is " + currentCategory().getCategoryName());
     }
 
     private Player getPlayer() {
