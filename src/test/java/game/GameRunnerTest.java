@@ -11,7 +11,7 @@ import static org.approvaltests.Approvals.verify;
 class GameRunnerTest {
 
     @Test
-    void testIfGameEnds() {
+    void testGamePlay() {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(byteStream);
         System.setOut(printStream);
@@ -20,9 +20,5 @@ class GameRunnerTest {
         GameRunner.main(args);
 
         verify(byteStream.toString());
-        //String[] splitOutput = byteStream.toString().split("\\n");
-        //String lastLine = splitOutput[splitOutput.length - 1];
-
-        //assertTrue(lastLine.contains("now has 6 Gold Coins."));
     }
 }
