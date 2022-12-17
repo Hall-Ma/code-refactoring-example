@@ -7,9 +7,7 @@ public class Game {
     List<Player> players = new ArrayList<>();
     QuestionStack questionStack;
     GameBoard gameBoard;
-
     int indexOfCurrentPlayer = 0;
-    boolean isGettingOutOfPenaltyBox;
 
     public Game() {
         this.questionStack = new QuestionStack();
@@ -30,7 +28,7 @@ public class Game {
         System.out.println("They have rolled a " + rolledNumber);
         if (getCurrentPlayer().isInPenaltyBox()) {
             if (isOdd(rolledNumber)) {
-                isGettingOutOfPenaltyBox = true;
+                getCurrentPlayer().setGettingOutOfPenaltyBox(true);
                 System.out.println(getCurrentPlayer().getName() + " is getting out of the penalty box");
                 gameBoard.setGameFieldByPlayer(getCurrentPlayer(), rolledNumber);
                 int gameField = gameBoard.getGameFieldByPlayer(getCurrentPlayer());
@@ -38,7 +36,7 @@ public class Game {
                 askQuestion(gameBoard.getGameFieldByPlayer(getCurrentPlayer()));
             } else {
                 System.out.println(getCurrentPlayer().getName() + " is not getting out of the penalty box");
-                isGettingOutOfPenaltyBox = false;
+                getCurrentPlayer().setGettingOutOfPenaltyBox(false);
             }
         } else {
             gameBoard.setGameFieldByPlayer(getCurrentPlayer(), rolledNumber);
@@ -64,7 +62,7 @@ public class Game {
 
     public boolean wasCorrectlyAnswered() {
         if (getCurrentPlayer().isInPenaltyBox()) {
-            if (isGettingOutOfPenaltyBox) {
+            if (getCurrentPlayer().isGettingOutOfPenaltyBox()) {
                 System.out.println("Answer was correct!!!!");
                 getCurrentPlayer().addCoin();
                 boolean winner = getCurrentPlayer().didPlayerWin();

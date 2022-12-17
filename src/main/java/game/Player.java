@@ -5,11 +5,13 @@ public class Player {
     private final String name;
     private int purse;
     private boolean inPenaltyBox;
+    private boolean isGettingOutOfPenaltyBox;
 
     public Player(String name) {
         this.name = name;
         this.purse = 0;
         this.inPenaltyBox = false;
+        this.isGettingOutOfPenaltyBox = false;
     }
 
     public void addCoin() {
@@ -30,6 +32,14 @@ public class Player {
 
     public void setInPenaltyBox(boolean inPenaltyBox) {
         this.inPenaltyBox = inPenaltyBox;
+    }
+
+    public boolean isGettingOutOfPenaltyBox() {
+        return isGettingOutOfPenaltyBox;
+    }
+
+    public void setGettingOutOfPenaltyBox(boolean gettingOutOfPenaltyBox) {
+        isGettingOutOfPenaltyBox = gettingOutOfPenaltyBox;
     }
 
     public boolean didPlayerWin() {
