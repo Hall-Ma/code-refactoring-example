@@ -27,7 +27,7 @@ public class Game {
         System.out.println(getCurrentPlayer().getName() + " is the current player");
         System.out.println("They have rolled a " + rolledNumber);
         if (getCurrentPlayer().isInPenaltyBox()) {
-            if (rolledNumber % 2 != 0) {
+            if (isOdd(rolledNumber)) {
                 isGettingOutOfPenaltyBox = true;
                 System.out.println(getCurrentPlayer().getName() + " is getting out of the penalty box");
                 getCurrentPlayer().setPlace(rolledNumber);
@@ -42,6 +42,10 @@ public class Game {
             System.out.println("The category is " + gameBoard.getCategoryByGameField(getCurrentPlayer().getPlace()));
             askQuestion(getCurrentPlayer().getPlace());
         }
+    }
+
+    private boolean isOdd(int rolledNumber) {
+        return rolledNumber % 2 != 0;
     }
 
     private Player getCurrentPlayer() {
