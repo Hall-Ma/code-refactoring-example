@@ -33,7 +33,6 @@ public class Game {
                 isGettingOutOfPenaltyBox = true;
                 System.out.println(getCurrentPlayer().getName() + " is getting out of the penalty box");
                 gameBoard.setGameFieldByPlayer(getCurrentPlayer(), rolledNumber);
-                //getCurrentPlayer().setPlace(rolledNumber);
                 int gameField = gameBoard.getGameFieldByPlayer(getCurrentPlayer());
                 System.out.println("The category is " + gameBoard.getCategoryByGameField(gameField));
                 askQuestion(gameBoard.getGameFieldByPlayer(getCurrentPlayer()));
@@ -43,7 +42,6 @@ public class Game {
             }
         } else {
             gameBoard.setGameFieldByPlayer(getCurrentPlayer(), rolledNumber);
-            //getCurrentPlayer().setPlace(rolledNumber);
             int gameField = gameBoard.getGameFieldByPlayer(getCurrentPlayer());
             System.out.println("The category is " + gameBoard.getCategoryByGameField(gameField));
             askQuestion(gameBoard.getGameFieldByPlayer(getCurrentPlayer()));
