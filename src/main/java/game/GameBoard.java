@@ -38,7 +38,7 @@ public class GameBoard {
         return this.gameFieldByPlayer.get(player);
     }
 
-    public void setGameFieldByPlayer(Player player, int rolledNumber) {
+    public void setGameFieldForPlayer(Player player, int rolledNumber) {
         int currentField = getGameFieldByPlayer(player);
         int newField = currentField + rolledNumber;
         if (newField >= NUMBER_OF_GAME_FIELDS) {

@@ -24,25 +24,26 @@ public class Game {
     }
 
     public void roll(int rolledNumber) {
-        System.out.println(getCurrentPlayer().getName() + " is the current player");
+        Player currentPlayer = getCurrentPlayer();
+        System.out.println(currentPlayer.getName() + " is the current player");
         System.out.println("They have rolled a " + rolledNumber);
-        if (getCurrentPlayer().isInPenaltyBox()) {
+        if (currentPlayer.isInPenaltyBox()) {
             if (isOdd(rolledNumber)) {
-                getCurrentPlayer().setGettingOutOfPenaltyBox(true);
-                System.out.println(getCurrentPlayer().getName() + " is getting out of the penalty box");
-                gameBoard.setGameFieldByPlayer(getCurrentPlayer(), rolledNumber);
-                int gameField = gameBoard.getGameFieldByPlayer(getCurrentPlayer());
+                currentPlayer.setGettingOutOfPenaltyBox(true);
+                System.out.println(currentPlayer.getName() + " is getting out of the penalty box");
+                gameBoard.setGameFieldForPlayer(currentPlayer, rolledNumber);
+                int gameField = gameBoard.getGameFieldByPlayer(currentPlayer);
                 System.out.println("The category is " + gameBoard.getCategoryByGameField(gameField));
-                askQuestion(gameBoard.getGameFieldByPlayer(getCurrentPlayer()));
+                askQuestion(gameBoard.getGameFieldByPlayer(currentPlayer));
             } else {
-                System.out.println(getCurrentPlayer().getName() + " is not getting out of the penalty box");
-                getCurrentPlayer().setGettingOutOfPenaltyBox(false);
+                System.out.println(currentPlayer.getName() + " is not getting out of the penalty box");
+                currentPlayer.setGettingOutOfPenaltyBox(false);
             }
         } else {
-            gameBoard.setGameFieldByPlayer(getCurrentPlayer(), rolledNumber);
-            int gameField = gameBoard.getGameFieldByPlayer(getCurrentPlayer());
+            gameBoard.setGameFieldForPlayer(currentPlayer, rolledNumber);
+            int gameField = gameBoard.getGameFieldByPlayer(currentPlayer);
             System.out.println("The category is " + gameBoard.getCategoryByGameField(gameField));
-            askQuestion(gameBoard.getGameFieldByPlayer(getCurrentPlayer()));
+            askQuestion(gameBoard.getGameFieldByPlayer(currentPlayer));
         }
     }
 
@@ -54,18 +55,19 @@ public class Game {
         return this.players.get(this.indexOfCurrentPlayer);
     }
 
-    private void askQuestion(int place) {
-        Category category = gameBoard.getCategoryByGameField(place);
+    private void askQuestion(int gameField) {
+        Category category = gameBoard.getCategoryByGameField(gameField);
         Question askedQuestion = questionStack.removeQuestion(category);
         System.out.println(askedQuestion);
     }
 
     public boolean wasCorrectlyAnswered() {
-        if (getCurrentPlayer().isInPenaltyBox()) {
-            if (getCurrentPlayer().isGettingOutOfPenaltyBox()) {
+        Player currentPlayer = getCurrentPlayer();
+        if (currentPlayer.isInPenaltyBox()) {
+            if (currentPlayer.isGettingOutOfPenaltyBox()) {
                 System.out.println("Answer was correct!!!!");
-                getCurrentPlayer().addCoin();
-                boolean winner = getCurrentPlayer().didPlayerWin();
+                currentPlayer.addCoin();
+                boolean winner = currentPlayer.didPlayerWin();
                 setNewCurrentPlayer();
                 return winner;
             } else {
@@ -74,8 +76,8 @@ public class Game {
             }
         } else {
             System.out.println("Answer was corrent!!!!");
-            getCurrentPlayer().addCoin();
-            boolean winner = getCurrentPlayer().didPlayerWin();
+            currentPlayer.addCoin();
+            boolean winner = currentPlayer.didPlayerWin();
             setNewCurrentPlayer();
             return winner;
         }
