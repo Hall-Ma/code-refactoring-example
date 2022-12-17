@@ -10,7 +10,8 @@ import java.io.PrintStream;
 
 import static org.approvaltests.Approvals.NAMES;
 import static org.approvaltests.Approvals.verify;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameTest {
 
@@ -20,23 +21,6 @@ class GameTest {
     void setUp() {
         baos = new ByteArrayOutputStream();
         System.setOut(new PrintStream(baos));
-    }
-
-    @Test
-    void testPlayerSize() {
-        Game game = new Game();
-
-        assertEquals(0, game.howManyPlayers());
-    }
-
-    @Test
-    void testAddPlayer() {
-        Game game = new Game();
-
-        assertEquals(0, game.howManyPlayers());
-
-        assertTrue(game.addPlayer("David"));
-        assertEquals(1, game.howManyPlayers());
     }
 
     @ParameterizedTest

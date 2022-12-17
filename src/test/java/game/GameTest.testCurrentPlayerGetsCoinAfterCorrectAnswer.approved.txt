@@ -2,5 +2,5 @@ David was added
 They are player number 1
 Julia was added
 They are player number 2
-Answer was correct!!!!
+Answer was corrent!!!!
 David now has 1 Gold Coins.

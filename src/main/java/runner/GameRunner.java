@@ -14,7 +14,7 @@ public class GameRunner {
         aGame.addPlayer("Pat");
         aGame.addPlayer("Sue");
 
-        Random rand = new Random();
+        Random rand = args.length > 0 ? new Random(Long.parseLong(args[0])) : new Random();
 
         do {
 

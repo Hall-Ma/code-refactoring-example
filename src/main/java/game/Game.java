@@ -71,14 +71,24 @@ public class Game {
     }
 
     public boolean wasCorrectlyAnswered() {
-        if (getCurrentPlayer().isInPenaltyBox() && !isGettingOutOfPenaltyBox) {
+        if (getCurrentPlayer().isInPenaltyBox()) {
+            if (isGettingOutOfPenaltyBox) {
+                System.out.println("Answer was correct!!!!");
+                getCurrentPlayer().addCoin();
+                boolean winner = getCurrentPlayer().didPlayerWin();
+                setNewCurrentPlayer();
+                return winner;
+            } else {
+                setNewCurrentPlayer();
+                return true;
+            }
+        } else {
+            System.out.println("Answer was corrent!!!!");
+            getCurrentPlayer().addCoin();
+            boolean winner = getCurrentPlayer().didPlayerWin();
             setNewCurrentPlayer();
-            return true;
+            return winner;
         }
-        System.out.println("Answer was correct!!!!");
-        getCurrentPlayer().addCoin();
-        setNewCurrentPlayer();
-        return getCurrentPlayer().didPlayerWin();
     }
 
     public boolean wasIncorrectlyAnswered() {
