@@ -4,33 +4,34 @@ import java.util.LinkedList;
 
 public class QuestionGenerator {
 
-    private final LinkedList popQuestions = new LinkedList<Category>();
-    private final LinkedList scienceQuestions = new LinkedList<Category>();
-    private final LinkedList sportsQuestions = new LinkedList<Category>();
-    private final LinkedList rockQuestions = new LinkedList<Category>();
+    private final LinkedList popQuestions = new LinkedList<Question>();
+    private final LinkedList scienceQuestions = new LinkedList<Question>();
+    private final LinkedList sportsQuestions = new LinkedList<Question>();
+    private final LinkedList rockQuestions = new LinkedList<Question>();
 
     public QuestionGenerator() {
         for (int i = 0; i < 50; i++) {
-            this.popQuestions.addLast(Category.POP.getCategoryName() + " Question " + i);
-            this.scienceQuestions.addLast(Category.SCIENCE.getCategoryName() + " Question " + i);
-            this.sportsQuestions.addLast(Category.SPORTS.getCategoryName() + " Question " + i);
-            this.rockQuestions.addLast(Category.ROCK.getCategoryName() + " Question " + i);
+            String question = "Question " + i;
+            this.popQuestions.addLast(new Question(Category.POP, question));
+            this.scienceQuestions.addLast(new Question(Category.SCIENCE, question));
+            this.sportsQuestions.addLast(new Question(Category.SPORTS, question));
+            this.rockQuestions.addLast(new Question(Category.ROCK, question));
         }
     }
 
-    public LinkedList<Category> getPopQuestions() {
+    public LinkedList<Question> getPopQuestions() {
         return popQuestions;
     }
 
-    public LinkedList<Category> getScienceQuestions() {
+    public LinkedList<Question> getScienceQuestions() {
         return scienceQuestions;
     }
 
-    public LinkedList<Category> getSportsQuestions() {
+    public LinkedList<Question> getSportsQuestions() {
         return sportsQuestions;
     }
 
-    public LinkedList<Category> getRockQuestions() {
+    public LinkedList<Question> getRockQuestions() {
         return rockQuestions;
     }
 

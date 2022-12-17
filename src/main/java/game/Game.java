@@ -6,10 +6,10 @@ import java.util.List;
 
 public class Game {
     List<Player> players = new ArrayList<>();
-    LinkedList<Category> popQuestions;
-    LinkedList<Category> scienceQuestions;
-    LinkedList<Category> sportsQuestions;
-    LinkedList<Category> rockQuestions;
+    LinkedList<Question> popQuestions;
+    LinkedList<Question> scienceQuestions;
+    LinkedList<Question> sportsQuestions;
+    LinkedList<Question> rockQuestions;
 
     int indexOfCurrentPlayer = 0;
     boolean isGettingOutOfPenaltyBox;
@@ -60,14 +60,19 @@ public class Game {
 
     private void askQuestion(int place) {
         Category category = Category.getCategory(place);
-        if (category == Category.POP)
-            System.out.println(popQuestions.removeFirst());
-        if (category == Category.SCIENCE)
-            System.out.println(scienceQuestions.removeFirst());
-        if (category == Category.SPORTS)
-            System.out.println(sportsQuestions.removeFirst());
-        if (category == Category.ROCK)
-            System.out.println(rockQuestions.removeFirst());
+        if (category == Category.POP) {
+            Question question = popQuestions.removeFirst();
+            System.out.println(question);
+        } else if (category == Category.SCIENCE) {
+            Question question = scienceQuestions.removeFirst();
+            System.out.println(question);
+        } else if (category == Category.SPORTS) {
+            Question question = sportsQuestions.removeFirst();
+            System.out.println(question);
+        } else if (category == Category.ROCK) {
+            Question question = rockQuestions.removeFirst();
+            System.out.println(question);
+        }
     }
 
     public boolean wasCorrectlyAnswered() {
