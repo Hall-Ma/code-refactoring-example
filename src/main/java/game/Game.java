@@ -1,25 +1,17 @@
 package game;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Game {
     List<Player> players = new ArrayList<>();
-    LinkedList<Question> popQuestions;
-    LinkedList<Question> scienceQuestions;
-    LinkedList<Question> sportsQuestions;
-    LinkedList<Question> rockQuestions;
+    QuestionStack questionStack;
 
     int indexOfCurrentPlayer = 0;
     boolean isGettingOutOfPenaltyBox;
 
     public Game() {
-        QuestionGenerator questionGenerator = new QuestionGenerator();
-        this.popQuestions = questionGenerator.getPopQuestions();
-        this.scienceQuestions = questionGenerator.getScienceQuestions();
-        this.sportsQuestions = questionGenerator.getSportsQuestions();
-        this.rockQuestions = questionGenerator.getRockQuestions();
+        this.questionStack = new QuestionStack();
     }
 
     public boolean addPlayer(String playerName) {
@@ -60,19 +52,8 @@ public class Game {
 
     private void askQuestion(int place) {
         Category category = Category.getCategory(place);
-        if (category == Category.POP) {
-            Question question = popQuestions.removeFirst();
-            System.out.println(question);
-        } else if (category == Category.SCIENCE) {
-            Question question = scienceQuestions.removeFirst();
-            System.out.println(question);
-        } else if (category == Category.SPORTS) {
-            Question question = sportsQuestions.removeFirst();
-            System.out.println(question);
-        } else if (category == Category.ROCK) {
-            Question question = rockQuestions.removeFirst();
-            System.out.println(question);
-        }
+        Question askedQuestion = this.questionStack.removeQuestion(category);
+        System.out.println(askedQuestion);
     }
 
     public boolean wasCorrectlyAnswered() {
