@@ -10,6 +10,10 @@ public class Game {
     Player currentPlayer;
 
     public Game(List<String> playerNames) {
+        initGame(playerNames);
+    }
+
+    private void initGame(List<String> playerNames) {
         this.questionStack = new QuestionStack();
         this.gameBoard = new GameBoard();
         for (String playerName : playerNames) {
