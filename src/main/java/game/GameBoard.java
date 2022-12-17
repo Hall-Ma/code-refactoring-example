@@ -48,4 +48,8 @@ public class GameBoard {
                 + "'s new location is "
                 + newField);
     }
+
+    public int getNumberOfPlayers() {
+        return this.gameFieldByPlayer.size();
+    }
 }

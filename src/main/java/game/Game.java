@@ -19,7 +19,7 @@ public class Game {
         this.players.add(player);
         this.gameBoard.setInitialGameFieldForPlayer(player);
         System.out.println(playerName + " was added");
-        System.out.println("They are player number " + players.size());
+        System.out.println("They are player number " + this.gameBoard.getNumberOfPlayers());
         return true;
     }
 
@@ -94,7 +94,7 @@ public class Game {
     private void setNewCurrentPlayer() {
         int firstPlacing = 0;
         this.indexOfCurrentPlayer++;
-        if (this.indexOfCurrentPlayer == players.size()) this.indexOfCurrentPlayer = firstPlacing;
+        if (this.indexOfCurrentPlayer == this.gameBoard.getNumberOfPlayers()) this.indexOfCurrentPlayer = firstPlacing;
     }
 }
 
