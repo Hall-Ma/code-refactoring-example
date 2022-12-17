@@ -8,6 +8,7 @@ public class Game {
     QuestionStack questionStack;
     GameBoard gameBoard;
     Player currentPlayer;
+    private final int COINS_NEEDED_TO_WIN = 6;
 
     public Game(List<String> playerNames) {
         initGame(playerNames);
@@ -59,38 +60,45 @@ public class Game {
         System.out.println(askedQuestion);
     }
 
-    public boolean wasCorrectlyAnswered() {
+    public boolean doesGameContinue(int answered) {
+        if (answered == 7) {
+            playerAnsweredIncorrectly();
+        } else {
+            playerAnsweredCorrectly();
+        }
+        setNewCurrentPlayer();
+        return noPlayerWon();
+    }
+
+    public boolean noPlayerWon() {
+        return this.players.stream().allMatch(p -> p.getCoins() != COINS_NEEDED_TO_WIN);
+    }
+
+    public void playerAnsweredCorrectly() {
         if (currentPlayer.isInPenaltyBox()) {
             if (currentPlayer.isGettingOutOfPenaltyBox()) {
                 System.out.println("Answer was correct!!!!");
                 currentPlayer.addCoin();
-                boolean winner = currentPlayer.didPlayerWin();
-                setNewCurrentPlayer();
-                return winner;
-            } else {
-                setNewCurrentPlayer();
-                return true;
             }
         } else {
             System.out.println("Answer was corrent!!!!");
             currentPlayer.addCoin();
-            boolean winner = currentPlayer.didPlayerWin();
-            setNewCurrentPlayer();
-            return winner;
         }
     }
 
-    public boolean wasIncorrectlyAnswered() {
+    public void playerAnsweredIncorrectly() {
         System.out.println("Question was incorrectly answered");
         System.out.println(this.currentPlayer.getName() + " was sent to the penalty box");
         this.currentPlayer.setInPenaltyBox(true);
-        setNewCurrentPlayer();
-        return true;
     }
 
     private void setNewCurrentPlayer() {
         int indexOfNextPlayer = this.players.indexOf(this.currentPlayer) + 1;
         this.currentPlayer = indexOfNextPlayer == this.players.size() ? this.players.get(0) : this.players.get(indexOfNextPlayer);
+    }
+
+    private boolean didPlayerWin() {
+        return this.currentPlayer.getCoins() == COINS_NEEDED_TO_WIN;
     }
 }
 

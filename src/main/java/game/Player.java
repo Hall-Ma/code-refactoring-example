@@ -42,8 +42,7 @@ public class Player {
         isGettingOutOfPenaltyBox = gettingOutOfPenaltyBox;
     }
 
-    public boolean didPlayerWin() {
-        int numberOfCoinsToWin = 6;
-        return !(this.purse == numberOfCoinsToWin);
+    public int getCoins() {
+        return this.purse;
     }
 }

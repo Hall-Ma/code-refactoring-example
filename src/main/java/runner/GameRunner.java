@@ -10,24 +10,22 @@ public class GameRunner {
 
     public static void main(String[] args) {
 
+        play(args);
+
+    }
+
+    private static void play(String[] args) {
         List<String> playerNames = List.of("Chet", "Pat", "Sue");
         Game aGame = new Game(playerNames);
 
         Random rand = args.length > 0 ? new Random(Long.parseLong(args[0])) : new Random();
 
+        int answered;
         do {
-
-            aGame.roll(rand.nextInt(5) + 1);
-
-            if (rand.nextInt(9) == 7) {
-                notAWinner = aGame.wasIncorrectlyAnswered();
-            } else {
-                notAWinner = aGame.wasCorrectlyAnswered();
-            }
-
-
-
-        } while (notAWinner);
-
+            int rolledNumber = rand.nextInt(5) + 1;
+            aGame.roll(rolledNumber);
+            answered = rand.nextInt(9);
+        } while (aGame.doesGameContinue(answered));
     }
+
 }
