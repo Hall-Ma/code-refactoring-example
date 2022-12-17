@@ -7,11 +7,9 @@ import static java.util.Map.entry;
 import static java.util.Map.ofEntries;
 
 public class GameBoard {
-
-    private static final int NUMBER_OF_GAME_FIELDS = 12;
-    private static final int INITIAL_FIELD_TO_START = 0;
+    private final int INITIAL_FIELD_TO_START = 0;
     private final Map<Player, Integer> gameFieldByPlayer = new HashMap();
-    private final Map<Integer, Category> categoryByField = ofEntries(
+    private final Map<Integer, Category> gameFieldByCategory = ofEntries(
             entry(INITIAL_FIELD_TO_START, Category.POP),
             entry(1, Category.SCIENCE),
             entry(2, Category.SPORTS),
@@ -25,9 +23,10 @@ public class GameBoard {
             entry(10, Category.SPORTS),
             entry(11, Category.ROCK)
     );
+    private final int NUMBER_OF_GAME_FIELDS = this.gameFieldByCategory.size();
 
     public Category getCategoryByGameField(int gameField) {
-        return this.categoryByField.get(gameField);
+        return this.gameFieldByCategory.get(gameField);
     }
 
     public void setInitialGameFieldForPlayer(Player player) {
