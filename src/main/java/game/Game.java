@@ -6,12 +6,14 @@ import java.util.List;
 public class Game {
     List<Player> players = new ArrayList<>();
     QuestionStack questionStack;
+    GameBoard gameBoard;
 
     int indexOfCurrentPlayer = 0;
     boolean isGettingOutOfPenaltyBox;
 
     public Game() {
         this.questionStack = new QuestionStack();
+        this.gameBoard = new GameBoard();
     }
 
     public boolean addPlayer(String playerName) {
@@ -33,7 +35,7 @@ public class Game {
                 isGettingOutOfPenaltyBox = true;
                 System.out.println(getCurrentPlayer().getName() + " is getting out of the penalty box");
                 getCurrentPlayer().setPlace(rolledNumber);
-                System.out.println("The category is " + Category.getCategory(getCurrentPlayer().getPlace()).getCategoryName());
+                System.out.println("The category is " + gameBoard.getCategoryByGameField(getCurrentPlayer().getPlace()).getCategoryName());
                 askQuestion(getCurrentPlayer().getPlace());
             } else {
                 System.out.println(getCurrentPlayer().getName() + " is not getting out of the penalty box");
@@ -41,7 +43,7 @@ public class Game {
             }
         } else {
             getCurrentPlayer().setPlace(rolledNumber);
-            System.out.println("The category is " + Category.getCategory(getCurrentPlayer().getPlace()).getCategoryName());
+            System.out.println("The category is " + gameBoard.getCategoryByGameField(getCurrentPlayer().getPlace()).getCategoryName());
             askQuestion(getCurrentPlayer().getPlace());
         }
     }
@@ -51,8 +53,8 @@ public class Game {
     }
 
     private void askQuestion(int place) {
-        Category category = Category.getCategory(place);
-        Question askedQuestion = this.questionStack.removeQuestion(category);
+        Category category = gameBoard.getCategoryByGameField(place);
+        Question askedQuestion = questionStack.removeQuestion(category);
         System.out.println(askedQuestion);
     }
 
