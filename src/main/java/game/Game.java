@@ -14,13 +14,12 @@ public class Game {
         this.gameBoard = new GameBoard();
     }
 
-    public boolean addPlayer(String playerName) {
+    public void addPlayer(String playerName) {
         Player player = new Player(playerName);
         this.players.add(player);
         this.gameBoard.setInitialGameFieldForPlayer(player);
         System.out.println(playerName + " was added");
         System.out.println("They are player number " + this.gameBoard.getNumberOfPlayers());
-        return true;
     }
 
     public void roll(int rolledNumber) {
