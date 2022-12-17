@@ -12,6 +12,6 @@ public class Question {
 
     @Override
     public String toString() {
-        return String.format("%s %s", typeOfCategory.getCategoryName(), questionSet);
+        return String.format("%s %s", typeOfCategory, questionSet);
     }
 }
