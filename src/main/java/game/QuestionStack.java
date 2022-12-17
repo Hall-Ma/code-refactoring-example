@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 public class QuestionStack {
 
+    private final int QuestionsPerCategory = 50;
     private final LinkedList<Question> popQuestions = new LinkedList<>();
     private final LinkedList<Question> scienceQuestions = new LinkedList<>();
     private final LinkedList<Question> sportsQuestions = new LinkedList<>();
@@ -14,29 +15,13 @@ public class QuestionStack {
     }
 
     private void generateQuestions() {
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < QuestionsPerCategory; i++) {
             String question = "Question " + i;
             this.popQuestions.addLast(new Question(Category.POP, question));
             this.scienceQuestions.addLast(new Question(Category.SCIENCE, question));
             this.sportsQuestions.addLast(new Question(Category.SPORTS, question));
             this.rockQuestions.addLast(new Question(Category.ROCK, question));
         }
-    }
-
-    public LinkedList<Question> getPopQuestions() {
-        return popQuestions;
-    }
-
-    public LinkedList<Question> getScienceQuestions() {
-        return scienceQuestions;
-    }
-
-    public LinkedList<Question> getSportsQuestions() {
-        return sportsQuestions;
-    }
-
-    public LinkedList<Question> getRockQuestions() {
-        return rockQuestions;
     }
 
     public Question removeQuestion(Category questionCategory) {
