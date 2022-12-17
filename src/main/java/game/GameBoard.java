@@ -1,5 +1,6 @@
 package game;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static java.util.Map.entry;
@@ -7,8 +8,11 @@ import static java.util.Map.ofEntries;
 
 public class GameBoard {
 
+    private static final int NUMBER_OF_GAME_FIELDS = 12;
+    private static final int INITIAL_FIELD_TO_START = 0;
+    private final Map<Player, Integer> gameFieldByPlayer = new HashMap();
     private final Map<Integer, Category> categoryByField = ofEntries(
-            entry(0, Category.POP),
+            entry(INITIAL_FIELD_TO_START, Category.POP),
             entry(1, Category.SCIENCE),
             entry(2, Category.SPORTS),
             entry(3, Category.ROCK),
@@ -24,5 +28,25 @@ public class GameBoard {
 
     public Category getCategoryByGameField(int gameField) {
         return this.categoryByField.get(gameField);
+    }
+
+    public void setInitialGameFieldForPlayer(Player player) {
+        this.gameFieldByPlayer.put(player, INITIAL_FIELD_TO_START);
+    }
+
+    public int getGameFieldByPlayer(Player player) {
+        return this.gameFieldByPlayer.get(player);
+    }
+
+    public void setGameFieldByPlayer(Player player, int rolledNumber) {
+        int currentField = getGameFieldByPlayer(player);
+        int newField = currentField + rolledNumber;
+        if (newField >= NUMBER_OF_GAME_FIELDS) {
+            newField -= NUMBER_OF_GAME_FIELDS;
+        }
+        this.gameFieldByPlayer.put(player, newField);
+        System.out.println(player.getName()
+                + "'s new location is "
+                + newField);
     }
 }

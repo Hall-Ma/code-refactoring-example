@@ -17,7 +17,9 @@ public class Game {
     }
 
     public boolean addPlayer(String playerName) {
-        this.players.add(new Player(playerName));
+        Player player = new Player(playerName);
+        this.players.add(player);
+        this.gameBoard.setInitialGameFieldForPlayer(player);
         System.out.println(playerName + " was added");
         System.out.println("They are player number " + players.size());
         return true;
@@ -30,17 +32,21 @@ public class Game {
             if (isOdd(rolledNumber)) {
                 isGettingOutOfPenaltyBox = true;
                 System.out.println(getCurrentPlayer().getName() + " is getting out of the penalty box");
-                getCurrentPlayer().setPlace(rolledNumber);
-                System.out.println("The category is " + gameBoard.getCategoryByGameField(getCurrentPlayer().getPlace()));
-                askQuestion(getCurrentPlayer().getPlace());
+                gameBoard.setGameFieldByPlayer(getCurrentPlayer(), rolledNumber);
+                //getCurrentPlayer().setPlace(rolledNumber);
+                int gameField = gameBoard.getGameFieldByPlayer(getCurrentPlayer());
+                System.out.println("The category is " + gameBoard.getCategoryByGameField(gameField));
+                askQuestion(gameBoard.getGameFieldByPlayer(getCurrentPlayer()));
             } else {
                 System.out.println(getCurrentPlayer().getName() + " is not getting out of the penalty box");
                 isGettingOutOfPenaltyBox = false;
             }
         } else {
-            getCurrentPlayer().setPlace(rolledNumber);
-            System.out.println("The category is " + gameBoard.getCategoryByGameField(getCurrentPlayer().getPlace()));
-            askQuestion(getCurrentPlayer().getPlace());
+            gameBoard.setGameFieldByPlayer(getCurrentPlayer(), rolledNumber);
+            //getCurrentPlayer().setPlace(rolledNumber);
+            int gameField = gameBoard.getGameFieldByPlayer(getCurrentPlayer());
+            System.out.println("The category is " + gameBoard.getCategoryByGameField(gameField));
+            askQuestion(gameBoard.getGameFieldByPlayer(getCurrentPlayer()));
         }
     }
 
