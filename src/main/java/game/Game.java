@@ -7,6 +7,7 @@ public class Game {
     List<Player> players = new ArrayList<>();
     QuestionStack questionStack;
     GameBoard gameBoard;
+    PenaltyBox penaltyBox;
     Treasurer treasurer;
     Player currentPlayer;
     public final int WRONG_ANSWER = 7;
@@ -19,6 +20,7 @@ public class Game {
         this.questionStack = new QuestionStack();
         this.gameBoard = new GameBoard();
         this.treasurer = new Treasurer();
+        this.penaltyBox = new PenaltyBox();
         for (String playerName : playerNames) {
             Player player = new Player(playerName);
             this.players.add(player);
@@ -33,7 +35,7 @@ public class Game {
     public void roll(int rolledNumber) {
         System.out.println(currentPlayer.getName() + " is the current player");
         System.out.println("They have rolled a " + rolledNumber);
-        if (currentPlayer.isInPenaltyBox()) {
+        if (this.penaltyBox.isPlayerInPenaltyBox(currentPlayer)) {
             if (isOdd(rolledNumber)) {
                 currentPlayer.setIsAllowedToAnswer(true);
                 System.out.println(currentPlayer.getName() + " is getting out of the penalty box");
@@ -74,7 +76,7 @@ public class Game {
     }
 
     public void playerAnsweredCorrectly() {
-        if (currentPlayer.isInPenaltyBox()) {
+        if (this.penaltyBox.isPlayerInPenaltyBox(currentPlayer)) {
             if (currentPlayer.isAllowedToAnswer()) {
                 System.out.println("Answer was correct!!!!");
                 this.treasurer.addCoin(currentPlayer);
@@ -86,9 +88,9 @@ public class Game {
     }
 
     public void playerAnsweredIncorrectly() {
+        this.penaltyBox.sendPlayerIntoPenaltyBox(currentPlayer);
         System.out.println("Question was incorrectly answered");
         System.out.println(this.currentPlayer.getName() + " was sent to the penalty box");
-        this.currentPlayer.setInPenaltyBox(true);
     }
 
     private void setNewCurrentPlayer() {
