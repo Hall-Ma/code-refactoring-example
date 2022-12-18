@@ -33,18 +33,18 @@ public class Game {
     }
 
     public void roll(int rolledNumber) {
-        System.out.println(currentPlayer.getName() + " is the current player");
+        System.out.println(currentPlayer + " is the current player");
         System.out.println("They have rolled a " + rolledNumber);
         if (this.penaltyBox.isPlayerInPenaltyBox(currentPlayer)) {
             if (isOdd(rolledNumber)) {
                 currentPlayer.setIsAllowedToAnswer(true);
-                System.out.println(currentPlayer.getName() + " is getting out of the penalty box");
+                System.out.println(currentPlayer + " is getting out of the penalty box");
                 gameBoard.setGameFieldForPlayer(currentPlayer, rolledNumber);
                 int gameField = gameBoard.getGameFieldForPlayer(currentPlayer);
                 System.out.println("The category is " + gameBoard.getCategoryByGameField(gameField));
                 askQuestion(gameField);
             } else {
-                System.out.println(currentPlayer.getName() + " is not getting out of the penalty box");
+                System.out.println(currentPlayer + " is not getting out of the penalty box");
                 currentPlayer.setIsAllowedToAnswer(false);
             }
         } else {
@@ -71,7 +71,7 @@ public class Game {
         } else {
             playerAnsweredCorrectly();
         }
-        setNewCurrentPlayer();
+        setNextPlayerInTurn();
         return this.treasurer.didPlayersReachedMaxCoins();
     }
 
@@ -90,12 +90,12 @@ public class Game {
     public void playerAnsweredIncorrectly() {
         this.penaltyBox.sendPlayerIntoPenaltyBox(currentPlayer);
         System.out.println("Question was incorrectly answered");
-        System.out.println(this.currentPlayer.getName() + " was sent to the penalty box");
+        System.out.println(this.currentPlayer + " was sent to the penalty box");
     }
 
-    private void setNewCurrentPlayer() {
+    private void setNextPlayerInTurn() {
         int indexOfNextPlayer = this.players.indexOf(this.currentPlayer) + 1;
-        this.currentPlayer = indexOfNextPlayer == this.players.size() ? this.players.get(0) : this.players.get(indexOfNextPlayer);
+        this.currentPlayer = (indexOfNextPlayer == this.players.size()) ? this.players.get(0) : this.players.get(indexOfNextPlayer);
     }
 }
 

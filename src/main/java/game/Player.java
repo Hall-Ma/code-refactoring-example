@@ -3,22 +3,23 @@ package game;
 public class Player {
 
     private final String name;
-    private boolean isGettingOutOfPenaltyBox;
+    private boolean isAllowedToAnswer;
 
     public Player(String name) {
         this.name = name;
-        this.isGettingOutOfPenaltyBox = false;
-    }
-
-    public String getName() {
-        return name;
+        this.isAllowedToAnswer = false;
     }
 
     public boolean isAllowedToAnswer() {
-        return isGettingOutOfPenaltyBox;
+        return isAllowedToAnswer;
     }
 
-    public void setIsAllowedToAnswer(boolean gettingOutOfPenaltyBox) {
-        isGettingOutOfPenaltyBox = gettingOutOfPenaltyBox;
+    public void setIsAllowedToAnswer(boolean isAllowedToAnswer) {
+        this.isAllowedToAnswer = isAllowedToAnswer;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

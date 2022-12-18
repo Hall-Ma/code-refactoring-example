@@ -44,7 +44,7 @@ public class GameBoard {
             newField -= NUMBER_OF_GAME_FIELDS;
         }
         this.gameFieldByPlayer.put(player, newField);
-        System.out.println(player.getName()
+        System.out.println(player
                 + "'s new location is "
                 + newField);
     }

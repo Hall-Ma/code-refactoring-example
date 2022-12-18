@@ -16,7 +16,7 @@ public class Treasurer {
     public void addCoin(Player player) {
         int increasedCoins = this.purse.get(player) + COINS_PER_ROUND;
         this.purse.put(player, increasedCoins);
-        System.out.println(player.getName() + " now has " + increasedCoins + " Gold Coins.");
+        System.out.println(player + " now has " + increasedCoins + " Gold Coins.");
     }
 
     public boolean didPlayersReachedMaxCoins() {
