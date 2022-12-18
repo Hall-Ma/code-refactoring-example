@@ -34,11 +34,11 @@ public class Player {
         this.inPenaltyBox = inPenaltyBox;
     }
 
-    public boolean isGettingOutOfPenaltyBox() {
+    public boolean isAllowedToAnswer() {
         return isGettingOutOfPenaltyBox;
     }
 
-    public void setGettingOutOfPenaltyBox(boolean gettingOutOfPenaltyBox) {
+    public void setIsAllowedToAnswer(boolean gettingOutOfPenaltyBox) {
         isGettingOutOfPenaltyBox = gettingOutOfPenaltyBox;
     }
 

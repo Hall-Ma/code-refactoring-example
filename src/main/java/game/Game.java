@@ -9,6 +9,7 @@ public class Game {
     GameBoard gameBoard;
     Player currentPlayer;
     private final int COINS_NEEDED_TO_WIN = 6;
+    public final int WRONG_ANSWER = 7;
 
     public Game(List<String> playerNames) {
         initGame(playerNames);
@@ -32,7 +33,7 @@ public class Game {
         System.out.println("They have rolled a " + rolledNumber);
         if (currentPlayer.isInPenaltyBox()) {
             if (isOdd(rolledNumber)) {
-                currentPlayer.setGettingOutOfPenaltyBox(true);
+                currentPlayer.setIsAllowedToAnswer(true);
                 System.out.println(currentPlayer.getName() + " is getting out of the penalty box");
                 gameBoard.setGameFieldForPlayer(currentPlayer, rolledNumber);
                 int gameField = gameBoard.getGameFieldForPlayer(currentPlayer);
@@ -40,7 +41,7 @@ public class Game {
                 askQuestion(gameField);
             } else {
                 System.out.println(currentPlayer.getName() + " is not getting out of the penalty box");
-                currentPlayer.setGettingOutOfPenaltyBox(false);
+                currentPlayer.setIsAllowedToAnswer(false);
             }
         } else {
             gameBoard.setGameFieldForPlayer(currentPlayer, rolledNumber);
@@ -60,8 +61,8 @@ public class Game {
         System.out.println(askedQuestion);
     }
 
-    public boolean doesGameContinue(int answered) {
-        if (answered == 7) {
+    public boolean doesGameContinue(int answeredNumber) {
+        if (answeredNumber == WRONG_ANSWER) {
             playerAnsweredIncorrectly();
         } else {
             playerAnsweredCorrectly();
@@ -71,12 +72,12 @@ public class Game {
     }
 
     public boolean noPlayerWon() {
-        return this.players.stream().allMatch(p -> p.getCoins() != COINS_NEEDED_TO_WIN);
+        return this.players.stream().allMatch(player -> player.getCoins() != COINS_NEEDED_TO_WIN);
     }
 
     public void playerAnsweredCorrectly() {
         if (currentPlayer.isInPenaltyBox()) {
-            if (currentPlayer.isGettingOutOfPenaltyBox()) {
+            if (currentPlayer.isAllowedToAnswer()) {
                 System.out.println("Answer was correct!!!!");
                 currentPlayer.addCoin();
             }
@@ -95,10 +96,6 @@ public class Game {
     private void setNewCurrentPlayer() {
         int indexOfNextPlayer = this.players.indexOf(this.currentPlayer) + 1;
         this.currentPlayer = indexOfNextPlayer == this.players.size() ? this.players.get(0) : this.players.get(indexOfNextPlayer);
-    }
-
-    private boolean didPlayerWin() {
-        return this.currentPlayer.getCoins() == COINS_NEEDED_TO_WIN;
     }
 }
 
