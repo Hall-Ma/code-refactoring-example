@@ -7,8 +7,8 @@ public class Game {
     List<Player> players = new ArrayList<>();
     QuestionStack questionStack;
     GameBoard gameBoard;
+    Treasurer treasurer;
     Player currentPlayer;
-    private final int COINS_NEEDED_TO_WIN = 6;
     public final int WRONG_ANSWER = 7;
 
     public Game(List<String> playerNames) {
@@ -18,11 +18,13 @@ public class Game {
     private void initGame(List<String> playerNames) {
         this.questionStack = new QuestionStack();
         this.gameBoard = new GameBoard();
+        this.treasurer = new Treasurer();
         for (String playerName : playerNames) {
             Player player = new Player(playerName);
             this.players.add(player);
             System.out.println(playerName + " was added");
             this.gameBoard.setInitialGameFieldForPlayer(player);
+            this.treasurer.setInitialCoinsForPlayer(player);
             System.out.println("They are player number " + this.gameBoard.getNumberOfPlayers());
         }
         this.currentPlayer = this.players.get(0);
@@ -68,22 +70,18 @@ public class Game {
             playerAnsweredCorrectly();
         }
         setNewCurrentPlayer();
-        return noPlayerWon();
-    }
-
-    public boolean noPlayerWon() {
-        return this.players.stream().allMatch(player -> player.getCoins() != COINS_NEEDED_TO_WIN);
+        return this.treasurer.didPlayersReachedMaxCoins();
     }
 
     public void playerAnsweredCorrectly() {
         if (currentPlayer.isInPenaltyBox()) {
             if (currentPlayer.isAllowedToAnswer()) {
                 System.out.println("Answer was correct!!!!");
-                currentPlayer.addCoin();
+                this.treasurer.addCoin(currentPlayer);
             }
         } else {
             System.out.println("Answer was corrent!!!!");
-            currentPlayer.addCoin();
+            this.treasurer.addCoin(currentPlayer);
         }
     }
 
