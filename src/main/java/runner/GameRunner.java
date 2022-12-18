@@ -1,5 +1,6 @@
 package runner;
 
+import game.Dice;
 import game.Game;
 
 import java.util.List;
@@ -17,12 +18,13 @@ public class GameRunner {
     private static void play(String[] args) {
         List<String> playerNames = List.of("Chet", "Pat", "Sue");
         Game aGame = new Game(playerNames);
-
         Random rand = args.length > 0 ? new Random(Long.parseLong(args[0])) : new Random();
+        Dice dice = new Dice(rand);
+
 
         int answered;
         do {
-            int rolledNumber = rand.nextInt(5) + 1;
+            int rolledNumber = dice.roll();
             aGame.roll(rolledNumber);
             answered = rand.nextInt(9);
         } while (aGame.doesGameContinue(answered));
