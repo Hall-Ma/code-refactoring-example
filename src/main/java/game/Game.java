@@ -3,12 +3,22 @@ package game;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+enum Category {
+    POP("Pop"), SCIENCE("Science"), SPORTS("Sports"), ROCK("Rock");
+    private final String categoryName;
+
+    Category(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    @Override
+    public String toString() {
+        return categoryName;
+    }
+}
+
 public class Game {
     private static final int NUMBER_OF_GAME_FIELDS = 12;
-    private static final String POP = "Pop";
-    private static final String SCIENCE = "Science";
-    private static final String SPORTS = "Sports";
-    private static final String ROCK = "Rock";
     private static final int COINS_NEEDED_TO_WIN = 6;
     ArrayList<String> players = new ArrayList();
     int[] places = new int[6];
@@ -27,10 +37,10 @@ public class Game {
 
     private void generateQuestionsByCategory() {
         for (int i = 0; i < 50; i++) {
-            popQuestions.addLast(POP + " Question " + i);
-            scienceQuestions.addLast((SCIENCE + " Question " + i));
-            sportsQuestions.addLast((SPORTS + " Question " + i));
-            rockQuestions.addLast(ROCK + " Question " + i);
+            popQuestions.addLast(Category.POP + " Question " + i);
+            scienceQuestions.addLast((Category.SCIENCE + " Question " + i));
+            sportsQuestions.addLast((Category.SPORTS + " Question " + i));
+            rockQuestions.addLast(Category.ROCK + " Question " + i);
         }
     }
 
@@ -74,19 +84,19 @@ public class Game {
 
     private void askQuestion() {
         String question;
-        if (currentCategory() == POP) {
+        if (currentCategory() == Category.POP) {
             question = getFirstQuestionFromList(popQuestions);
             System.out.println(question);
         }
-        if (currentCategory() == SCIENCE) {
+        if (currentCategory() == Category.SCIENCE) {
             question = getFirstQuestionFromList(scienceQuestions);
             System.out.println(question);
         }
-        if (currentCategory() == SPORTS) {
+        if (currentCategory() == Category.SPORTS) {
             question = getFirstQuestionFromList(sportsQuestions);
             System.out.println(question);
         }
-        if (currentCategory() == ROCK) {
+        if (currentCategory() == Category.ROCK) {
             question = getFirstQuestionFromList(rockQuestions);
             System.out.println(question);
         }
@@ -96,21 +106,21 @@ public class Game {
         return popQuestions.removeFirst();
     }
 
-    private String currentCategory() {
-        if (places[currentPlayer] == 0) return POP;
-        if (places[currentPlayer] == 4) return POP;
-        if (places[currentPlayer] == 8) return POP;
-        if (places[currentPlayer] == 1) return SCIENCE;
-        if (places[currentPlayer] == 5) return SCIENCE;
-        if (places[currentPlayer] == 9) return SCIENCE;
-        if (places[currentPlayer] == 2) return SPORTS;
-        if (places[currentPlayer] == 6) return SPORTS;
-        if (places[currentPlayer] == 10) return SPORTS;
-        return ROCK;
+    private Category currentCategory() {
+        if (places[currentPlayer] == 0) return Category.POP;
+        if (places[currentPlayer] == 4) return Category.POP;
+        if (places[currentPlayer] == 8) return Category.POP;
+        if (places[currentPlayer] == 1) return Category.SCIENCE;
+        if (places[currentPlayer] == 5) return Category.SCIENCE;
+        if (places[currentPlayer] == 9) return Category.SCIENCE;
+        if (places[currentPlayer] == 2) return Category.SPORTS;
+        if (places[currentPlayer] == 6) return Category.SPORTS;
+        if (places[currentPlayer] == 10) return Category.SPORTS;
+        return Category.ROCK;
     }
 
     public boolean wasCorrectlyAnswered() {
-        if (inPenaltyBox[currentPlayer]){
+        if (inPenaltyBox[currentPlayer]) {
             if (isGettingOutOfPenaltyBox) {
                 System.out.println("Answer was correct!!!!");
                 purses[currentPlayer]++;
@@ -154,4 +164,5 @@ public class Game {
     private boolean didPlayerWin() {
         return !(purses[currentPlayer] == COINS_NEEDED_TO_WIN);
     }
+
 }
