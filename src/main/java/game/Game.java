@@ -97,14 +97,26 @@ class Player {
     }
 }
 
+class PenaltyBox {
+    private boolean[] inPenaltyBox = new boolean[6];
+
+    public boolean isPlayerInPenaltyBox(int currentPlayer) {
+        return inPenaltyBox[currentPlayer];
+    }
+
+    public void movePlayerToPenaltyBox(int currentPlayer, boolean hasToMove) {
+        inPenaltyBox[currentPlayer] = hasToMove;
+    }
+}
+
 public class Game {
     private static final int NUMBER_OF_GAME_FIELDS = 12;
     private static final int COINS_NEEDED_TO_WIN = 6;
     final QuestionStack questionStack = new QuestionStack();
+    private final PenaltyBox penaltyBox = new PenaltyBox();
     ArrayList<Player> players = new ArrayList();
     int[] places = new int[6];
     int[] purses = new int[6];
-    boolean[] inPenaltyBox = new boolean[6];
     int currentPlayer = 0;
 
     public Game() {
@@ -115,7 +127,7 @@ public class Game {
         players.add(player);
         places[players.size()] = 0;
         purses[players.size()] = 0;
-        inPenaltyBox[players.size()] = false;
+        penaltyBox.movePlayerToPenaltyBox(players.size(), false);
         System.out.println(player + " was added");
         System.out.println("They are player number " + players.size());
     }
@@ -123,7 +135,7 @@ public class Game {
     public void roll(int rolledNumber) {
         System.out.println(players.get(currentPlayer) + " is the current player");
         System.out.println("They have rolled a " + rolledNumber);
-        if (isPlayerInPenaltyBox(currentPlayer)) {
+        if (penaltyBox.isPlayerInPenaltyBox(currentPlayer)) {
             if (isOdd(rolledNumber)) {
                 players.get(currentPlayer).setAllowedToAnswer(true);
                 System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
@@ -145,10 +157,6 @@ public class Game {
             System.out.println("The category is " + currentCategory(places[currentPlayer]));
             questionStack.askQuestion(currentCategory(places[currentPlayer]));
         }
-    }
-
-    private boolean isPlayerInPenaltyBox(int currentPlayer) {
-        return inPenaltyBox[currentPlayer];
     }
 
     private boolean isOdd(int rolledNumber) {
@@ -177,7 +185,7 @@ public class Game {
     }
 
     public boolean wasCorrectlyAnswered() {
-        if (isPlayerInPenaltyBox(currentPlayer)) {
+        if (penaltyBox.isPlayerInPenaltyBox(currentPlayer)) {
             if (players.get(currentPlayer).isAllowedToAnswer()) {
                 System.out.println("Answer was correct!!!!");
                 purses[currentPlayer]++;
@@ -208,13 +216,9 @@ public class Game {
     public boolean wrongAnswer() {
         System.out.println("Question was incorrectly answered");
         System.out.println(players.get(currentPlayer) + " was sent to the penalty box");
-        movePlayerToPenaltyBox(currentPlayer, true);
+        penaltyBox.movePlayerToPenaltyBox(currentPlayer, true);
         selectNextPlayerInTurn();
         return true;
-    }
-
-    private void movePlayerToPenaltyBox(int currentPlayer, boolean hasToMove) {
-        inPenaltyBox[currentPlayer] = hasToMove;
     }
 
     private void selectNextPlayerInTurn() {
