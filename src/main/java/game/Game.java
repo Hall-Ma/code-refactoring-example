@@ -105,14 +105,26 @@ class Player {
     }
 }
 
+class PenaltyBox {
+    private final List<String> playersInPenaltyBox = new ArrayList<>();
+
+    public boolean isPlayerInPenaltyBox(String playerID) {
+        return playersInPenaltyBox.contains(playerID);
+    }
+
+    public void movePlayerToPenaltyBox(String playerID) {
+        playersInPenaltyBox.add(playerID);
+    }
+}
+
 public class Game {
     private static final int NUMBER_OF_GAME_FIELDS = 12;
     private static final int COINS_NEEDED_TO_WIN = 6;
     final QuestionStack questionStack = new QuestionStack();
+    private final PenaltyBox penaltyBox = new PenaltyBox();
     ArrayList<Player> players = new ArrayList();
     int[] places = new int[6];
     int[] purses = new int[6];
-    private final List<String> playersInPenaltyBox = new ArrayList<>();
     int currentPlayer = 0;
 
     public Game(List<String> playerNames) {
@@ -133,7 +145,7 @@ public class Game {
     public void roll(int rolledNumber) {
         System.out.println(players.get(currentPlayer) + " is the current player");
         System.out.println("They have rolled a " + rolledNumber);
-        if (isPlayerInPenaltyBox(players.get(currentPlayer).getPlayerID())) {
+        if (penaltyBox.isPlayerInPenaltyBox(players.get(currentPlayer).getPlayerID())) {
             if (isOdd(rolledNumber)) {
                 players.get(currentPlayer).setAllowedToAnswer(true);
                 System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
@@ -155,10 +167,6 @@ public class Game {
             System.out.println("The category is " + currentCategory(places[currentPlayer]));
             questionStack.askQuestion(currentCategory(places[currentPlayer]));
         }
-    }
-
-    private boolean isPlayerInPenaltyBox(String playerID) {
-        return playersInPenaltyBox.contains(playerID);
     }
 
     private boolean isOdd(int rolledNumber) {
@@ -187,7 +195,7 @@ public class Game {
     }
 
     public boolean wasCorrectlyAnswered() {
-        if (isPlayerInPenaltyBox(players.get(currentPlayer).getPlayerID())) {
+        if (penaltyBox.isPlayerInPenaltyBox(players.get(currentPlayer).getPlayerID())) {
             if (players.get(currentPlayer).isAllowedToAnswer()) {
                 System.out.println("Answer was correct!!!!");
                 purses[currentPlayer]++;
@@ -218,13 +226,9 @@ public class Game {
     public boolean wrongAnswer() {
         System.out.println("Question was incorrectly answered");
         System.out.println(players.get(currentPlayer) + " was sent to the penalty box");
-        movePlayerToPenaltyBox(players.get(currentPlayer).getPlayerID());
+        penaltyBox.movePlayerToPenaltyBox(players.get(currentPlayer).getPlayerID());
         selectNextPlayerInTurn();
         return true;
-    }
-
-    private void movePlayerToPenaltyBox(String playerID) {
-        playersInPenaltyBox.add(playerID);
     }
 
     private void selectNextPlayerInTurn() {
