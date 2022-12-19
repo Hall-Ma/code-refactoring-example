@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class Game {
-    private final int NUMBER_OF_GAME_FIELDS = 12;
-    private final String POP = "Pop";
-    private final String SCIENCE = "Science";
-    private final String SPORTS = "Sports";
-    private final String ROCK = "Rock";
-    private final int COINS_NEEDED_TO_WIN = 6;
+    private static final int NUMBER_OF_GAME_FIELDS = 12;
+    private static final String POP = "Pop";
+    private static final String SCIENCE = "Science";
+    private static final String SPORTS = "Sports";
+    private static final String ROCK = "Rock";
+    private static final int COINS_NEEDED_TO_WIN = 6;
     ArrayList players = new ArrayList();
     int[] places = new int[6];
     int[] purses = new int[6];
