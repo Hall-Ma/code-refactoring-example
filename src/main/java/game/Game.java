@@ -107,8 +107,7 @@ public class Game {
     boolean[] inPenaltyBox = new boolean[6];
     int currentPlayer = 0;
 
-    public Game(List<String> playerNames) {
-        add(playerNames);
+    public Game() {
     }
 
     public void add(String playerName) {
@@ -209,13 +208,13 @@ public class Game {
     public boolean wrongAnswer() {
         System.out.println("Question was incorrectly answered");
         System.out.println(players.get(currentPlayer) + " was sent to the penalty box");
-        movePlayerToPenaltyBox();
+        movePlayerToPenaltyBox(currentPlayer, true);
         selectNextPlayerInTurn();
         return true;
     }
 
-    private void movePlayerToPenaltyBox() {
-        inPenaltyBox[currentPlayer] = true;
+    private void movePlayerToPenaltyBox(int currentPlayer, boolean hasToMove) {
+        inPenaltyBox[currentPlayer] = hasToMove;
     }
 
     private void selectNextPlayerInTurn() {
