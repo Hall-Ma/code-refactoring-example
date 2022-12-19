@@ -18,22 +18,25 @@ enum Category {
 }
 
 class Question {
+    private final Category category;
     private final String question;
 
-    public Question(String question) {
+    public Question(Category category, String question) {
+        this.category = category;
         this.question = question;
     }
 
-    public String getQuestion() {
-        return question;
+    @Override
+    public String toString() {
+        return String.format("%s %s", category, question);
     }
 }
 
 class QuestionStack {
-    LinkedList<String> popQuestions = new LinkedList();
-    LinkedList<String> scienceQuestions = new LinkedList();
-    LinkedList<String> sportsQuestions = new LinkedList();
-    LinkedList<String> rockQuestions = new LinkedList();
+    LinkedList<Question> popQuestions = new LinkedList();
+    LinkedList<Question> scienceQuestions = new LinkedList();
+    LinkedList<Question> sportsQuestions = new LinkedList();
+    LinkedList<Question> rockQuestions = new LinkedList();
 
     QuestionStack() {
         generateQuestionsByCategory();
@@ -41,15 +44,15 @@ class QuestionStack {
 
     private void generateQuestionsByCategory() {
         for (int i = 0; i < 50; i++) {
-            popQuestions.addLast(Category.POP + new Question(" Question ").getQuestion() + i);
-            scienceQuestions.addLast((Category.SCIENCE + new Question(" Question ").getQuestion() + i));
-            sportsQuestions.addLast((Category.SPORTS + new Question(" Question ").getQuestion() + i));
-            rockQuestions.addLast(Category.ROCK + new Question(" Question ").getQuestion() + i);
+            popQuestions.addLast(new Question(Category.POP, "Question " + i));
+            scienceQuestions.addLast(new Question(Category.SCIENCE, "Question " + i));
+            sportsQuestions.addLast(new Question(Category.SPORTS, "Question " + i));
+            rockQuestions.addLast(new Question(Category.ROCK, "Question " + i));
         }
     }
 
     void askQuestion(Category category) {
-        String question;
+        Question question;
         if (category == Category.POP) {
             question = getFirstQuestionFromList(popQuestions);
             System.out.println(question);
@@ -68,7 +71,7 @@ class QuestionStack {
         }
     }
 
-    String getFirstQuestionFromList(LinkedList<String> popQuestions) {
+    Question getFirstQuestionFromList(LinkedList<Question> popQuestions) {
         return popQuestions.removeFirst();
     }
 }
