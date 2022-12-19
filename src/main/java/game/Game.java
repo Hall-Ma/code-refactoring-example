@@ -56,26 +56,23 @@ class QuestionStack {
     void askQuestion(Category category) {
         Question question;
         if (category == Category.POP) {
-            question = getFirstQuestionFromList(popQuestions);
+            question = popQuestions.removeFirst();
             System.out.println(question);
         }
         if (category == Category.SCIENCE) {
-            question = getFirstQuestionFromList(scienceQuestions);
+            question = scienceQuestions.removeFirst();
             System.out.println(question);
         }
         if (category == Category.SPORTS) {
-            question = getFirstQuestionFromList(sportsQuestions);
+            question = sportsQuestions.removeFirst();
             System.out.println(question);
         }
         if (category == Category.ROCK) {
-            question = getFirstQuestionFromList(rockQuestions);
+            question = rockQuestions.removeFirst();
             System.out.println(question);
         }
     }
 
-    Question getFirstQuestionFromList(LinkedList<Question> popQuestions) {
-        return popQuestions.removeFirst();
-    }
 }
 
 public class Game {
