@@ -72,14 +72,26 @@ class QuestionStack {
             System.out.println(question);
         }
     }
+}
 
+class Player {
+    private final String playerName;
+
+    public Player(String playerName) {
+        this.playerName = playerName;
+    }
+
+    @Override
+    public String toString() {
+        return playerName;
+    }
 }
 
 public class Game {
     private static final int NUMBER_OF_GAME_FIELDS = 12;
     private static final int COINS_NEEDED_TO_WIN = 6;
     final QuestionStack questionStack = new QuestionStack();
-    ArrayList<String> players = new ArrayList();
+    ArrayList<Player> players = new ArrayList();
     int[] places = new int[6];
     int[] purses = new int[6];
     boolean[] inPenaltyBox = new boolean[6];
@@ -90,11 +102,12 @@ public class Game {
     }
 
     public void add(String playerName) {
-        players.add(playerName);
+        Player player = new Player(playerName);
+        players.add(player);
         places[players.size()] = 0;
         purses[players.size()] = 0;
         inPenaltyBox[players.size()] = false;
-        System.out.println(playerName + " was added");
+        System.out.println(player + " was added");
         System.out.println("They are player number " + players.size());
     }
 
