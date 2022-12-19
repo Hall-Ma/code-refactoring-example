@@ -73,14 +73,23 @@ public class Game {
     }
 
     private void askQuestion() {
-        if (currentCategory() == POP)
-            System.out.println(getFirstQuestionFromList(popQuestions));
-        if (currentCategory() == SCIENCE)
-            System.out.println(getFirstQuestionFromList(scienceQuestions));
-        if (currentCategory() == SPORTS)
-            System.out.println(getFirstQuestionFromList(sportsQuestions));
-        if (currentCategory() == ROCK)
-            System.out.println(getFirstQuestionFromList(rockQuestions));
+        String question;
+        if (currentCategory() == POP) {
+            question = getFirstQuestionFromList(popQuestions);
+            System.out.println(question);
+        }
+        if (currentCategory() == SCIENCE) {
+            question = getFirstQuestionFromList(scienceQuestions);
+            System.out.println(question);
+        }
+        if (currentCategory() == SPORTS) {
+            question = getFirstQuestionFromList(sportsQuestions);
+            System.out.println(question);
+        }
+        if (currentCategory() == ROCK) {
+            question = getFirstQuestionFromList(rockQuestions);
+            System.out.println(question);
+        }
     }
 
     private String getFirstQuestionFromList(LinkedList<String> popQuestions) {
