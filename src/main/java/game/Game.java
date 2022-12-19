@@ -97,7 +97,7 @@ public class Game {
     int[] purses = new int[6];
     boolean[] inPenaltyBox = new boolean[6];
     int currentPlayer = 0;
-    boolean isGettingOutOfPenaltyBox;
+    boolean isAllowedToAnswer;
 
     public Game(List<String> playerNames) {
         add(playerNames);
@@ -118,7 +118,7 @@ public class Game {
         System.out.println("They have rolled a " + rolledNumber);
         if (inPenaltyBox[currentPlayer]) {
             if (isOdd(rolledNumber)) {
-                isGettingOutOfPenaltyBox = true;
+                isAllowedToAnswer = true;
                 System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
                 movePlayer(rolledNumber);
                 System.out.println(players.get(currentPlayer)
@@ -128,7 +128,7 @@ public class Game {
                 questionStack.askQuestion(currentCategory(places[currentPlayer]));
             } else {
                 System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
-                isGettingOutOfPenaltyBox = false;
+                isAllowedToAnswer = false;
             }
         } else {
             movePlayer(rolledNumber);
@@ -167,7 +167,7 @@ public class Game {
 
     public boolean wasCorrectlyAnswered() {
         if (inPenaltyBox[currentPlayer]) {
-            if (isGettingOutOfPenaltyBox) {
+            if (isAllowedToAnswer) {
                 System.out.println("Answer was correct!!!!");
                 purses[currentPlayer]++;
                 System.out.println(players.get(currentPlayer)
