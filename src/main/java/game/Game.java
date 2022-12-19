@@ -65,8 +65,8 @@ public class Game {
                 System.out.println(players.get(currentPlayer)
                         + "'s new location is "
                         + places[currentPlayer]);
-                System.out.println("The category is " + currentCategory());
-                askQuestion(currentCategory());
+                System.out.println("The category is " + currentCategory(places[currentPlayer]));
+                askQuestion(currentCategory(places[currentPlayer]));
             } else {
                 System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
                 isGettingOutOfPenaltyBox = false;
@@ -77,8 +77,8 @@ public class Game {
             System.out.println(players.get(currentPlayer)
                     + "'s new location is "
                     + places[currentPlayer]);
-            System.out.println("The category is " + currentCategory());
-            askQuestion(currentCategory());
+            System.out.println("The category is " + currentCategory(places[currentPlayer]));
+            askQuestion(currentCategory(places[currentPlayer]));
         }
     }
 
@@ -106,16 +106,16 @@ public class Game {
         return popQuestions.removeFirst();
     }
 
-    private Category currentCategory() {
-        if (places[currentPlayer] == 0) return Category.POP;
-        if (places[currentPlayer] == 4) return Category.POP;
-        if (places[currentPlayer] == 8) return Category.POP;
-        if (places[currentPlayer] == 1) return Category.SCIENCE;
-        if (places[currentPlayer] == 5) return Category.SCIENCE;
-        if (places[currentPlayer] == 9) return Category.SCIENCE;
-        if (places[currentPlayer] == 2) return Category.SPORTS;
-        if (places[currentPlayer] == 6) return Category.SPORTS;
-        if (places[currentPlayer] == 10) return Category.SPORTS;
+    private Category currentCategory(int gameField) {
+        if (gameField == 0) return Category.POP;
+        if (gameField == 4) return Category.POP;
+        if (gameField == 8) return Category.POP;
+        if (gameField == 1) return Category.SCIENCE;
+        if (gameField == 5) return Category.SCIENCE;
+        if (gameField == 9) return Category.SCIENCE;
+        if (gameField == 2) return Category.SPORTS;
+        if (gameField == 6) return Category.SPORTS;
+        if (gameField == 10) return Category.SPORTS;
         return Category.ROCK;
     }
 
