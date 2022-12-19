@@ -133,7 +133,7 @@ public class Game {
     public void roll(int rolledNumber) {
         System.out.println(players.get(currentPlayer) + " is the current player");
         System.out.println("They have rolled a " + rolledNumber);
-        if (isPlayerInPenaltyBox()) {
+        if (isPlayerInPenaltyBox(players.get(currentPlayer).getPlayerID())) {
             if (isOdd(rolledNumber)) {
                 players.get(currentPlayer).setAllowedToAnswer(true);
                 System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
@@ -157,8 +157,8 @@ public class Game {
         }
     }
 
-    private boolean isPlayerInPenaltyBox() {
-        return playersInPenaltyBox.contains(players.get(currentPlayer).getPlayerID());
+    private boolean isPlayerInPenaltyBox(String playerID) {
+        return playersInPenaltyBox.contains(playerID);
     }
 
     private boolean isOdd(int rolledNumber) {
@@ -187,7 +187,7 @@ public class Game {
     }
 
     public boolean wasCorrectlyAnswered() {
-        if (isPlayerInPenaltyBox()) {
+        if (isPlayerInPenaltyBox(players.get(currentPlayer).getPlayerID())) {
             if (players.get(currentPlayer).isAllowedToAnswer()) {
                 System.out.println("Answer was correct!!!!");
                 purses[currentPlayer]++;
