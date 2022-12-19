@@ -16,6 +16,10 @@ public class Game {
     boolean isGettingOutOfPenaltyBox;
 
     public  Game(){
+        generateQuestionsByCategory();
+    }
+
+    private void generateQuestionsByCategory() {
         for (int i = 0; i < 50; i++) {
             popQuestions.addLast("Pop Question " + i);
             scienceQuestions.addLast(("Science Question " + i));
@@ -96,12 +100,10 @@ public class Game {
                         + purses[currentPlayer]
                         + " Gold Coins.");
                 boolean winner = didPlayerWin();
-                currentPlayer++;
-                if (currentPlayer == players.size()) currentPlayer = 0;
+                selectNextPlayerInTurn();
                 return winner;
             } else {
-                currentPlayer++;
-                if (currentPlayer == players.size()) currentPlayer = 0;
+                selectNextPlayerInTurn();
                 return true;
             }
         } else {
@@ -112,19 +114,22 @@ public class Game {
                     + purses[currentPlayer]
                     + " Gold Coins.");
             boolean winner = didPlayerWin();
-            currentPlayer++;
-            if (currentPlayer == players.size()) currentPlayer = 0;
+            selectNextPlayerInTurn();
             return winner;
         }
     }
 
-    public boolean wrongAnswer(){
+    public boolean wrongAnswer() {
         System.out.println("Question was incorrectly answered");
-        System.out.println(players.get(currentPlayer)+ " was sent to the penalty box");
+        System.out.println(players.get(currentPlayer) + " was sent to the penalty box");
         inPenaltyBox[currentPlayer] = true;
+        selectNextPlayerInTurn();
+        return true;
+    }
+
+    private void selectNextPlayerInTurn() {
         currentPlayer++;
         if (currentPlayer == players.size()) currentPlayer = 0;
-        return true;
     }
 
     private boolean didPlayerWin() {
