@@ -66,7 +66,7 @@ public class Game {
                         + "'s new location is "
                         + places[currentPlayer]);
                 System.out.println("The category is " + currentCategory());
-                askQuestion();
+                askQuestion(currentCategory());
             } else {
                 System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
                 isGettingOutOfPenaltyBox = false;
@@ -78,25 +78,25 @@ public class Game {
                     + "'s new location is "
                     + places[currentPlayer]);
             System.out.println("The category is " + currentCategory());
-            askQuestion();
+            askQuestion(currentCategory());
         }
     }
 
-    private void askQuestion() {
+    private void askQuestion(Category category) {
         String question;
-        if (currentCategory() == Category.POP) {
+        if (category == Category.POP) {
             question = getFirstQuestionFromList(popQuestions);
             System.out.println(question);
         }
-        if (currentCategory() == Category.SCIENCE) {
+        if (category == Category.SCIENCE) {
             question = getFirstQuestionFromList(scienceQuestions);
             System.out.println(question);
         }
-        if (currentCategory() == Category.SPORTS) {
+        if (category == Category.SPORTS) {
             question = getFirstQuestionFromList(sportsQuestions);
             System.out.println(question);
         }
-        if (currentCategory() == Category.ROCK) {
+        if (category == Category.ROCK) {
             question = getFirstQuestionFromList(rockQuestions);
             System.out.println(question);
         }
