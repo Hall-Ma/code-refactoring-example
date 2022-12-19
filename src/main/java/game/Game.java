@@ -20,15 +20,17 @@ enum Category {
 class Question {
     private final Category category;
     private final String question;
+    private final int number;
 
-    public Question(Category category, String question) {
+    public Question(Category category, String question, int number) {
         this.category = category;
         this.question = question;
+        this.number = number;
     }
 
     @Override
     public String toString() {
-        return String.format("%s %s", category, question);
+        return String.format("%s %s %d", category, question, number);
     }
 }
 
@@ -44,10 +46,10 @@ class QuestionStack {
 
     private void generateQuestionsByCategory() {
         for (int i = 0; i < 50; i++) {
-            popQuestions.addLast(new Question(Category.POP, "Question " + i));
-            scienceQuestions.addLast(new Question(Category.SCIENCE, "Question " + i));
-            sportsQuestions.addLast(new Question(Category.SPORTS, "Question " + i));
-            rockQuestions.addLast(new Question(Category.ROCK, "Question " + i));
+            popQuestions.addLast(new Question(Category.POP, "Question", i));
+            scienceQuestions.addLast(new Question(Category.SCIENCE, "Question", i));
+            sportsQuestions.addLast(new Question(Category.SPORTS, "Question", i));
+            rockQuestions.addLast(new Question(Category.ROCK, "Question", i));
         }
     }
 
