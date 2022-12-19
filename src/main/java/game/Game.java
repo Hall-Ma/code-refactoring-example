@@ -127,7 +127,7 @@ public class Game {
     public void roll(int rolledNumber) {
         System.out.println(players.get(currentPlayer) + " is the current player");
         System.out.println("They have rolled a " + rolledNumber);
-        if (inPenaltyBox[currentPlayer]) {
+        if (isPlayerInPenaltyBox()) {
             if (isOdd(rolledNumber)) {
                 players.get(currentPlayer).setAllowedToAnswer(true);
                 System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
@@ -149,6 +149,10 @@ public class Game {
             System.out.println("The category is " + currentCategory(places[currentPlayer]));
             questionStack.askQuestion(currentCategory(places[currentPlayer]));
         }
+    }
+
+    private boolean isPlayerInPenaltyBox() {
+        return inPenaltyBox[currentPlayer];
     }
 
     private boolean isOdd(int rolledNumber) {
@@ -177,7 +181,7 @@ public class Game {
     }
 
     public boolean wasCorrectlyAnswered() {
-        if (inPenaltyBox[currentPlayer]) {
+        if (isPlayerInPenaltyBox()) {
             if (players.get(currentPlayer).isAllowedToAnswer()) {
                 System.out.println("Answer was correct!!!!");
                 purses[currentPlayer]++;
