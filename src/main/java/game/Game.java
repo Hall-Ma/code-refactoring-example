@@ -36,10 +36,11 @@ class QuestionStack {
     LinkedList<String> rockQuestions = new LinkedList();
 
     QuestionStack() {
-        generateQuestionsByCategory(new Question(" Question "));
+        generateQuestionsByCategory();
     }
 
-    private void generateQuestionsByCategory(Question question) {
+    private void generateQuestionsByCategory() {
+        Question question = new Question(" Question ");
         for (int i = 0; i < 50; i++) {
             popQuestions.addLast(Category.POP + question.getQuestion() + i);
             scienceQuestions.addLast((Category.SCIENCE + question.getQuestion() + i));
