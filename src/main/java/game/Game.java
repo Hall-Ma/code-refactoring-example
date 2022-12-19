@@ -37,6 +37,7 @@ class Question {
 }
 
 class QuestionStack {
+    public static final int MAX_NUMBER_OF_QUESTIONS_PER_CATEGORY = 50;
     LinkedList<Question> popQuestions = new LinkedList();
     LinkedList<Question> scienceQuestions = new LinkedList();
     LinkedList<Question> sportsQuestions = new LinkedList();
@@ -47,7 +48,7 @@ class QuestionStack {
     }
 
     private void generateQuestionsByCategory() {
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < MAX_NUMBER_OF_QUESTIONS_PER_CATEGORY; i++) {
             popQuestions.addLast(new Question(Category.POP, "Question", i));
             scienceQuestions.addLast(new Question(Category.SCIENCE, "Question", i));
             sportsQuestions.addLast(new Question(Category.SPORTS, "Question", i));
