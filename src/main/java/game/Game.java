@@ -24,15 +24,15 @@ class QuestionStack {
     LinkedList<String> rockQuestions = new LinkedList();
 
     QuestionStack() {
-        generateQuestionsByCategory();
+        generateQuestionsByCategory(" Question ");
     }
 
-    private void generateQuestionsByCategory() {
+    private void generateQuestionsByCategory(String question) {
         for (int i = 0; i < 50; i++) {
-            popQuestions.addLast(Category.POP + " Question " + i);
-            scienceQuestions.addLast((Category.SCIENCE + " Question " + i));
-            sportsQuestions.addLast((Category.SPORTS + " Question " + i));
-            rockQuestions.addLast(Category.ROCK + " Question " + i);
+            popQuestions.addLast(Category.POP + question + i);
+            scienceQuestions.addLast((Category.SCIENCE + question + i));
+            sportsQuestions.addLast((Category.SPORTS + question + i));
+            rockQuestions.addLast(Category.ROCK + question + i);
         }
     }
 
