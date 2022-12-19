@@ -127,7 +127,7 @@ public class Game {
     public void roll(int rolledNumber) {
         System.out.println(players.get(currentPlayer) + " is the current player");
         System.out.println("They have rolled a " + rolledNumber);
-        if (isPlayerInPenaltyBox()) {
+        if (isPlayerInPenaltyBox(currentPlayer)) {
             if (isOdd(rolledNumber)) {
                 players.get(currentPlayer).setAllowedToAnswer(true);
                 System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
@@ -151,7 +151,7 @@ public class Game {
         }
     }
 
-    private boolean isPlayerInPenaltyBox() {
+    private boolean isPlayerInPenaltyBox(int currentPlayer) {
         return inPenaltyBox[currentPlayer];
     }
 
@@ -181,7 +181,7 @@ public class Game {
     }
 
     public boolean wasCorrectlyAnswered() {
-        if (isPlayerInPenaltyBox()) {
+        if (isPlayerInPenaltyBox(currentPlayer)) {
             if (players.get(currentPlayer).isAllowedToAnswer()) {
                 System.out.println("Answer was correct!!!!");
                 purses[currentPlayer]++;
