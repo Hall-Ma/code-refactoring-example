@@ -2,6 +2,7 @@ package game;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 enum Category {
     POP("Pop"), SCIENCE("Science"), SPORTS("Sports"), ROCK("Rock");
@@ -101,14 +102,16 @@ public class Game {
     public Game() {
     }
 
-    public void add(String playerName) {
-        Player player = new Player(playerName);
-        players.add(player);
-        places[players.size()] = 0;
-        purses[players.size()] = 0;
-        inPenaltyBox[players.size()] = false;
-        System.out.println(player + " was added");
-        System.out.println("They are player number " + players.size());
+    public void add(List<String> playerNames) {
+        for (String playerName : playerNames) {
+            Player player = new Player(playerName);
+            players.add(player);
+            places[players.size()] = 0;
+            purses[players.size()] = 0;
+            inPenaltyBox[players.size()] = false;
+            System.out.println(player + " was added");
+            System.out.println("They are player number " + players.size());
+        }
     }
 
     public void roll(int roll) {
