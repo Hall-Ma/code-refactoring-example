@@ -119,14 +119,14 @@ public class Game {
         }
     }
 
-    public void roll(int roll) {
+    public void roll(int rolledNumber) {
         System.out.println(players.get(currentPlayer) + " is the current player");
-        System.out.println("They have rolled a " + roll);
+        System.out.println("They have rolled a " + rolledNumber);
         if (inPenaltyBox[currentPlayer]) {
-            if (roll % 2 != 0) {
+            if (rolledNumber % 2 != 0) {
                 isGettingOutOfPenaltyBox = true;
                 System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
-                movePlayer(roll);
+                movePlayer(rolledNumber);
                 System.out.println(players.get(currentPlayer)
                         + "'s new location is "
                         + places[currentPlayer]);
@@ -137,7 +137,7 @@ public class Game {
                 isGettingOutOfPenaltyBox = false;
             }
         } else {
-            movePlayer(roll);
+            movePlayer(rolledNumber);
             System.out.println(players.get(currentPlayer)
                     + "'s new location is "
                     + places[currentPlayer]);
@@ -146,8 +146,8 @@ public class Game {
         }
     }
 
-    private void movePlayer(int roll) {
-        int gameFieldToMove = places[currentPlayer] + roll;
+    private void movePlayer(int rolledNumber) {
+        int gameFieldToMove = places[currentPlayer] + rolledNumber;
         if (gameFieldToMove > 11) {
             gameFieldToMove -= NUMBER_OF_GAME_FIELDS;
         }
