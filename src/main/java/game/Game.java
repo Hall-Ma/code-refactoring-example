@@ -23,6 +23,9 @@ class QuestionStack {
     LinkedList<String> sportsQuestions = new LinkedList();
     LinkedList<String> rockQuestions = new LinkedList();
 
+    QuestionStack() {
+    }
+
     void generateQuestionsByCategory() {
         for (int i = 0; i < 50; i++) {
             popQuestions.addLast(Category.POP + " Question " + i);
@@ -72,10 +75,6 @@ public class Game {
         questionStack.generateQuestionsByCategory();
     }
 
-    private void generateQuestionsByCategory() {
-        questionStack.generateQuestionsByCategory();
-    }
-
     public void add(String playerName) {
         players.add(playerName);
         places[players.size()] = 0;
@@ -112,14 +111,6 @@ public class Game {
             System.out.println("The category is " + currentCategory(places[currentPlayer]));
             questionStack.askQuestion(currentCategory(places[currentPlayer]));
         }
-    }
-
-    private void askQuestion(Category category) {
-        questionStack.askQuestion(category);
-    }
-
-    private String getFirstQuestionFromList(LinkedList<String> popQuestions) {
-        return questionStack.getFirstQuestionFromList(popQuestions);
     }
 
     private Category currentCategory(int gameField) {
