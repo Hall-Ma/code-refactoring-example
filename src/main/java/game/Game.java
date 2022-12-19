@@ -98,7 +98,8 @@ public class Game {
     int currentPlayer = 0;
     boolean isGettingOutOfPenaltyBox;
 
-    public Game() {
+    public Game(List<String> playerNames) {
+        add(playerNames);
     }
 
     public void add(String playerName) {
