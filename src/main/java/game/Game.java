@@ -112,7 +112,7 @@ public class Game {
     ArrayList<Player> players = new ArrayList();
     int[] places = new int[6];
     int[] purses = new int[6];
-    boolean[] inPenaltyBox = new boolean[6];
+    private final List<String> playersInPenaltyBox = new ArrayList<>();
     int currentPlayer = 0;
 
     public Game(List<String> playerNames) {
@@ -125,7 +125,6 @@ public class Game {
             players.add(player);
             places[players.size()] = 0;
             purses[players.size()] = 0;
-            inPenaltyBox[players.size()] = false;
             System.out.println(player + " was added");
             System.out.println("They are player number " + players.size());
         }
@@ -134,7 +133,7 @@ public class Game {
     public void roll(int rolledNumber) {
         System.out.println(players.get(currentPlayer) + " is the current player");
         System.out.println("They have rolled a " + rolledNumber);
-        if (inPenaltyBox[currentPlayer]) {
+        if (playersInPenaltyBox.contains(players.get(currentPlayer).getPlayerID())) {
             if (isOdd(rolledNumber)) {
                 players.get(currentPlayer).setAllowedToAnswer(true);
                 System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
@@ -184,7 +183,7 @@ public class Game {
     }
 
     public boolean wasCorrectlyAnswered() {
-        if (inPenaltyBox[currentPlayer]) {
+        if (playersInPenaltyBox.contains(players.get(currentPlayer).getPlayerID())) {
             if (players.get(currentPlayer).isAllowedToAnswer()) {
                 System.out.println("Answer was correct!!!!");
                 purses[currentPlayer]++;
@@ -215,7 +214,7 @@ public class Game {
     public boolean wrongAnswer() {
         System.out.println("Question was incorrectly answered");
         System.out.println(players.get(currentPlayer) + " was sent to the penalty box");
-        inPenaltyBox[currentPlayer] = true;
+        playersInPenaltyBox.add(players.get(currentPlayer).getPlayerID());
         selectNextPlayerInTurn();
         return true;
     }
