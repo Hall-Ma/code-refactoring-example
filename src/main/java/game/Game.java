@@ -80,6 +80,7 @@ class QuestionStack {
 class Player {
     private final String playerName;
     private final String playerID;
+    private boolean isAllowedToAnswer;
 
     public Player(String playerName) {
         this.playerName = playerName;
@@ -89,6 +90,14 @@ class Player {
     @Override
     public String toString() {
         return playerName;
+    }
+
+    public boolean isAllowedToAnswer() {
+        return isAllowedToAnswer;
+    }
+
+    public void setAllowedToAnswer(boolean allowedToAnswer) {
+        isAllowedToAnswer = allowedToAnswer;
     }
 }
 
@@ -101,7 +110,6 @@ public class Game {
     int[] purses = new int[6];
     boolean[] inPenaltyBox = new boolean[6];
     int currentPlayer = 0;
-    boolean isAllowedToAnswer;
 
     public Game(List<String> playerNames) {
         add(playerNames);
@@ -124,7 +132,7 @@ public class Game {
         System.out.println("They have rolled a " + rolledNumber);
         if (inPenaltyBox[currentPlayer]) {
             if (isOdd(rolledNumber)) {
-                isAllowedToAnswer = true;
+                players.get(currentPlayer).setAllowedToAnswer(true);
                 System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
                 movePlayer(rolledNumber);
                 System.out.println(players.get(currentPlayer)
@@ -134,7 +142,7 @@ public class Game {
                 questionStack.askQuestion(currentCategory(places[currentPlayer]));
             } else {
                 System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
-                isAllowedToAnswer = false;
+                players.get(currentPlayer).setAllowedToAnswer(false);
             }
         } else {
             movePlayer(rolledNumber);
@@ -173,7 +181,7 @@ public class Game {
 
     public boolean wasCorrectlyAnswered() {
         if (inPenaltyBox[currentPlayer]) {
-            if (isAllowedToAnswer) {
+            if (players.get(currentPlayer).isAllowedToAnswer()) {
                 System.out.println("Answer was correct!!!!");
                 purses[currentPlayer]++;
                 System.out.println(players.get(currentPlayer)
