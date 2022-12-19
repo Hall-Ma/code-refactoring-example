@@ -17,6 +17,18 @@ enum Category {
     }
 }
 
+class Question {
+    private final String question;
+
+    public Question(String question) {
+        this.question = question;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+}
+
 class QuestionStack {
     LinkedList<String> popQuestions = new LinkedList();
     LinkedList<String> scienceQuestions = new LinkedList();
@@ -24,15 +36,15 @@ class QuestionStack {
     LinkedList<String> rockQuestions = new LinkedList();
 
     QuestionStack() {
-        generateQuestionsByCategory(" Question ");
+        generateQuestionsByCategory(new Question(" Question "));
     }
 
-    private void generateQuestionsByCategory(String question) {
+    private void generateQuestionsByCategory(Question question) {
         for (int i = 0; i < 50; i++) {
-            popQuestions.addLast(Category.POP + question + i);
-            scienceQuestions.addLast((Category.SCIENCE + question + i));
-            sportsQuestions.addLast((Category.SPORTS + question + i));
-            rockQuestions.addLast(Category.ROCK + question + i);
+            popQuestions.addLast(Category.POP + question.getQuestion() + i);
+            scienceQuestions.addLast((Category.SCIENCE + question.getQuestion() + i));
+            sportsQuestions.addLast((Category.SPORTS + question.getQuestion() + i));
+            rockQuestions.addLast(Category.ROCK + question.getQuestion() + i);
         }
     }
 
