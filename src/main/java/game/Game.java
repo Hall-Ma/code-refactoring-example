@@ -24,9 +24,10 @@ class QuestionStack {
     LinkedList<String> rockQuestions = new LinkedList();
 
     QuestionStack() {
+        generateQuestionsByCategory();
     }
 
-    void generateQuestionsByCategory() {
+    private void generateQuestionsByCategory() {
         for (int i = 0; i < 50; i++) {
             popQuestions.addLast(Category.POP + " Question " + i);
             scienceQuestions.addLast((Category.SCIENCE + " Question " + i));
@@ -72,7 +73,6 @@ public class Game {
     boolean isGettingOutOfPenaltyBox;
 
     public Game() {
-        questionStack.generateQuestionsByCategory();
     }
 
     public void add(String playerName) {
