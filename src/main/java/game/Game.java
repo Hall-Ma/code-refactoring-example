@@ -147,8 +147,11 @@ public class Game {
     }
 
     private void movePlayer(int roll) {
-        places[currentPlayer] = places[currentPlayer] + roll;
-        if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - NUMBER_OF_GAME_FIELDS;
+        int gameFieldToMove = places[currentPlayer] + roll;
+        if (gameFieldToMove > 11) {
+            gameFieldToMove -= NUMBER_OF_GAME_FIELDS;
+        }
+        places[currentPlayer] = gameFieldToMove;
     }
 
     private Category currentCategory(int gameField) {
