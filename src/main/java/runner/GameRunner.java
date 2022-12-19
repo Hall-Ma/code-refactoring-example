@@ -9,9 +9,8 @@ public class GameRunner {
     private static boolean notAWinner;
 
     public static void main(String[] args) {
-        Game aGame = new Game();
         List<String> playerNames = List.of("Chet", "Pat", "Sue");
-        aGame.add(playerNames);
+        Game aGame = new Game(playerNames);
 
 
         Random rand = args.length > 0 ? new Random(Long.parseLong(args[0])) : new Random();
