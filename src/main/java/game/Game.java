@@ -17,31 +17,63 @@ enum Category {
     }
 }
 
-public class Game {
-    private static final int NUMBER_OF_GAME_FIELDS = 12;
-    private static final int COINS_NEEDED_TO_WIN = 6;
-    ArrayList<String> players = new ArrayList();
-    int[] places = new int[6];
-    int[] purses = new int[6];
-    boolean[] inPenaltyBox = new boolean[6];
+class QuestionStack {
     LinkedList<String> popQuestions = new LinkedList();
     LinkedList<String> scienceQuestions = new LinkedList();
     LinkedList<String> sportsQuestions = new LinkedList();
     LinkedList<String> rockQuestions = new LinkedList();
-    int currentPlayer = 0;
-    boolean isGettingOutOfPenaltyBox;
 
-    public Game(){
-        generateQuestionsByCategory();
-    }
-
-    private void generateQuestionsByCategory() {
+    void generateQuestionsByCategory() {
         for (int i = 0; i < 50; i++) {
             popQuestions.addLast(Category.POP + " Question " + i);
             scienceQuestions.addLast((Category.SCIENCE + " Question " + i));
             sportsQuestions.addLast((Category.SPORTS + " Question " + i));
             rockQuestions.addLast(Category.ROCK + " Question " + i);
         }
+    }
+
+    void askQuestion(Category category) {
+        String question;
+        if (category == Category.POP) {
+            question = getFirstQuestionFromList(popQuestions);
+            System.out.println(question);
+        }
+        if (category == Category.SCIENCE) {
+            question = getFirstQuestionFromList(scienceQuestions);
+            System.out.println(question);
+        }
+        if (category == Category.SPORTS) {
+            question = getFirstQuestionFromList(sportsQuestions);
+            System.out.println(question);
+        }
+        if (category == Category.ROCK) {
+            question = getFirstQuestionFromList(rockQuestions);
+            System.out.println(question);
+        }
+    }
+
+    String getFirstQuestionFromList(LinkedList<String> popQuestions) {
+        return popQuestions.removeFirst();
+    }
+}
+
+public class Game {
+    private static final int NUMBER_OF_GAME_FIELDS = 12;
+    private static final int COINS_NEEDED_TO_WIN = 6;
+    final QuestionStack questionStack = new QuestionStack();
+    ArrayList<String> players = new ArrayList();
+    int[] places = new int[6];
+    int[] purses = new int[6];
+    boolean[] inPenaltyBox = new boolean[6];
+    int currentPlayer = 0;
+    boolean isGettingOutOfPenaltyBox;
+
+    public Game() {
+        questionStack.generateQuestionsByCategory();
+    }
+
+    private void generateQuestionsByCategory() {
+        questionStack.generateQuestionsByCategory();
     }
 
     public void add(String playerName) {
@@ -66,7 +98,7 @@ public class Game {
                         + "'s new location is "
                         + places[currentPlayer]);
                 System.out.println("The category is " + currentCategory(places[currentPlayer]));
-                askQuestion(currentCategory(places[currentPlayer]));
+                questionStack.askQuestion(currentCategory(places[currentPlayer]));
             } else {
                 System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
                 isGettingOutOfPenaltyBox = false;
@@ -78,32 +110,16 @@ public class Game {
                     + "'s new location is "
                     + places[currentPlayer]);
             System.out.println("The category is " + currentCategory(places[currentPlayer]));
-            askQuestion(currentCategory(places[currentPlayer]));
+            questionStack.askQuestion(currentCategory(places[currentPlayer]));
         }
     }
 
     private void askQuestion(Category category) {
-        String question;
-        if (category == Category.POP) {
-            question = getFirstQuestionFromList(popQuestions);
-            System.out.println(question);
-        }
-        if (category == Category.SCIENCE) {
-            question = getFirstQuestionFromList(scienceQuestions);
-            System.out.println(question);
-        }
-        if (category == Category.SPORTS) {
-            question = getFirstQuestionFromList(sportsQuestions);
-            System.out.println(question);
-        }
-        if (category == Category.ROCK) {
-            question = getFirstQuestionFromList(rockQuestions);
-            System.out.println(question);
-        }
+        questionStack.askQuestion(category);
     }
 
     private String getFirstQuestionFromList(LinkedList<String> popQuestions) {
-        return popQuestions.removeFirst();
+        return questionStack.getFirstQuestionFromList(popQuestions);
     }
 
     private Category currentCategory(int gameField) {
