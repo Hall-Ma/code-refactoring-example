@@ -218,9 +218,13 @@ public class Game {
     public boolean wrongAnswer() {
         System.out.println("Question was incorrectly answered");
         System.out.println(players.get(currentPlayer) + " was sent to the penalty box");
-        playersInPenaltyBox.add(players.get(currentPlayer).getPlayerID());
+        movePlayerToPenaltyBox();
         selectNextPlayerInTurn();
         return true;
+    }
+
+    private void movePlayerToPenaltyBox() {
+        playersInPenaltyBox.add(players.get(currentPlayer).getPlayerID());
     }
 
     private void selectNextPlayerInTurn() {
