@@ -40,12 +40,11 @@ class QuestionStack {
     }
 
     private void generateQuestionsByCategory() {
-        Question question = new Question(" Question ");
         for (int i = 0; i < 50; i++) {
-            popQuestions.addLast(Category.POP + question.getQuestion() + i);
-            scienceQuestions.addLast((Category.SCIENCE + question.getQuestion() + i));
-            sportsQuestions.addLast((Category.SPORTS + question.getQuestion() + i));
-            rockQuestions.addLast(Category.ROCK + question.getQuestion() + i);
+            popQuestions.addLast(Category.POP + new Question(" Question ").getQuestion() + i);
+            scienceQuestions.addLast((Category.SCIENCE + new Question(" Question ").getQuestion() + i));
+            sportsQuestions.addLast((Category.SPORTS + new Question(" Question ").getQuestion() + i));
+            rockQuestions.addLast(Category.ROCK + new Question(" Question ").getQuestion() + i);
         }
     }
 
