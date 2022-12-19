@@ -123,7 +123,7 @@ public class Game {
         System.out.println(players.get(currentPlayer) + " is the current player");
         System.out.println("They have rolled a " + rolledNumber);
         if (inPenaltyBox[currentPlayer]) {
-            if (rolledNumber % 2 != 0) {
+            if (isOdd(rolledNumber)) {
                 isGettingOutOfPenaltyBox = true;
                 System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
                 movePlayer(rolledNumber);
@@ -144,6 +144,10 @@ public class Game {
             System.out.println("The category is " + currentCategory(places[currentPlayer]));
             questionStack.askQuestion(currentCategory(places[currentPlayer]));
         }
+    }
+
+    private boolean isOdd(int rolledNumber) {
+        return rolledNumber % 2 != 0;
     }
 
     private void movePlayer(int rolledNumber) {
