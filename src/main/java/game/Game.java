@@ -2,6 +2,7 @@ package game;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.UUID;
 
 enum Category {
     POP("Pop"), SCIENCE("Science"), SPORTS("Sports"), ROCK("Rock");
@@ -76,9 +77,11 @@ class QuestionStack {
 
 class Player {
     private final String playerName;
+    private final String playerID;
 
     public Player(String playerName) {
         this.playerName = playerName;
+        this.playerID = UUID.randomUUID().toString();
     }
 
     @Override
