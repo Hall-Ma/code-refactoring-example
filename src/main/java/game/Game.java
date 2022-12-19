@@ -92,6 +92,10 @@ class Player {
         return playerName;
     }
 
+    public String getPlayerID() {
+        return playerID;
+    }
+
     public boolean isAllowedToAnswer() {
         return isAllowedToAnswer;
     }
