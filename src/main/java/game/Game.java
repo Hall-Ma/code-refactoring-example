@@ -149,7 +149,7 @@ public class Game {
             if (isOdd(rolledNumber)) {
                 players.get(currentPlayer).setAllowedToAnswer(true);
                 System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
-                movePlayer(rolledNumber);
+                movePlayer(rolledNumber, currentPlayer);
                 System.out.println(players.get(currentPlayer)
                         + "'s new location is "
                         + places[currentPlayer]);
@@ -160,7 +160,7 @@ public class Game {
                 players.get(currentPlayer).setAllowedToAnswer(false);
             }
         } else {
-            movePlayer(rolledNumber);
+            movePlayer(rolledNumber, currentPlayer);
             System.out.println(players.get(currentPlayer)
                     + "'s new location is "
                     + places[currentPlayer]);
@@ -173,7 +173,7 @@ public class Game {
         return rolledNumber % 2 != 0;
     }
 
-    private void movePlayer(int rolledNumber) {
+    private void movePlayer(int rolledNumber, int currentPlayer) {
         int gameFieldToMove = places[currentPlayer] + rolledNumber;
         if (gameFieldToMove > 11) {
             gameFieldToMove -= NUMBER_OF_GAME_FIELDS;
