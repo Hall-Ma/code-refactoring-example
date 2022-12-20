@@ -204,24 +204,23 @@ public class Game {
             if (isOdd(rolledNumber)) {
                 currentPlayer.setAllowedToAnswer(true);
                 System.out.println(currentPlayer + " is getting out of the penalty box");
-                gameBoard.movePlayer(rolledNumber, players.indexOf(currentPlayer));
-                System.out.println(currentPlayer
-                        + "'s new location is "
-                        + gameBoard.getGameFieldOfPlayer(players.indexOf(currentPlayer)));
-                System.out.println("The category is " + gameBoard.getCategory(gameBoard.getGameFieldOfPlayer(players.indexOf(currentPlayer))));
-                questionStack.askQuestion(gameBoard.getCategory(gameBoard.getGameFieldOfPlayer(players.indexOf(currentPlayer))));
+                moveAndAskPlayer(rolledNumber);
             } else {
                 System.out.println(currentPlayer + " is not getting out of the penalty box");
                 currentPlayer.setAllowedToAnswer(false);
             }
         } else {
-            gameBoard.movePlayer(rolledNumber, players.indexOf(currentPlayer));
-            System.out.println(currentPlayer
-                    + "'s new location is "
-                    + gameBoard.getGameFieldOfPlayer(players.indexOf(currentPlayer)));
-            System.out.println("The category is " + gameBoard.getCategory(gameBoard.getGameFieldOfPlayer(players.indexOf(currentPlayer))));
-            questionStack.askQuestion(gameBoard.getCategory(gameBoard.getGameFieldOfPlayer(players.indexOf(currentPlayer))));
+            moveAndAskPlayer(rolledNumber);
         }
+    }
+
+    private void moveAndAskPlayer(int rolledNumber) {
+        gameBoard.movePlayer(rolledNumber, players.indexOf(currentPlayer));
+        System.out.println(currentPlayer
+                + "'s new location is "
+                + gameBoard.getGameFieldOfPlayer(players.indexOf(currentPlayer)));
+        System.out.println("The category is " + gameBoard.getCategory(gameBoard.getGameFieldOfPlayer(players.indexOf(currentPlayer))));
+        questionStack.askQuestion(gameBoard.getCategory(gameBoard.getGameFieldOfPlayer(players.indexOf(currentPlayer))));
     }
 
     private boolean isOdd(int rolledNumber) {
