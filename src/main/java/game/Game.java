@@ -143,13 +143,33 @@ class GameBoard {
     }
 }
 
-public class Game {
+class Treasurer {
     private static final int COINS_NEEDED_TO_WIN = 6;
+    private final int[] purses = new int[6];
+
+    public void setPlayersInitialCoins(int currentPlayer) {
+        purses[currentPlayer] = 0;
+    }
+
+    public void addCoinsToPlayer(int currentPlayer, Player player) {
+        purses[currentPlayer]++;
+        System.out.println(player
+                + " now has "
+                + purses[currentPlayer]
+                + " Gold Coins.");
+    }
+
+    public boolean didPlayerWin(int currentPlayer) {
+        return !(purses[currentPlayer] == COINS_NEEDED_TO_WIN);
+    }
+}
+
+public class Game {
     final QuestionStack questionStack = new QuestionStack();
     final GameBoard gameBoard = new GameBoard();
+    final Treasurer treasurer = new Treasurer();
     private final PenaltyBox penaltyBox = new PenaltyBox();
     ArrayList<Player> players = new ArrayList();
-    int[] purses = new int[6];
     int currentPlayer = 0;
 
     public Game() {
@@ -159,15 +179,10 @@ public class Game {
         Player player = new Player(playerName);
         players.add(player);
         gameBoard.setPlayerToStartField(players.size());
-        purses[players.size()] = 0;
         penaltyBox.movePlayerToPenaltyBox(players.size(), false);
-        setPlayersInitialCoins(players.size());
+        treasurer.setPlayersInitialCoins(players.size());
         System.out.println(player + " was added");
         System.out.println("They are player number " + players.size());
-    }
-
-    private void setPlayersInitialCoins(int currentPlayer) {
-        purses[currentPlayer] = 0;
     }
 
     public void roll(int rolledNumber) {
@@ -205,8 +220,8 @@ public class Game {
         if (penaltyBox.isPlayerInPenaltyBox(currentPlayer)) {
             if (players.get(currentPlayer).isAllowedToAnswer()) {
                 System.out.println("Answer was correct!!!!");
-                addCoinsToPlayer(currentPlayer, players.get(currentPlayer));
-                boolean winner = didPlayerWin(currentPlayer);
+                treasurer.addCoinsToPlayer(currentPlayer, players.get(currentPlayer));
+                boolean winner = treasurer.didPlayerWin(currentPlayer);
                 selectNextPlayerInTurn();
                 return winner;
             } else {
@@ -215,19 +230,11 @@ public class Game {
             }
         } else {
             System.out.println("Answer was corrent!!!!");
-            addCoinsToPlayer(currentPlayer, players.get(currentPlayer));
-            boolean winner = didPlayerWin(currentPlayer);
+            treasurer.addCoinsToPlayer(currentPlayer, players.get(currentPlayer));
+            boolean winner = treasurer.didPlayerWin(currentPlayer);
             selectNextPlayerInTurn();
             return winner;
         }
-    }
-
-    private void addCoinsToPlayer(int currentPlayer, Player player) {
-        purses[currentPlayer]++;
-        System.out.println(player
-                + " now has "
-                + purses[currentPlayer]
-                + " Gold Coins.");
     }
 
     public boolean wrongAnswer() {
@@ -241,10 +248,6 @@ public class Game {
     private void selectNextPlayerInTurn() {
         currentPlayer++;
         if (currentPlayer == players.size()) currentPlayer = 0;
-    }
-
-    private boolean didPlayerWin(int currentPlayer) {
-        return !(purses[currentPlayer] == COINS_NEEDED_TO_WIN);
     }
 
 }
