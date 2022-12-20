@@ -200,11 +200,7 @@ public class Game {
         if (penaltyBox.isPlayerInPenaltyBox(currentPlayer)) {
             if (players.get(currentPlayer).isAllowedToAnswer()) {
                 System.out.println("Answer was correct!!!!");
-                purses[currentPlayer]++;
-                System.out.println(players.get(currentPlayer)
-                        + " now has "
-                        + purses[currentPlayer]
-                        + " Gold Coins.");
+                addCoinsToPlayer();
                 boolean winner = didPlayerWin();
                 selectNextPlayerInTurn();
                 return winner;
@@ -214,15 +210,19 @@ public class Game {
             }
         } else {
             System.out.println("Answer was corrent!!!!");
-            purses[currentPlayer]++;
-            System.out.println(players.get(currentPlayer)
-                    + " now has "
-                    + purses[currentPlayer]
-                    + " Gold Coins.");
+            addCoinsToPlayer();
             boolean winner = didPlayerWin();
             selectNextPlayerInTurn();
             return winner;
         }
+    }
+
+    private void addCoinsToPlayer() {
+        purses[currentPlayer]++;
+        System.out.println(players.get(currentPlayer)
+                + " now has "
+                + purses[currentPlayer]
+                + " Gold Coins.");
     }
 
     public boolean wrongAnswer() {
