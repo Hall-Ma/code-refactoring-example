@@ -109,13 +109,33 @@ class PenaltyBox {
     }
 }
 
-public class Game {
+class GameBoard {
     private static final int NUMBER_OF_GAME_FIELDS = 12;
+    private final int[] places = new int[6];
+
+    public void setPlayerToStartField(int currentPlayer) {
+        places[currentPlayer] = 0;
+    }
+
+    public int getGameFieldOfPlayer(int currentPlayer) {
+        return places[currentPlayer];
+    }
+
+    public void movePlayer(int rolledNumber, int currentPlayer) {
+        int gameFieldToMove = getGameFieldOfPlayer(currentPlayer) + rolledNumber;
+        if (gameFieldToMove > 11) {
+            gameFieldToMove -= NUMBER_OF_GAME_FIELDS;
+        }
+        places[currentPlayer] = gameFieldToMove;
+    }
+}
+
+public class Game {
     private static final int COINS_NEEDED_TO_WIN = 6;
     final QuestionStack questionStack = new QuestionStack();
+    final GameBoard gameBoard = new GameBoard();
     private final PenaltyBox penaltyBox = new PenaltyBox();
     ArrayList<Player> players = new ArrayList();
-    int[] places = new int[6];
     int[] purses = new int[6];
     int currentPlayer = 0;
 
@@ -125,15 +145,11 @@ public class Game {
     public void add(String playerName) {
         Player player = new Player(playerName);
         players.add(player);
-        setPlayerToStartField(players.size());
+        gameBoard.setPlayerToStartField(players.size());
         purses[players.size()] = 0;
         penaltyBox.movePlayerToPenaltyBox(players.size(), false);
         System.out.println(player + " was added");
         System.out.println("They are player number " + players.size());
-    }
-
-    private void setPlayerToStartField(int currentPlayer) {
-        places[currentPlayer] = 0;
     }
 
     public void roll(int rolledNumber) {
@@ -143,40 +159,28 @@ public class Game {
             if (isOdd(rolledNumber)) {
                 players.get(currentPlayer).setAllowedToAnswer(true);
                 System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
-                movePlayer(rolledNumber, currentPlayer);
+                gameBoard.movePlayer(rolledNumber, currentPlayer);
                 System.out.println(players.get(currentPlayer)
                         + "'s new location is "
-                        + getGameFieldOfPlayer(currentPlayer));
-                System.out.println("The category is " + currentCategory(getGameFieldOfPlayer(currentPlayer)));
-                questionStack.askQuestion(currentCategory(getGameFieldOfPlayer(currentPlayer)));
+                        + gameBoard.getGameFieldOfPlayer(currentPlayer));
+                System.out.println("The category is " + currentCategory(gameBoard.getGameFieldOfPlayer(currentPlayer)));
+                questionStack.askQuestion(currentCategory(gameBoard.getGameFieldOfPlayer(currentPlayer)));
             } else {
                 System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
                 players.get(currentPlayer).setAllowedToAnswer(false);
             }
         } else {
-            movePlayer(rolledNumber, currentPlayer);
+            gameBoard.movePlayer(rolledNumber, currentPlayer);
             System.out.println(players.get(currentPlayer)
                     + "'s new location is "
-                    + getGameFieldOfPlayer(currentPlayer));
-            System.out.println("The category is " + currentCategory(getGameFieldOfPlayer(currentPlayer)));
-            questionStack.askQuestion(currentCategory(getGameFieldOfPlayer(currentPlayer)));
+                    + gameBoard.getGameFieldOfPlayer(currentPlayer));
+            System.out.println("The category is " + currentCategory(gameBoard.getGameFieldOfPlayer(currentPlayer)));
+            questionStack.askQuestion(currentCategory(gameBoard.getGameFieldOfPlayer(currentPlayer)));
         }
-    }
-
-    private int getGameFieldOfPlayer(int currentPlayer) {
-        return places[currentPlayer];
     }
 
     private boolean isOdd(int rolledNumber) {
         return rolledNumber % 2 != 0;
-    }
-
-    private void movePlayer(int rolledNumber, int currentPlayer) {
-        int gameFieldToMove = getGameFieldOfPlayer(currentPlayer) + rolledNumber;
-        if (gameFieldToMove > 11) {
-            gameFieldToMove -= NUMBER_OF_GAME_FIELDS;
-        }
-        places[currentPlayer] = gameFieldToMove;
     }
 
     private Category currentCategory(int gameField) {
