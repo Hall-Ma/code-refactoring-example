@@ -161,13 +161,13 @@ public class Game {
         gameBoard.setPlayerToStartField(players.size());
         purses[players.size()] = 0;
         penaltyBox.movePlayerToPenaltyBox(players.size(), false);
-        setPlayersInitialCoins();
+        setPlayersInitialCoins(players.size());
         System.out.println(player + " was added");
         System.out.println("They are player number " + players.size());
     }
 
-    private void setPlayersInitialCoins() {
-        purses[players.size()] = 0;
+    private void setPlayersInitialCoins(int currentPlayer) {
+        purses[currentPlayer] = 0;
     }
 
     public void roll(int rolledNumber) {
