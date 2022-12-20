@@ -171,7 +171,7 @@ public class Game {
     final Treasurer treasurer = new Treasurer();
     private final PenaltyBox penaltyBox = new PenaltyBox();
     ArrayList<Player> players = new ArrayList();
-    int currentPlayer = 0;
+    Player currentPlayer;
 
     public Game(List<String> playerNames) {
         add(playerNames);
@@ -187,32 +187,33 @@ public class Game {
             System.out.println(player + " was added");
             System.out.println("They are player number " + players.size());
         }
+        currentPlayer = players.get(0);
     }
 
     public void roll(int rolledNumber) {
-        System.out.println(players.get(currentPlayer) + " is the current player");
+        System.out.println(currentPlayer + " is the current player");
         System.out.println("They have rolled a " + rolledNumber);
-        if (penaltyBox.isPlayerInPenaltyBox(currentPlayer)) {
+        if (penaltyBox.isPlayerInPenaltyBox(players.indexOf(currentPlayer))) {
             if (isOdd(rolledNumber)) {
-                players.get(currentPlayer).setAllowedToAnswer(true);
-                System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
-                gameBoard.movePlayer(rolledNumber, currentPlayer);
-                System.out.println(players.get(currentPlayer)
+                currentPlayer.setAllowedToAnswer(true);
+                System.out.println(currentPlayer + " is getting out of the penalty box");
+                gameBoard.movePlayer(rolledNumber, players.indexOf(currentPlayer));
+                System.out.println(currentPlayer
                         + "'s new location is "
-                        + gameBoard.getGameFieldOfPlayer(currentPlayer));
-                System.out.println("The category is " + gameBoard.getCategory(gameBoard.getGameFieldOfPlayer(currentPlayer)));
-                questionStack.askQuestion(gameBoard.getCategory(gameBoard.getGameFieldOfPlayer(currentPlayer)));
+                        + gameBoard.getGameFieldOfPlayer(players.indexOf(currentPlayer)));
+                System.out.println("The category is " + gameBoard.getCategory(gameBoard.getGameFieldOfPlayer(players.indexOf(currentPlayer))));
+                questionStack.askQuestion(gameBoard.getCategory(gameBoard.getGameFieldOfPlayer(players.indexOf(currentPlayer))));
             } else {
-                System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
-                players.get(currentPlayer).setAllowedToAnswer(false);
+                System.out.println(currentPlayer + " is not getting out of the penalty box");
+                currentPlayer.setAllowedToAnswer(false);
             }
         } else {
-            gameBoard.movePlayer(rolledNumber, currentPlayer);
-            System.out.println(players.get(currentPlayer)
+            gameBoard.movePlayer(rolledNumber, players.indexOf(currentPlayer));
+            System.out.println(currentPlayer
                     + "'s new location is "
-                    + gameBoard.getGameFieldOfPlayer(currentPlayer));
-            System.out.println("The category is " + gameBoard.getCategory(gameBoard.getGameFieldOfPlayer(currentPlayer)));
-            questionStack.askQuestion(gameBoard.getCategory(gameBoard.getGameFieldOfPlayer(currentPlayer)));
+                    + gameBoard.getGameFieldOfPlayer(players.indexOf(currentPlayer)));
+            System.out.println("The category is " + gameBoard.getCategory(gameBoard.getGameFieldOfPlayer(players.indexOf(currentPlayer))));
+            questionStack.askQuestion(gameBoard.getCategory(gameBoard.getGameFieldOfPlayer(players.indexOf(currentPlayer))));
         }
     }
 
@@ -221,11 +222,11 @@ public class Game {
     }
 
     public boolean wasCorrectlyAnswered() {
-        if (penaltyBox.isPlayerInPenaltyBox(currentPlayer)) {
-            if (players.get(currentPlayer).isAllowedToAnswer()) {
+        if (penaltyBox.isPlayerInPenaltyBox(players.indexOf(currentPlayer))) {
+            if (currentPlayer.isAllowedToAnswer()) {
                 System.out.println("Answer was correct!!!!");
-                treasurer.addCoinsToPlayer(currentPlayer, players.get(currentPlayer));
-                boolean winner = treasurer.didPlayerWin(currentPlayer);
+                treasurer.addCoinsToPlayer(players.indexOf(currentPlayer), currentPlayer);
+                boolean winner = treasurer.didPlayerWin(players.indexOf(currentPlayer));
                 selectNextPlayerInTurn();
                 return winner;
             } else {
@@ -234,8 +235,8 @@ public class Game {
             }
         } else {
             System.out.println("Answer was corrent!!!!");
-            treasurer.addCoinsToPlayer(currentPlayer, players.get(currentPlayer));
-            boolean winner = treasurer.didPlayerWin(currentPlayer);
+            treasurer.addCoinsToPlayer(players.indexOf(currentPlayer), currentPlayer);
+            boolean winner = treasurer.didPlayerWin(players.indexOf(currentPlayer));
             selectNextPlayerInTurn();
             return winner;
         }
@@ -243,15 +244,19 @@ public class Game {
 
     public boolean wrongAnswer() {
         System.out.println("Question was incorrectly answered");
-        System.out.println(players.get(currentPlayer) + " was sent to the penalty box");
-        penaltyBox.movePlayerToPenaltyBox(currentPlayer, true);
+        System.out.println(currentPlayer + " was sent to the penalty box");
+        penaltyBox.movePlayerToPenaltyBox(players.indexOf(currentPlayer), true);
         selectNextPlayerInTurn();
         return true;
     }
 
     private void selectNextPlayerInTurn() {
-        currentPlayer++;
-        if (currentPlayer == players.size()) currentPlayer = 0;
+        int indexOfNextPlayer = players.indexOf(currentPlayer) + 1;
+        if (indexOfNextPlayer == players.size()) {
+            currentPlayer = players.get(0);
+        } else {
+            currentPlayer = players.get(indexOfNextPlayer);
+        }
     }
 
 }
