@@ -206,11 +206,12 @@ public class Game {
 
     private void moveAndAskPlayer(int rolledNumber) {
         gameBoard.movePlayer(rolledNumber, players.indexOf(currentPlayer));
+        int gameFieldOfPlayer = gameBoard.getGameFieldOfPlayer(players.indexOf(currentPlayer));
         System.out.println(currentPlayer
                 + "'s new location is "
-                + gameBoard.getGameFieldOfPlayer(players.indexOf(currentPlayer)));
-        System.out.println("The category is " + gameBoard.getCategory(gameBoard.getGameFieldOfPlayer(players.indexOf(currentPlayer))));
-        questionStack.askQuestion(gameBoard.getCategory(gameBoard.getGameFieldOfPlayer(players.indexOf(currentPlayer))));
+                + gameFieldOfPlayer);
+        System.out.println("The category is " + gameBoard.getCategory(gameFieldOfPlayer));
+        questionStack.askQuestion(gameBoard.getCategory(gameFieldOfPlayer));
     }
 
     private boolean isOdd(int rolledNumber) {
