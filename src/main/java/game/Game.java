@@ -145,10 +145,11 @@ class GameBoard {
 
 class Treasurer {
     private static final int COINS_NEEDED_TO_WIN = 6;
+    private static final int COINS_TO_START = 0;
     private final int[] purses = new int[6];
 
     public void setPlayersInitialCoins(int currentPlayer) {
-        purses[currentPlayer] = 0;
+        purses[currentPlayer] = COINS_TO_START;
     }
 
     public void addCoinsToPlayer(int currentPlayer, Player player) {
