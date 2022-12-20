@@ -214,8 +214,9 @@ public class Game {
         System.out.println(currentPlayer
                 + "'s new location is "
                 + gameFieldOfPlayer);
-        System.out.println("The category is " + gameBoard.getCategory(gameFieldOfPlayer));
-        questionStack.askQuestion(gameBoard.getCategory(gameFieldOfPlayer));
+        Category category = gameBoard.getCategory(gameFieldOfPlayer);
+        System.out.println("The category is " + category);
+        questionStack.askQuestion(category);
     }
 
     private boolean isOdd(int rolledNumber) {
