@@ -128,6 +128,19 @@ class GameBoard {
         }
         places[currentPlayer] = gameFieldToMove;
     }
+
+    Category getCategory(int gameField) {
+        if (gameField == 0) return Category.POP;
+        if (gameField == 4) return Category.POP;
+        if (gameField == 8) return Category.POP;
+        if (gameField == 1) return Category.SCIENCE;
+        if (gameField == 5) return Category.SCIENCE;
+        if (gameField == 9) return Category.SCIENCE;
+        if (gameField == 2) return Category.SPORTS;
+        if (gameField == 6) return Category.SPORTS;
+        if (gameField == 10) return Category.SPORTS;
+        return Category.ROCK;
+    }
 }
 
 public class Game {
@@ -163,8 +176,8 @@ public class Game {
                 System.out.println(players.get(currentPlayer)
                         + "'s new location is "
                         + gameBoard.getGameFieldOfPlayer(currentPlayer));
-                System.out.println("The category is " + currentCategory(gameBoard.getGameFieldOfPlayer(currentPlayer)));
-                questionStack.askQuestion(currentCategory(gameBoard.getGameFieldOfPlayer(currentPlayer)));
+                System.out.println("The category is " + gameBoard.getCategory(gameBoard.getGameFieldOfPlayer(currentPlayer)));
+                questionStack.askQuestion(gameBoard.getCategory(gameBoard.getGameFieldOfPlayer(currentPlayer)));
             } else {
                 System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
                 players.get(currentPlayer).setAllowedToAnswer(false);
@@ -174,26 +187,13 @@ public class Game {
             System.out.println(players.get(currentPlayer)
                     + "'s new location is "
                     + gameBoard.getGameFieldOfPlayer(currentPlayer));
-            System.out.println("The category is " + currentCategory(gameBoard.getGameFieldOfPlayer(currentPlayer)));
-            questionStack.askQuestion(currentCategory(gameBoard.getGameFieldOfPlayer(currentPlayer)));
+            System.out.println("The category is " + gameBoard.getCategory(gameBoard.getGameFieldOfPlayer(currentPlayer)));
+            questionStack.askQuestion(gameBoard.getCategory(gameBoard.getGameFieldOfPlayer(currentPlayer)));
         }
     }
 
     private boolean isOdd(int rolledNumber) {
         return rolledNumber % 2 != 0;
-    }
-
-    private Category currentCategory(int gameField) {
-        if (gameField == 0) return Category.POP;
-        if (gameField == 4) return Category.POP;
-        if (gameField == 8) return Category.POP;
-        if (gameField == 1) return Category.SCIENCE;
-        if (gameField == 5) return Category.SCIENCE;
-        if (gameField == 9) return Category.SCIENCE;
-        if (gameField == 2) return Category.SPORTS;
-        if (gameField == 6) return Category.SPORTS;
-        if (gameField == 10) return Category.SPORTS;
-        return Category.ROCK;
     }
 
     public boolean wasCorrectlyAnswered() {
