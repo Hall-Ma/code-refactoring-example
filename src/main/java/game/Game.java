@@ -130,7 +130,7 @@ class GameBoard {
         places[currentPlayer] = gameFieldToMove;
     }
 
-    Category getCategory(int gameField) {
+    Category getCategoryByGameField(int gameField) {
         if (gameField == 0) return Category.POP;
         if (gameField == 4) return Category.POP;
         if (gameField == 8) return Category.POP;
@@ -214,7 +214,7 @@ public class Game {
         System.out.println(currentPlayer
                 + "'s new location is "
                 + gameFieldOfPlayer);
-        Category category = gameBoard.getCategory(gameFieldOfPlayer);
+        Category category = gameBoard.getCategoryByGameField(gameFieldOfPlayer);
         System.out.println("The category is " + category);
         questionStack.askQuestion(category);
     }
