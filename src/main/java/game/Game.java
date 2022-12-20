@@ -168,9 +168,13 @@ public class Game {
             System.out.println(players.get(currentPlayer)
                     + "'s new location is "
                     + places[currentPlayer]);
-            System.out.println("The category is " + currentCategory(places[currentPlayer]));
+            System.out.println("The category is " + currentCategory(getGameFieldOfPlayer()));
             questionStack.askQuestion(currentCategory(places[currentPlayer]));
         }
+    }
+
+    private int getGameFieldOfPlayer() {
+        return places[currentPlayer];
     }
 
     private boolean isOdd(int rolledNumber) {
