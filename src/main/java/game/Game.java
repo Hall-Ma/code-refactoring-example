@@ -128,12 +128,16 @@ public class Game {
         for (String playerName : playerNames) {
             Player player = new Player(playerName);
             players.add(player);
-            places[players.size()] = 0;
+            setPlayerToStartField();
             purses[players.size()] = 0;
             penaltyBox.movePlayerToPenaltyBox(players.size(), false);
             System.out.println(player + " was added");
             System.out.println("They are player number " + players.size());
         }
+    }
+
+    private void setPlayerToStartField() {
+        places[players.size()] = 0;
     }
 
     public void roll(int rolledNumber) {
