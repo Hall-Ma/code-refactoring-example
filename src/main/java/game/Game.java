@@ -146,9 +146,9 @@ public class Game {
                 movePlayer(rolledNumber, currentPlayer);
                 System.out.println(players.get(currentPlayer)
                         + "'s new location is "
-                        + places[currentPlayer]);
-                System.out.println("The category is " + currentCategory(places[currentPlayer]));
-                questionStack.askQuestion(currentCategory(places[currentPlayer]));
+                        + getGameFieldOfPlayer(currentPlayer));
+                System.out.println("The category is " + currentCategory(getGameFieldOfPlayer(currentPlayer)));
+                questionStack.askQuestion(currentCategory(getGameFieldOfPlayer(currentPlayer)));
             } else {
                 System.out.println(players.get(currentPlayer) + " is not getting out of the penalty box");
                 players.get(currentPlayer).setAllowedToAnswer(false);
@@ -157,13 +157,13 @@ public class Game {
             movePlayer(rolledNumber, currentPlayer);
             System.out.println(players.get(currentPlayer)
                     + "'s new location is "
-                    + places[currentPlayer]);
-            System.out.println("The category is " + currentCategory(getGameFieldOfPlayer()));
-            questionStack.askQuestion(currentCategory(places[currentPlayer]));
+                    + getGameFieldOfPlayer(currentPlayer));
+            System.out.println("The category is " + currentCategory(getGameFieldOfPlayer(currentPlayer)));
+            questionStack.askQuestion(currentCategory(getGameFieldOfPlayer(currentPlayer)));
         }
     }
 
-    private int getGameFieldOfPlayer() {
+    private int getGameFieldOfPlayer(int currentPlayer) {
         return places[currentPlayer];
     }
 
@@ -172,7 +172,7 @@ public class Game {
     }
 
     private void movePlayer(int rolledNumber, int currentPlayer) {
-        int gameFieldToMove = places[currentPlayer] + rolledNumber;
+        int gameFieldToMove = getGameFieldOfPlayer(currentPlayer) + rolledNumber;
         if (gameFieldToMove > 11) {
             gameFieldToMove -= NUMBER_OF_GAME_FIELDS;
         }
