@@ -169,10 +169,14 @@ public class Game {
             Player player = new Player(playerName);
             players.add(player);
             gameBoard.setPlayerToStartField(players.size());
-            purses[players.size()] = 0;
+            setPlayersInitialCoins();
             System.out.println(player + " was added");
             System.out.println("They are player number " + players.size());
         }
+    }
+
+    private void setPlayersInitialCoins() {
+        purses[players.size()] = 0;
     }
 
     public void roll(int rolledNumber) {
