@@ -211,7 +211,7 @@ public class Game {
             if (players.get(currentPlayer).isAllowedToAnswer()) {
                 System.out.println("Answer was correct!!!!");
                 addCoinsToPlayer(currentPlayer, players.get(currentPlayer));
-                boolean winner = didPlayerWin();
+                boolean winner = didPlayerWin(currentPlayer);
                 selectNextPlayerInTurn();
                 return winner;
             } else {
@@ -221,7 +221,7 @@ public class Game {
         } else {
             System.out.println("Answer was corrent!!!!");
             addCoinsToPlayer(currentPlayer, players.get(currentPlayer));
-            boolean winner = didPlayerWin();
+            boolean winner = didPlayerWin(currentPlayer);
             selectNextPlayerInTurn();
             return winner;
         }
@@ -248,7 +248,7 @@ public class Game {
         if (currentPlayer == players.size()) currentPlayer = 0;
     }
 
-    private boolean didPlayerWin() {
+    private boolean didPlayerWin(int currentPlayer) {
         return !(purses[currentPlayer] == COINS_NEEDED_TO_WIN);
     }
 
