@@ -17,12 +17,12 @@ enum Category {
     }
 }
 
-class Question {
+class QuestionCard {
     private final Category category;
     private final String question;
     private final int number;
 
-    public Question(Category category, String question, int number) {
+    public QuestionCard(Category category, String question, int number) {
         this.category = category;
         this.question = question;
         this.number = number;
@@ -36,10 +36,10 @@ class Question {
 
 class QuestionStack {
     private static final int MAX_NUMBER_OF_QUESTIONS_PER_CATEGORY = 50;
-    private final LinkedList<Question> popQuestions = new LinkedList();
-    private final LinkedList<Question> scienceQuestions = new LinkedList();
-    private final LinkedList<Question> sportsQuestions = new LinkedList();
-    private final LinkedList<Question> rockQuestions = new LinkedList();
+    private final LinkedList<QuestionCard> popQuestion = new LinkedList();
+    private final LinkedList<QuestionCard> scienceQuestion = new LinkedList();
+    private final LinkedList<QuestionCard> sportsQuestion = new LinkedList();
+    private final LinkedList<QuestionCard> rockQuestion = new LinkedList();
 
     QuestionStack() {
         generateQuestionsByCategory();
@@ -47,30 +47,30 @@ class QuestionStack {
 
     private void generateQuestionsByCategory() {
         for (int i = 0; i < MAX_NUMBER_OF_QUESTIONS_PER_CATEGORY; i++) {
-            popQuestions.addLast(new Question(Category.POP, "Question", i));
-            scienceQuestions.addLast(new Question(Category.SCIENCE, "Question", i));
-            sportsQuestions.addLast(new Question(Category.SPORTS, "Question", i));
-            rockQuestions.addLast(new Question(Category.ROCK, "Question", i));
+            popQuestion.addLast(new QuestionCard(Category.POP, "Question", i));
+            scienceQuestion.addLast(new QuestionCard(Category.SCIENCE, "Question", i));
+            sportsQuestion.addLast(new QuestionCard(Category.SPORTS, "Question", i));
+            rockQuestion.addLast(new QuestionCard(Category.ROCK, "Question", i));
         }
     }
 
     public void askQuestion(Category category) {
-        Question question;
+        QuestionCard questionCard;
         if (category == Category.POP) {
-            question = popQuestions.removeFirst();
-            System.out.println(question);
+            questionCard = popQuestion.removeFirst();
+            System.out.println(questionCard);
         }
         if (category == Category.SCIENCE) {
-            question = scienceQuestions.removeFirst();
-            System.out.println(question);
+            questionCard = scienceQuestion.removeFirst();
+            System.out.println(questionCard);
         }
         if (category == Category.SPORTS) {
-            question = sportsQuestions.removeFirst();
-            System.out.println(question);
+            questionCard = sportsQuestion.removeFirst();
+            System.out.println(questionCard);
         }
         if (category == Category.ROCK) {
-            question = rockQuestions.removeFirst();
-            System.out.println(question);
+            questionCard = rockQuestion.removeFirst();
+            System.out.println(questionCard);
         }
     }
 }
@@ -170,7 +170,7 @@ public class Game {
     private final GameBoard gameBoard = new GameBoard();
     private final Treasurer treasurer = new Treasurer();
     private final PenaltyBox penaltyBox = new PenaltyBox();
-    private final ArrayList<Player> players = new ArrayList();
+    private final ArrayList<Player> players = new ArrayList<>();
     private Player playerInTurn;
 
     public Game() {
