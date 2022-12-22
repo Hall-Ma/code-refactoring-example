@@ -190,7 +190,7 @@ public class Game {
     public void roll(int rolledNumber) {
         System.out.println(currentPlayer + " is the current player");
         System.out.println("They have rolled a " + rolledNumber);
-        if (penaltyBox.isPlayerInPenaltyBox(players.indexOf(currentPlayer))) {
+        if (penaltyBox.isPlayerInPenaltyBox(getPositionOfPlayerInTurn())) {
             if (isOdd(rolledNumber)) {
                 currentPlayer.setAllowedToAnswer(true);
                 System.out.println(currentPlayer + " is getting out of the penalty box");
@@ -205,8 +205,8 @@ public class Game {
     }
 
     private void moveAndAskPlayer(int rolledNumber) {
-        gameBoard.movePlayer(rolledNumber, players.indexOf(currentPlayer));
-        int gameFieldOfPlayer = gameBoard.getGameFieldOfPlayer(players.indexOf(currentPlayer));
+        gameBoard.movePlayer(rolledNumber, getPositionOfPlayerInTurn());
+        int gameFieldOfPlayer = gameBoard.getGameFieldOfPlayer(getPositionOfPlayerInTurn());
         System.out.println(currentPlayer
                 + "'s new location is "
                 + gameFieldOfPlayer);
@@ -220,7 +220,7 @@ public class Game {
     }
 
     public boolean wasCorrectlyAnswered() {
-        if (penaltyBox.isPlayerInPenaltyBox(players.indexOf(currentPlayer))) {
+        if (penaltyBox.isPlayerInPenaltyBox(getPositionOfPlayerInTurn())) {
             if (currentPlayer.isAllowedToAnswer()) {
                 System.out.println("Answer was correct!!!!");
                 return addCoinsAndCheckWinner();
@@ -234,9 +234,13 @@ public class Game {
         }
     }
 
+    private int getPositionOfPlayerInTurn() {
+        return players.indexOf(currentPlayer);
+    }
+
     private boolean addCoinsAndCheckWinner() {
-        treasurer.addCoinsToPlayer(players.indexOf(currentPlayer), currentPlayer);
-        boolean winner = treasurer.didPlayerWin(players.indexOf(currentPlayer));
+        treasurer.addCoinsToPlayer(getPositionOfPlayerInTurn(), currentPlayer);
+        boolean winner = treasurer.didPlayerWin(getPositionOfPlayerInTurn());
         selectNextPlayerInTurn();
         return winner;
     }
@@ -244,13 +248,13 @@ public class Game {
     public boolean wrongAnswer() {
         System.out.println("Question was incorrectly answered");
         System.out.println(currentPlayer + " was sent to the penalty box");
-        penaltyBox.movePlayerToPenaltyBox(players.indexOf(currentPlayer), true);
+        penaltyBox.movePlayerToPenaltyBox(getPositionOfPlayerInTurn(), true);
         selectNextPlayerInTurn();
         return true;
     }
 
     private void selectNextPlayerInTurn() {
-        int indexOfNextPlayer = players.indexOf(currentPlayer) + 1;
+        int indexOfNextPlayer = getPositionOfPlayerInTurn() + 1;
         if (indexOfNextPlayer == players.size()) {
             currentPlayer = players.get(0);
         } else {
