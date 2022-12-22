@@ -174,9 +174,6 @@ public class Game {
     private final ArrayList<Player> players = new ArrayList<>();
     private Player playerInTurn;
 
-    public Game() {
-    }
-
     public void addPlayer(String playerName) {
         Player player = new Player(playerName);
         players.add(player);
