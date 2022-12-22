@@ -98,35 +98,35 @@ class Player {
 }
 
 class PenaltyBox {
-    private final boolean[] inPenaltyBox = new boolean[6];
+    private final boolean[] playersInPenaltyBox = new boolean[6];
 
-    public boolean isPlayerInPenaltyBox(int currentPlayer) {
-        return inPenaltyBox[currentPlayer];
+    public boolean isPlayerInPenaltyBox(int positionOfPlayer) {
+        return playersInPenaltyBox[positionOfPlayer];
     }
 
-    public void movePlayerToPenaltyBox(int currentPlayer, boolean hasToMove) {
-        inPenaltyBox[currentPlayer] = hasToMove;
+    public void movePlayerToPenaltyBox(int positionOfPlayer, boolean hasToMove) {
+        playersInPenaltyBox[positionOfPlayer] = hasToMove;
     }
 }
 
 class GameBoard {
     private static final int NUMBER_OF_GAME_FIELDS = 12;
-    private final int[] places = new int[6];
+    private final int[] playersPosition = new int[6];
 
-    public void setPlayerToStartField(int currentPlayer) {
-        places[currentPlayer] = 0;
+    public void setPlayerToStartField(int positionOfPlayer) {
+        playersPosition[positionOfPlayer] = 0;
     }
 
-    public int getGameFieldOfPlayer(int currentPlayer) {
-        return places[currentPlayer];
+    public int getGameFieldOfPlayer(int positionOfPlayer) {
+        return playersPosition[positionOfPlayer];
     }
 
-    public void movePlayer(int rolledNumber, int currentPlayer) {
-        int gameFieldToMove = getGameFieldOfPlayer(currentPlayer) + rolledNumber;
+    public void movePlayer(int rolledNumber, int positionOfPlayer) {
+        int gameFieldToMove = getGameFieldOfPlayer(positionOfPlayer) + rolledNumber;
         if (gameFieldToMove > 11) {
             gameFieldToMove -= NUMBER_OF_GAME_FIELDS;
         }
-        places[currentPlayer] = gameFieldToMove;
+        playersPosition[positionOfPlayer] = gameFieldToMove;
     }
 
     Category getCategoryByGameField(int gameField) {
@@ -146,22 +146,22 @@ class GameBoard {
 class Treasurer {
     private static final int COINS_NEEDED_TO_WIN = 6;
     private static final int COINS_TO_START = 0;
-    private final int[] purses = new int[6];
+    private final int[] playersPurse = new int[6];
 
-    public void setPlayersInitialCoins(int currentPlayer) {
-        purses[currentPlayer] = COINS_TO_START;
+    public void setPlayersInitialCoins(int positionOfPlayer) {
+        playersPurse[positionOfPlayer] = COINS_TO_START;
     }
 
-    public void addCoinsToPlayer(int currentPlayer) {
-        purses[currentPlayer]++;
+    public void addCoinsToPlayer(int positionOfPlayer) {
+        playersPurse[positionOfPlayer]++;
     }
 
-    public int getPlayersCoins(int currentPlayer) {
-        return purses[currentPlayer];
+    public int getPlayersCoins(int positionOfPlayer) {
+        return playersPurse[positionOfPlayer];
     }
 
-    public boolean didPlayerWin(int currentPlayer) {
-        return !(purses[currentPlayer] == COINS_NEEDED_TO_WIN);
+    public boolean didPlayerWin(int positionOfPlayer) {
+        return !(playersPurse[positionOfPlayer] == COINS_NEEDED_TO_WIN);
     }
 }
 
@@ -219,7 +219,7 @@ public class Game {
         return rolledNumber % 2 != 0;
     }
 
-    public boolean wasCorrectlyAnswered() {
+    public boolean playerAnsweredCorrectly() {
         if (penaltyBox.isPlayerInPenaltyBox(getPositionOfPlayerInTurn())) {
             if (playerInTurn.isAllowedToAnswer()) {
                 System.out.println("Answer was correct!!!!");
@@ -244,12 +244,12 @@ public class Game {
                 + " now has "
                 + treasurer.getPlayersCoins(getPositionOfPlayerInTurn())
                 + " Gold Coins.");
-        boolean winner = treasurer.didPlayerWin(getPositionOfPlayerInTurn());
+        boolean isWinner = treasurer.didPlayerWin(getPositionOfPlayerInTurn());
         selectNextPlayerInTurn();
-        return winner;
+        return isWinner;
     }
 
-    public boolean wasIncorrectlyAnswered() {
+    public boolean playerAnsweredIncorrectly() {
         System.out.println("Question was incorrectly answered");
         System.out.println(playerInTurn + " was sent to the penalty box");
         penaltyBox.movePlayerToPenaltyBox(getPositionOfPlayerInTurn(), true);
