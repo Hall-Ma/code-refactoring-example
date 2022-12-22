@@ -171,12 +171,12 @@ public class Game {
     final Treasurer treasurer = new Treasurer();
     private final PenaltyBox penaltyBox = new PenaltyBox();
     ArrayList<Player> players = new ArrayList();
-    Player currentPlayer;
+    Player playerInTurn;
 
     public Game() {
     }
 
-    public void add(String playerName) {
+    public void addPlayer(String playerName) {
         Player player = new Player(playerName);
         players.add(player);
         gameBoard.setPlayerToStartField(players.size());
@@ -184,20 +184,20 @@ public class Game {
         treasurer.setPlayersInitialCoins(players.size());
         System.out.println(player + " was added");
         System.out.println("They are player number " + players.size());
-        currentPlayer = players.get(0);
+        playerInTurn = players.get(0);
     }
 
     public void roll(int rolledNumber) {
-        System.out.println(currentPlayer + " is the current player");
+        System.out.println(playerInTurn + " is the current player");
         System.out.println("They have rolled a " + rolledNumber);
         if (penaltyBox.isPlayerInPenaltyBox(getPositionOfPlayerInTurn())) {
             if (isOdd(rolledNumber)) {
-                currentPlayer.setAllowedToAnswer(true);
-                System.out.println(currentPlayer + " is getting out of the penalty box");
+                playerInTurn.setAllowedToAnswer(true);
+                System.out.println(playerInTurn + " is getting out of the penalty box");
                 moveAndAskPlayer(rolledNumber);
             } else {
-                System.out.println(currentPlayer + " is not getting out of the penalty box");
-                currentPlayer.setAllowedToAnswer(false);
+                playerInTurn.setAllowedToAnswer(false);
+                System.out.println(playerInTurn + " is not getting out of the penalty box");
             }
         } else {
             moveAndAskPlayer(rolledNumber);
@@ -207,7 +207,7 @@ public class Game {
     private void moveAndAskPlayer(int rolledNumber) {
         gameBoard.movePlayer(rolledNumber, getPositionOfPlayerInTurn());
         int gameFieldOfPlayer = gameBoard.getGameFieldOfPlayer(getPositionOfPlayerInTurn());
-        System.out.println(currentPlayer
+        System.out.println(playerInTurn
                 + "'s new location is "
                 + gameFieldOfPlayer);
         Category category = gameBoard.getCategoryByGameField(gameFieldOfPlayer);
@@ -221,7 +221,7 @@ public class Game {
 
     public boolean wasCorrectlyAnswered() {
         if (penaltyBox.isPlayerInPenaltyBox(getPositionOfPlayerInTurn())) {
-            if (currentPlayer.isAllowedToAnswer()) {
+            if (playerInTurn.isAllowedToAnswer()) {
                 System.out.println("Answer was correct!!!!");
                 return addCoinsAndCheckWinner();
             } else {
@@ -235,19 +235,19 @@ public class Game {
     }
 
     private int getPositionOfPlayerInTurn() {
-        return players.indexOf(currentPlayer);
+        return players.indexOf(playerInTurn);
     }
 
     private boolean addCoinsAndCheckWinner() {
-        treasurer.addCoinsToPlayer(getPositionOfPlayerInTurn(), currentPlayer);
+        treasurer.addCoinsToPlayer(getPositionOfPlayerInTurn(), playerInTurn);
         boolean winner = treasurer.didPlayerWin(getPositionOfPlayerInTurn());
         selectNextPlayerInTurn();
         return winner;
     }
 
-    public boolean wrongAnswer() {
+    public boolean wasIncorrectlyAnswered() {
         System.out.println("Question was incorrectly answered");
-        System.out.println(currentPlayer + " was sent to the penalty box");
+        System.out.println(playerInTurn + " was sent to the penalty box");
         penaltyBox.movePlayerToPenaltyBox(getPositionOfPlayerInTurn(), true);
         selectNextPlayerInTurn();
         return true;
@@ -256,9 +256,9 @@ public class Game {
     private void selectNextPlayerInTurn() {
         int indexOfNextPlayer = getPositionOfPlayerInTurn() + 1;
         if (indexOfNextPlayer == players.size()) {
-            currentPlayer = players.get(0);
+            playerInTurn = players.get(0);
         } else {
-            currentPlayer = players.get(indexOfNextPlayer);
+            playerInTurn = players.get(indexOfNextPlayer);
         }
     }
 
