@@ -35,11 +35,11 @@ class Question {
 }
 
 class QuestionStack {
-    public static final int MAX_NUMBER_OF_QUESTIONS_PER_CATEGORY = 50;
-    LinkedList<Question> popQuestions = new LinkedList();
-    LinkedList<Question> scienceQuestions = new LinkedList();
-    LinkedList<Question> sportsQuestions = new LinkedList();
-    LinkedList<Question> rockQuestions = new LinkedList();
+    private static final int MAX_NUMBER_OF_QUESTIONS_PER_CATEGORY = 50;
+    private final LinkedList<Question> popQuestions = new LinkedList();
+    private final LinkedList<Question> scienceQuestions = new LinkedList();
+    private final LinkedList<Question> sportsQuestions = new LinkedList();
+    private final LinkedList<Question> rockQuestions = new LinkedList();
 
     QuestionStack() {
         generateQuestionsByCategory();
@@ -54,7 +54,7 @@ class QuestionStack {
         }
     }
 
-    void askQuestion(Category category) {
+    public void askQuestion(Category category) {
         Question question;
         if (category == Category.POP) {
             question = popQuestions.removeFirst();
@@ -129,7 +129,7 @@ class GameBoard {
         playersPosition[positionOfPlayer] = gameFieldToMove;
     }
 
-    Category getCategoryByGameField(int gameField) {
+    public Category getCategoryByGameField(int gameField) {
         if (gameField == 0) return Category.POP;
         if (gameField == 4) return Category.POP;
         if (gameField == 8) return Category.POP;
@@ -166,12 +166,12 @@ class Treasurer {
 }
 
 public class Game {
-    final QuestionStack questionStack = new QuestionStack();
-    final GameBoard gameBoard = new GameBoard();
-    final Treasurer treasurer = new Treasurer();
+    private final QuestionStack questionStack = new QuestionStack();
+    private final GameBoard gameBoard = new GameBoard();
+    private final Treasurer treasurer = new Treasurer();
     private final PenaltyBox penaltyBox = new PenaltyBox();
-    ArrayList<Player> players = new ArrayList();
-    Player playerInTurn;
+    private final ArrayList<Player> players = new ArrayList();
+    private Player playerInTurn;
 
     public Game() {
     }
