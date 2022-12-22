@@ -47,10 +47,11 @@ class QuestionStack {
 
     private void generateQuestionsByCategory() {
         for (int i = 0; i < MAX_NUMBER_OF_QUESTIONS_PER_CATEGORY; i++) {
-            popQuestion.addLast(new QuestionCard(Category.POP, "Question", i));
-            scienceQuestion.addLast(new QuestionCard(Category.SCIENCE, "Question", i));
-            sportsQuestion.addLast(new QuestionCard(Category.SPORTS, "Question", i));
-            rockQuestion.addLast(new QuestionCard(Category.ROCK, "Question", i));
+            String question = "Question";
+            popQuestion.addLast(new QuestionCard(Category.POP, question, i));
+            scienceQuestion.addLast(new QuestionCard(Category.SCIENCE, question, i));
+            sportsQuestion.addLast(new QuestionCard(Category.SPORTS, question, i));
+            rockQuestion.addLast(new QuestionCard(Category.ROCK, question, i));
         }
     }
 
