@@ -152,12 +152,12 @@ class Treasurer {
         purses[currentPlayer] = COINS_TO_START;
     }
 
-    public void addCoinsToPlayer(int currentPlayer, Player player) {
+    public void addCoinsToPlayer(int currentPlayer) {
         purses[currentPlayer]++;
-        System.out.println(player
-                + " now has "
-                + purses[currentPlayer]
-                + " Gold Coins.");
+    }
+
+    public int getPlayersCoins(int currentPlayer) {
+        return purses[currentPlayer];
     }
 
     public boolean didPlayerWin(int currentPlayer) {
@@ -239,7 +239,11 @@ public class Game {
     }
 
     private boolean addCoinsAndCheckWinner() {
-        treasurer.addCoinsToPlayer(getPositionOfPlayerInTurn(), playerInTurn);
+        treasurer.addCoinsToPlayer(getPositionOfPlayerInTurn());
+        System.out.println(playerInTurn
+                + " now has "
+                + treasurer.getPlayersCoins(getPositionOfPlayerInTurn())
+                + " Gold Coins.");
         boolean winner = treasurer.didPlayerWin(getPositionOfPlayerInTurn());
         selectNextPlayerInTurn();
         return winner;
