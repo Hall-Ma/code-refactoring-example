@@ -98,7 +98,7 @@ class Player {
 }
 
 class PenaltyBox {
-    private boolean[] inPenaltyBox = new boolean[6];
+    private final boolean[] inPenaltyBox = new boolean[6];
 
     public boolean isPlayerInPenaltyBox(int currentPlayer) {
         return inPenaltyBox[currentPlayer];
@@ -223,21 +223,22 @@ public class Game {
         if (penaltyBox.isPlayerInPenaltyBox(players.indexOf(currentPlayer))) {
             if (currentPlayer.isAllowedToAnswer()) {
                 System.out.println("Answer was correct!!!!");
-                treasurer.addCoinsToPlayer(players.indexOf(currentPlayer), currentPlayer);
-                boolean winner = treasurer.didPlayerWin(players.indexOf(currentPlayer));
-                selectNextPlayerInTurn();
-                return winner;
+                return addCoinsAndCheckWinner();
             } else {
                 selectNextPlayerInTurn();
                 return true;
             }
         } else {
             System.out.println("Answer was corrent!!!!");
-            treasurer.addCoinsToPlayer(players.indexOf(currentPlayer), currentPlayer);
-            boolean winner = treasurer.didPlayerWin(players.indexOf(currentPlayer));
-            selectNextPlayerInTurn();
-            return winner;
+            return addCoinsAndCheckWinner();
         }
+    }
+
+    private boolean addCoinsAndCheckWinner() {
+        treasurer.addCoinsToPlayer(players.indexOf(currentPlayer), currentPlayer);
+        boolean winner = treasurer.didPlayerWin(players.indexOf(currentPlayer));
+        selectNextPlayerInTurn();
+        return winner;
     }
 
     public boolean wrongAnswer() {
