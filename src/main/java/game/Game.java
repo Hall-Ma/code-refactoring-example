@@ -79,9 +79,11 @@ class QuestionStack {
 class Player {
     private final String playerName;
     private boolean isAllowedToAnswer;
+    private final int postionOfPlayerInTurn;
 
-    public Player(String playerName) {
+    public Player(String playerName, int postionOfPlayerInTurn) {
         this.playerName = playerName;
+        this.postionOfPlayerInTurn = postionOfPlayerInTurn;
     }
 
     @Override
@@ -95,6 +97,10 @@ class Player {
 
     public void setAllowedToAnswer(boolean allowedToAnswer) {
         isAllowedToAnswer = allowedToAnswer;
+    }
+
+    public int getPostionOfPlayerInTurn() {
+        return postionOfPlayerInTurn;
     }
 }
 
@@ -173,10 +179,9 @@ public class Game {
     private final PenaltyBox penaltyBox = new PenaltyBox();
     private final ArrayList<Player> players = new ArrayList<>();
     private Player playerInTurn;
-    private int postionOfPlayerInTurn;
 
     public void addPlayer(String playerName) {
-        Player player = new Player(playerName);
+        Player player = new Player(playerName, players.size());
         players.add(player);
         gameBoard.setPlayerToStartField(players.size());
         penaltyBox.movePlayerToPenaltyBox(players.size(), false);
@@ -189,7 +194,7 @@ public class Game {
     public void handlePlayersTurn(int rolledNumber) {
         System.out.println(playerInTurn + " is the current player");
         System.out.println("They have rolled a " + rolledNumber);
-        if (penaltyBox.isPlayerInPenaltyBox(getPositionOfPlayerInTurn())) {
+        if (penaltyBox.isPlayerInPenaltyBox(playerInTurn.getPostionOfPlayerInTurn())) {
             if (isOdd(rolledNumber)) {
                 playerInTurn.setAllowedToAnswer(true);
                 System.out.println(playerInTurn + " is getting out of the penalty box");
@@ -204,7 +209,7 @@ public class Game {
     }
 
     public boolean playerAnsweredCorrectlyAndIsNotAWinner() {
-        if (penaltyBox.isPlayerInPenaltyBox(getPositionOfPlayerInTurn())) {
+        if (penaltyBox.isPlayerInPenaltyBox(playerInTurn.getPostionOfPlayerInTurn())) {
             if (playerInTurn.isAllowedToAnswer()) {
                 System.out.println("Answer was correct!!!!");
                 return addCoinsAndCheckWinner();
@@ -221,14 +226,14 @@ public class Game {
     public boolean playerAnsweredIncorrectly() {
         System.out.println("Question was incorrectly answered");
         System.out.println(playerInTurn + " was sent to the penalty box");
-        penaltyBox.movePlayerToPenaltyBox(getPositionOfPlayerInTurn(), true);
+        penaltyBox.movePlayerToPenaltyBox(playerInTurn.getPostionOfPlayerInTurn(), true);
         selectNextPlayerInTurn();
         return true;
     }
 
     private void moveAndAskPlayer(int rolledNumber) {
-        gameBoard.movePlayer(rolledNumber, getPositionOfPlayerInTurn());
-        int gameFieldOfPlayer = gameBoard.getGameFieldOfPlayer(getPositionOfPlayerInTurn());
+        gameBoard.movePlayer(rolledNumber, playerInTurn.getPostionOfPlayerInTurn());
+        int gameFieldOfPlayer = gameBoard.getGameFieldOfPlayer(playerInTurn.getPostionOfPlayerInTurn());
         System.out.println(playerInTurn
                 + "'s new location is "
                 + gameFieldOfPlayer);
@@ -241,24 +246,19 @@ public class Game {
         return rolledNumber % 2 != 0;
     }
 
-    private int getPositionOfPlayerInTurn() {
-        postionOfPlayerInTurn = players.indexOf(playerInTurn);
-        return postionOfPlayerInTurn;
-    }
-
     private boolean addCoinsAndCheckWinner() {
-        treasurer.addCoinsToPlayer(getPositionOfPlayerInTurn());
+        treasurer.addCoinsToPlayer(playerInTurn.getPostionOfPlayerInTurn());
         System.out.println(playerInTurn
                 + " now has "
-                + treasurer.getPlayersCoins(getPositionOfPlayerInTurn())
+                + treasurer.getPlayersCoins(playerInTurn.getPostionOfPlayerInTurn())
                 + " Gold Coins.");
-        boolean isNotWinner = treasurer.playerReachedNotMaxCoins(getPositionOfPlayerInTurn());
+        boolean isNotWinner = treasurer.playerReachedNotMaxCoins(playerInTurn.getPostionOfPlayerInTurn());
         selectNextPlayerInTurn();
         return isNotWinner;
     }
 
     private void selectNextPlayerInTurn() {
-        int indexOfNextPlayer = getPositionOfPlayerInTurn() + 1;
+        int indexOfNextPlayer = playerInTurn.getPostionOfPlayerInTurn() + 1;
         if (indexOfNextPlayer == players.size()) {
             playerInTurn = players.get(0);
         } else {
