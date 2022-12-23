@@ -120,10 +120,6 @@ class GameBoard {
     private static final int NUMBER_OF_GAME_FIELDS = 12;
     private final int[] playersPosition = new int[6];
 
-    public void setPlayerToStartField(int positionOfPlayer) {
-        playersPosition[positionOfPlayer] = 0;
-    }
-
     public int getGameFieldOfPlayer(int positionOfPlayer) {
         return playersPosition[positionOfPlayer];
     }
@@ -183,8 +179,6 @@ public class Game {
     public void addPlayer(String playerName) {
         Player player = new Player(playerName, players.size());
         players.add(player);
-        gameBoard.setPlayerToStartField(players.size());
-        penaltyBox.movePlayerToPenaltyBox(players.size());
         treasurer.setPlayersInitialCoins(players.size());
         System.out.println(player + " was added");
         System.out.println("They are player number " + players.size());
