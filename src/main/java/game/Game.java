@@ -55,7 +55,7 @@ class QuestionStack {
         }
     }
 
-    public void askQuestion(Category category) {
+    public void removeQuestionFromStack(Category category) {
         QuestionCard questionCard;
         if (category == Category.POP) {
             questionCard = popQuestion.removeFirst();
@@ -77,30 +77,30 @@ class QuestionStack {
 }
 
 class Player {
-    private final String playerName;
+    private final String name;
     private boolean isAllowedToAnswer;
-    private final int postionOfPlayerInTurn;
+    private final int number;
 
-    public Player(String playerName, int postionOfPlayerInTurn) {
-        this.playerName = playerName;
-        this.postionOfPlayerInTurn = postionOfPlayerInTurn;
+    public Player(String name, int number) {
+        this.name = name;
+        this.number = number;
     }
 
     @Override
     public String toString() {
-        return playerName;
+        return name;
     }
 
     public boolean isAllowedToAnswer() {
         return isAllowedToAnswer;
     }
 
-    public void setAllowedToAnswer(boolean allowedToAnswer) {
+    public void allowToAnswer(boolean allowedToAnswer) {
         isAllowedToAnswer = allowedToAnswer;
     }
 
-    public int getPostionOfPlayerInTurn() {
-        return postionOfPlayerInTurn;
+    public int getNumber() {
+        return number;
     }
 }
 
@@ -194,13 +194,13 @@ public class Game {
     public void handlePlayersTurn(int rolledNumber) {
         System.out.println(playerInTurn + " is the current player");
         System.out.println("They have rolled a " + rolledNumber);
-        if (penaltyBox.isPlayerInPenaltyBox(playerInTurn.getPostionOfPlayerInTurn())) {
+        if (penaltyBox.isPlayerInPenaltyBox(playerInTurn.getNumber())) {
             if (isOdd(rolledNumber)) {
-                playerInTurn.setAllowedToAnswer(true);
+                playerInTurn.allowToAnswer(true);
                 System.out.println(playerInTurn + " is getting out of the penalty box");
                 moveAndAskPlayer(rolledNumber);
             } else {
-                playerInTurn.setAllowedToAnswer(false);
+                playerInTurn.allowToAnswer(false);
                 System.out.println(playerInTurn + " is not getting out of the penalty box");
             }
         } else {
@@ -209,7 +209,7 @@ public class Game {
     }
 
     public boolean playerAnsweredCorrectlyAndIsNotAWinner() {
-        if (penaltyBox.isPlayerInPenaltyBox(playerInTurn.getPostionOfPlayerInTurn())) {
+        if (penaltyBox.isPlayerInPenaltyBox(playerInTurn.getNumber())) {
             if (playerInTurn.isAllowedToAnswer()) {
                 System.out.println("Answer was correct!!!!");
                 return addCoinsAndCheckWinner();
@@ -226,20 +226,20 @@ public class Game {
     public boolean playerAnsweredIncorrectly() {
         System.out.println("Question was incorrectly answered");
         System.out.println(playerInTurn + " was sent to the penalty box");
-        penaltyBox.movePlayerToPenaltyBox(playerInTurn.getPostionOfPlayerInTurn(), true);
+        penaltyBox.movePlayerToPenaltyBox(playerInTurn.getNumber(), true);
         selectNextPlayerInTurn();
         return true;
     }
 
     private void moveAndAskPlayer(int rolledNumber) {
-        gameBoard.movePlayer(rolledNumber, playerInTurn.getPostionOfPlayerInTurn());
-        int gameFieldOfPlayer = gameBoard.getGameFieldOfPlayer(playerInTurn.getPostionOfPlayerInTurn());
+        gameBoard.movePlayer(rolledNumber, playerInTurn.getNumber());
+        int gameFieldOfPlayer = gameBoard.getGameFieldOfPlayer(playerInTurn.getNumber());
         System.out.println(playerInTurn
                 + "'s new location is "
                 + gameFieldOfPlayer);
         Category category = gameBoard.getCategoryByGameField(gameFieldOfPlayer);
         System.out.println("The category is " + category);
-        questionStack.askQuestion(category);
+        questionStack.removeQuestionFromStack(category);
     }
 
     private boolean isOdd(int rolledNumber) {
@@ -247,18 +247,18 @@ public class Game {
     }
 
     private boolean addCoinsAndCheckWinner() {
-        treasurer.addCoinsToPlayer(playerInTurn.getPostionOfPlayerInTurn());
+        treasurer.addCoinsToPlayer(playerInTurn.getNumber());
         System.out.println(playerInTurn
                 + " now has "
-                + treasurer.getPlayersCoins(playerInTurn.getPostionOfPlayerInTurn())
+                + treasurer.getPlayersCoins(playerInTurn.getNumber())
                 + " Gold Coins.");
-        boolean isNotWinner = treasurer.playerReachedNotMaxCoins(playerInTurn.getPostionOfPlayerInTurn());
+        boolean isNotWinner = treasurer.playerReachedNotMaxCoins(playerInTurn.getNumber());
         selectNextPlayerInTurn();
         return isNotWinner;
     }
 
     private void selectNextPlayerInTurn() {
-        int indexOfNextPlayer = playerInTurn.getPostionOfPlayerInTurn() + 1;
+        int indexOfNextPlayer = playerInTurn.getNumber() + 1;
         if (indexOfNextPlayer == players.size()) {
             playerInTurn = players.get(0);
         } else {
