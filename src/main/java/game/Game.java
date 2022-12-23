@@ -124,7 +124,7 @@ class GameBoard {
 
     public void movePlayer(int rolledNumber, int positionOfPlayer) {
         int gameFieldToMove = getGameFieldOfPlayer(positionOfPlayer) + rolledNumber;
-        if (gameFieldToMove > 11) {
+        if (gameFieldToMove >= NUMBER_OF_GAME_FIELDS) {
             gameFieldToMove -= NUMBER_OF_GAME_FIELDS;
         }
         playersPosition[positionOfPlayer] = gameFieldToMove;
