@@ -162,7 +162,7 @@ class Treasurer {
     }
 
     public boolean playerReachedNotMaxCoins(int positionOfPlayer) {
-        return !(playersPurse[positionOfPlayer] == COINS_NEEDED_TO_WIN);
+        return playersPurse[positionOfPlayer] != COINS_NEEDED_TO_WIN;
     }
 }
 
