@@ -111,8 +111,8 @@ class PenaltyBox {
         return playersInPenaltyBox[positionOfPlayer];
     }
 
-    public void movePlayerToPenaltyBox(int positionOfPlayer, boolean hasToMove) {
-        playersInPenaltyBox[positionOfPlayer] = hasToMove;
+    public void movePlayerToPenaltyBox(int positionOfPlayer) {
+        playersInPenaltyBox[positionOfPlayer] = true;
     }
 }
 
@@ -184,7 +184,7 @@ public class Game {
         Player player = new Player(playerName, players.size());
         players.add(player);
         gameBoard.setPlayerToStartField(players.size());
-        penaltyBox.movePlayerToPenaltyBox(players.size(), false);
+        penaltyBox.movePlayerToPenaltyBox(players.size());
         treasurer.setPlayersInitialCoins(players.size());
         System.out.println(player + " was added");
         System.out.println("They are player number " + players.size());
@@ -226,7 +226,7 @@ public class Game {
     public boolean playerAnsweredIncorrectly() {
         System.out.println("Question was incorrectly answered");
         System.out.println(playerInTurn + " was sent to the penalty box");
-        penaltyBox.movePlayerToPenaltyBox(playerInTurn.getNumber(), true);
+        penaltyBox.movePlayerToPenaltyBox(playerInTurn.getNumber());
         selectNextPlayerInTurn();
         return true;
     }
