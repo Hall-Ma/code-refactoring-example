@@ -56,24 +56,24 @@ class QuestionStack {
         }
     }
 
-    public void removeQuestionFromStack(Category category) {
-        QuestionCard questionCard;
+    public void askQuestion(Category category) {
         if (category == Category.POP) {
-            questionCard = popQuestion.remove(0);
-            System.out.println(questionCard);
+            removeFirstQuestionFromStack(popQuestion);
         }
         if (category == Category.SCIENCE) {
-            questionCard = scienceQuestion.remove(0);
-            System.out.println(questionCard);
+            removeFirstQuestionFromStack(scienceQuestion);
         }
         if (category == Category.SPORTS) {
-            questionCard = sportsQuestion.remove(0);
-            System.out.println(questionCard);
+            removeFirstQuestionFromStack(sportsQuestion);
         }
         if (category == Category.ROCK) {
-            questionCard = rockQuestion.remove(0);
-            System.out.println(questionCard);
+            removeFirstQuestionFromStack(rockQuestion);
         }
+    }
+
+    private void removeFirstQuestionFromStack(List<QuestionCard> questions) {
+        QuestionCard question = questions.remove(0);
+        System.out.println(question);
     }
 }
 
@@ -229,7 +229,7 @@ public class Game {
                 + gameFieldOfPlayer);
         Category category = gameBoard.getCategoryByGameField(gameFieldOfPlayer);
         System.out.println("The category is " + category);
-        questionStack.removeQuestionFromStack(category);
+        questionStack.askQuestion(category);
     }
 
     private boolean isOdd(int rolledNumber) {
