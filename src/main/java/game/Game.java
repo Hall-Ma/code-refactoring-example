@@ -36,10 +36,10 @@ class QuestionCard {
 
 class QuestionStack {
     private static final int MAX_NUMBER_OF_QUESTIONS_PER_CATEGORY = 50;
-    private final LinkedList<QuestionCard> popQuestion = new LinkedList();
-    private final LinkedList<QuestionCard> scienceQuestion = new LinkedList();
-    private final LinkedList<QuestionCard> sportsQuestion = new LinkedList();
-    private final LinkedList<QuestionCard> rockQuestion = new LinkedList();
+    private final LinkedList<QuestionCard> popQuestion = new LinkedList<>();
+    private final LinkedList<QuestionCard> scienceQuestion = new LinkedList<>();
+    private final LinkedList<QuestionCard> sportsQuestion = new LinkedList<>();
+    private final LinkedList<QuestionCard> rockQuestion = new LinkedList<>();
 
     QuestionStack() {
         generateQuestionsByCategory();
