@@ -161,7 +161,7 @@ class Treasurer {
         return playersPurse[positionOfPlayer];
     }
 
-    public boolean didPlayerWin(int positionOfPlayer) {
+    public boolean playerReachedNotMaxCoins(int positionOfPlayer) {
         return !(playersPurse[positionOfPlayer] == COINS_NEEDED_TO_WIN);
     }
 }
@@ -185,7 +185,7 @@ public class Game {
         playerInTurn = players.get(0);
     }
 
-    public void roll(int rolledNumber) {
+    public void handlePlayersTurn(int rolledNumber) {
         System.out.println(playerInTurn + " is the current player");
         System.out.println("They have rolled a " + rolledNumber);
         if (penaltyBox.isPlayerInPenaltyBox(getPositionOfPlayerInTurn())) {
@@ -200,6 +200,29 @@ public class Game {
         } else {
             moveAndAskPlayer(rolledNumber);
         }
+    }
+
+    public boolean playerAnsweredCorrectlyAndIsNotAWinner() {
+        if (penaltyBox.isPlayerInPenaltyBox(getPositionOfPlayerInTurn())) {
+            if (playerInTurn.isAllowedToAnswer()) {
+                System.out.println("Answer was correct!!!!");
+                return addCoinsAndCheckWinner();
+            } else {
+                selectNextPlayerInTurn();
+                return true;
+            }
+        } else {
+            System.out.println("Answer was corrent!!!!");
+            return addCoinsAndCheckWinner();
+        }
+    }
+
+    public boolean playerAnsweredIncorrectly() {
+        System.out.println("Question was incorrectly answered");
+        System.out.println(playerInTurn + " was sent to the penalty box");
+        penaltyBox.movePlayerToPenaltyBox(getPositionOfPlayerInTurn(), true);
+        selectNextPlayerInTurn();
+        return true;
     }
 
     private void moveAndAskPlayer(int rolledNumber) {
@@ -217,21 +240,6 @@ public class Game {
         return rolledNumber % 2 != 0;
     }
 
-    public boolean playerAnsweredCorrectly() {
-        if (penaltyBox.isPlayerInPenaltyBox(getPositionOfPlayerInTurn())) {
-            if (playerInTurn.isAllowedToAnswer()) {
-                System.out.println("Answer was correct!!!!");
-                return addCoinsAndCheckWinner();
-            } else {
-                selectNextPlayerInTurn();
-                return true;
-            }
-        } else {
-            System.out.println("Answer was corrent!!!!");
-            return addCoinsAndCheckWinner();
-        }
-    }
-
     private int getPositionOfPlayerInTurn() {
         return players.indexOf(playerInTurn);
     }
@@ -242,17 +250,9 @@ public class Game {
                 + " now has "
                 + treasurer.getPlayersCoins(getPositionOfPlayerInTurn())
                 + " Gold Coins.");
-        boolean isWinner = treasurer.didPlayerWin(getPositionOfPlayerInTurn());
+        boolean isNotWinner = treasurer.playerReachedNotMaxCoins(getPositionOfPlayerInTurn());
         selectNextPlayerInTurn();
-        return isWinner;
-    }
-
-    public boolean playerAnsweredIncorrectly() {
-        System.out.println("Question was incorrectly answered");
-        System.out.println(playerInTurn + " was sent to the penalty box");
-        penaltyBox.movePlayerToPenaltyBox(getPositionOfPlayerInTurn(), true);
-        selectNextPlayerInTurn();
-        return true;
+        return isNotWinner;
     }
 
     private void selectNextPlayerInTurn() {

@@ -27,9 +27,9 @@ class GameTest {
     @ValueSource(ints = {1, 2, 3, 4, 5})
     void testRollOutSidePenaltyBox(int parameter) {
         Game game = new Game();
-        game.add("David");
+        game.addPlayer("David");
 
-        game.roll(parameter);
+        game.handlePlayersTurn(parameter);
 
         verify(baos.toString(), NAMES.withParameters(String.valueOf(parameter)));
     }
@@ -37,10 +37,10 @@ class GameTest {
     @Test
     void testRollAndResetPlaces() {
         Game game = new Game();
-        game.add("David");
+        game.addPlayer("David");
 
         // Only for test purposes a 12 is rolled here, this will not happen in production
-        game.roll(12);
+        game.handlePlayersTurn(12);
 
         verify(baos.toString());
     }
@@ -49,10 +49,10 @@ class GameTest {
     @ValueSource(ints = {2, 4})
     void testRollDontGetOutOfPenaltyBox(int parameter) {
         Game game = new Game();
-        game.add("David");
-        game.wrongAnswer();
+        game.addPlayer("David");
+        game.playerAnsweredIncorrectly();
 
-        game.roll(parameter);
+        game.handlePlayersTurn(parameter);
 
         verify(baos.toString(), NAMES.withParameters(String.valueOf(parameter)));
     }
@@ -61,10 +61,10 @@ class GameTest {
     @ValueSource(ints = {1, 3, 5})
     void testRollGetOutOfPenaltyBox(int parameter) {
         Game game = new Game();
-        game.add("David");
-        game.wrongAnswer();
+        game.addPlayer("David");
+        game.playerAnsweredIncorrectly();
 
-        game.roll(parameter);
+        game.handlePlayersTurn(parameter);
 
         verify(baos.toString(), NAMES.withParameters(String.valueOf(parameter)));
     }
@@ -72,11 +72,11 @@ class GameTest {
     @Test
     void testRollGetOutOfPenaltyBoxAndResetPlaces() {
         Game game = new Game();
-        game.add("David");
-        game.wrongAnswer();
+        game.addPlayer("David");
+        game.playerAnsweredIncorrectly();
 
         // Only for test purposes a 13 is rolled here, this will not happen in production
-        game.roll(13);
+        game.handlePlayersTurn(13);
 
         verify(baos.toString());
     }
@@ -84,9 +84,9 @@ class GameTest {
     @Test
     void testCorrectAnswer() {
         Game game = new Game();
-        game.add("David");
+        game.addPlayer("David");
 
-        boolean hasPlayerNotWon = game.wasCorrectlyAnswered();
+        boolean hasPlayerNotWon = game.playerAnsweredCorrectlyAndIsNotAWinner();
 
         assertTrue(hasPlayerNotWon);
         verify(baos.toString());
@@ -95,11 +95,11 @@ class GameTest {
     @Test
     void testIsPlayerWinner() {
         Game game = new Game();
-        game.add("David");
+        game.addPlayer("David");
         boolean hasPlayerNotWon = true;
 
         for (int i = 0; i < 6; i++) {
-            hasPlayerNotWon = game.wasCorrectlyAnswered();
+            hasPlayerNotWon = game.playerAnsweredCorrectlyAndIsNotAWinner();
         }
 
         assertFalse(hasPlayerNotWon);
@@ -109,11 +109,11 @@ class GameTest {
     @Test
     void testPlayerCannotAnswerQuestion() {
         Game game = new Game();
-        game.add("David");
-        game.wrongAnswer();
-        game.roll(2);
+        game.addPlayer("David");
+        game.playerAnsweredIncorrectly();
+        game.handlePlayersTurn(2);
 
-        boolean hasPlayerNotWon = game.wasCorrectlyAnswered();
+        boolean hasPlayerNotWon = game.playerAnsweredCorrectlyAndIsNotAWinner();
 
         assertTrue(hasPlayerNotWon);
         verify(baos.toString());
@@ -122,11 +122,11 @@ class GameTest {
     @Test
     void testAnswerCorrectQuestionAfterGettingOutOfPenaltyBox() {
         Game game = new Game();
-        game.add("David");
-        game.wrongAnswer();
-        game.roll(3);
+        game.addPlayer("David");
+        game.playerAnsweredIncorrectly();
+        game.handlePlayersTurn(3);
 
-        boolean hasPlayerNotWon = game.wasCorrectlyAnswered();
+        boolean hasPlayerNotWon = game.playerAnsweredCorrectlyAndIsNotAWinner();
 
         assertTrue(hasPlayerNotWon);
         verify(baos.toString());
@@ -135,10 +135,10 @@ class GameTest {
     @Test
     void testCurrentPlayerGetsCoinAfterCorrectAnswer() {
         Game game = new Game();
-        game.add("David");
-        game.add("Julia");
+        game.addPlayer("David");
+        game.addPlayer("Julia");
 
-        boolean hasPlayerNotWon = game.wasCorrectlyAnswered();
+        boolean hasPlayerNotWon = game.playerAnsweredCorrectlyAndIsNotAWinner();
 
         assertTrue(hasPlayerNotWon);
         verify(baos.toString());
