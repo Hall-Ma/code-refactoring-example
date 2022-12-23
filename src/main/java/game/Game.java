@@ -151,7 +151,7 @@ class Treasurer {
     private final int[] playersPurse = new int[6];
 
 
-    public void addCoinsToPlayer(int positionOfPlayer) {
+    public void addCoinToPlayer(int positionOfPlayer) {
         playersPurse[positionOfPlayer]++;
     }
 
@@ -159,7 +159,7 @@ class Treasurer {
         return playersPurse[positionOfPlayer];
     }
 
-    public boolean playerReachedNotMaxCoins(int positionOfPlayer) {
+    public boolean hasPlayerNotReachedMaxCoins(int positionOfPlayer) {
         return playersPurse[positionOfPlayer] != COINS_NEEDED_TO_WIN;
     }
 }
@@ -236,12 +236,12 @@ public class Game {
     }
 
     private boolean addCoinsAndCheckWinner() {
-        treasurer.addCoinsToPlayer(playerInTurn.getNumber());
+        treasurer.addCoinToPlayer(playerInTurn.getNumber());
         System.out.println(playerInTurn
                 + " now has "
                 + treasurer.getPlayersCoins(playerInTurn.getNumber())
                 + " Gold Coins.");
-        boolean isNotWinner = treasurer.playerReachedNotMaxCoins(playerInTurn.getNumber());
+        boolean isNotWinner = treasurer.hasPlayerNotReachedMaxCoins(playerInTurn.getNumber());
         selectNextPlayerInTurn();
         return isNotWinner;
     }
