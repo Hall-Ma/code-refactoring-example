@@ -1,5 +1,6 @@
 package game;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,12 +16,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GameTest {
 
-    ByteArrayOutputStream baos;
+    ByteArrayOutputStream byteStream;
 
     @BeforeEach
     void setUp() {
-        baos = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(baos));
+        byteStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(byteStream));
+    }
+
+    @AfterEach
+    public void teardown() {
+        System.setOut(System.out);
     }
 
     @ParameterizedTest
@@ -31,7 +37,7 @@ class GameTest {
 
         game.roll(parameter);
 
-        verify(baos.toString(), NAMES.withParameters(String.valueOf(parameter)));
+        verify(byteStream.toString(), NAMES.withParameters(String.valueOf(parameter)));
     }
 
     @Test
@@ -42,7 +48,7 @@ class GameTest {
         // Only for test purposes a 12 is rolled here, this will not happen in production
         game.roll(12);
 
-        verify(baos.toString());
+        verify(byteStream.toString());
     }
 
     @ParameterizedTest
@@ -54,7 +60,7 @@ class GameTest {
 
         game.roll(parameter);
 
-        verify(baos.toString(), NAMES.withParameters(String.valueOf(parameter)));
+        verify(byteStream.toString(), NAMES.withParameters(String.valueOf(parameter)));
     }
 
     @ParameterizedTest
@@ -66,7 +72,7 @@ class GameTest {
 
         game.roll(parameter);
 
-        verify(baos.toString(), NAMES.withParameters(String.valueOf(parameter)));
+        verify(byteStream.toString(), NAMES.withParameters(String.valueOf(parameter)));
     }
 
     @Test
@@ -78,7 +84,7 @@ class GameTest {
         // Only for test purposes a 13 is rolled here, this will not happen in production
         game.roll(13);
 
-        verify(baos.toString());
+        verify(byteStream.toString());
     }
 
     @Test
@@ -89,7 +95,7 @@ class GameTest {
         boolean hasPlayerNotWon = game.wasCorrectlyAnswered();
 
         assertTrue(hasPlayerNotWon);
-        verify(baos.toString());
+        verify(byteStream.toString());
     }
 
     @Test
@@ -103,7 +109,7 @@ class GameTest {
         }
 
         assertFalse(hasPlayerNotWon);
-        verify(baos.toString());
+        verify(byteStream.toString());
     }
 
     @Test
@@ -116,7 +122,7 @@ class GameTest {
         boolean hasPlayerNotWon = game.wasCorrectlyAnswered();
 
         assertTrue(hasPlayerNotWon);
-        verify(baos.toString());
+        verify(byteStream.toString());
     }
 
     @Test
@@ -129,7 +135,7 @@ class GameTest {
         boolean hasPlayerNotWon = game.wasCorrectlyAnswered();
 
         assertTrue(hasPlayerNotWon);
-        verify(baos.toString());
+        verify(byteStream.toString());
     }
 
     @Test
@@ -141,6 +147,6 @@ class GameTest {
         boolean hasPlayerNotWon = game.wasCorrectlyAnswered();
 
         assertTrue(hasPlayerNotWon);
-        verify(baos.toString());
+        verify(byteStream.toString());
     }
 }
