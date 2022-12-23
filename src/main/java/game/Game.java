@@ -2,6 +2,7 @@ package game;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 enum Category {
     POP("Pop"), SCIENCE("Science"), SPORTS("Sports"), ROCK("Rock");
@@ -36,10 +37,10 @@ class QuestionCard {
 
 class QuestionStack {
     private static final int MAX_NUMBER_OF_QUESTIONS_PER_CATEGORY = 50;
-    private final LinkedList<QuestionCard> popQuestion = new LinkedList<>();
-    private final LinkedList<QuestionCard> scienceQuestion = new LinkedList<>();
-    private final LinkedList<QuestionCard> sportsQuestion = new LinkedList<>();
-    private final LinkedList<QuestionCard> rockQuestion = new LinkedList<>();
+    private final List<QuestionCard> popQuestion = new LinkedList<>();
+    private final List<QuestionCard> scienceQuestion = new LinkedList<>();
+    private final List<QuestionCard> sportsQuestion = new LinkedList<>();
+    private final List<QuestionCard> rockQuestion = new LinkedList<>();
 
     QuestionStack() {
         generateQuestionsByCategory();
@@ -48,29 +49,29 @@ class QuestionStack {
     private void generateQuestionsByCategory() {
         for (int i = 0; i < MAX_NUMBER_OF_QUESTIONS_PER_CATEGORY; i++) {
             String question = "Question";
-            popQuestion.addLast(new QuestionCard(Category.POP, question, i));
-            scienceQuestion.addLast(new QuestionCard(Category.SCIENCE, question, i));
-            sportsQuestion.addLast(new QuestionCard(Category.SPORTS, question, i));
-            rockQuestion.addLast(new QuestionCard(Category.ROCK, question, i));
+            popQuestion.add(new QuestionCard(Category.POP, question, i));
+            scienceQuestion.add(new QuestionCard(Category.SCIENCE, question, i));
+            sportsQuestion.add(new QuestionCard(Category.SPORTS, question, i));
+            rockQuestion.add(new QuestionCard(Category.ROCK, question, i));
         }
     }
 
     public void removeQuestionFromStack(Category category) {
         QuestionCard questionCard;
         if (category == Category.POP) {
-            questionCard = popQuestion.removeFirst();
+            questionCard = popQuestion.remove(0);
             System.out.println(questionCard);
         }
         if (category == Category.SCIENCE) {
-            questionCard = scienceQuestion.removeFirst();
+            questionCard = scienceQuestion.remove(0);
             System.out.println(questionCard);
         }
         if (category == Category.SPORTS) {
-            questionCard = sportsQuestion.removeFirst();
+            questionCard = sportsQuestion.remove(0);
             System.out.println(questionCard);
         }
         if (category == Category.ROCK) {
-            questionCard = rockQuestion.removeFirst();
+            questionCard = rockQuestion.remove(0);
             System.out.println(questionCard);
         }
     }
@@ -169,7 +170,7 @@ public class Game {
     private final GameBoard gameBoard = new GameBoard();
     private final Treasurer treasurer = new Treasurer();
     private final PenaltyBox penaltyBox = new PenaltyBox();
-    private final ArrayList<Player> players = new ArrayList<>();
+    private final List<Player> players = new ArrayList<>();
     private Player playerInTurn;
 
     public void addPlayer(String playerName) {
