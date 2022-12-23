@@ -173,6 +173,7 @@ public class Game {
     private final PenaltyBox penaltyBox = new PenaltyBox();
     private final ArrayList<Player> players = new ArrayList<>();
     private Player playerInTurn;
+    private int postionOfPlayerInTurn;
 
     public void addPlayer(String playerName) {
         Player player = new Player(playerName);
@@ -241,7 +242,8 @@ public class Game {
     }
 
     private int getPositionOfPlayerInTurn() {
-        return players.indexOf(playerInTurn);
+        postionOfPlayerInTurn = players.indexOf(playerInTurn);
+        return postionOfPlayerInTurn;
     }
 
     private boolean addCoinsAndCheckWinner() {
