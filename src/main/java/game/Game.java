@@ -148,12 +148,8 @@ class GameBoard {
 
 class Treasurer {
     private static final int COINS_NEEDED_TO_WIN = 6;
-    private static final int COINS_TO_START = 0;
     private final int[] playersPurse = new int[6];
 
-    public void setPlayersInitialCoins(int positionOfPlayer) {
-        playersPurse[positionOfPlayer] = COINS_TO_START;
-    }
 
     public void addCoinsToPlayer(int positionOfPlayer) {
         playersPurse[positionOfPlayer]++;
@@ -179,7 +175,6 @@ public class Game {
     public void addPlayer(String playerName) {
         Player player = new Player(playerName, players.size());
         players.add(player);
-        treasurer.setPlayersInitialCoins(players.size());
         System.out.println(player + " was added");
         System.out.println("They are player number " + players.size());
         playerInTurn = players.get(0);
