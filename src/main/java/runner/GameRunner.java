@@ -21,9 +21,9 @@ public class GameRunner {
             aGame.handlePlayersTurn(rand.nextInt(5) + 1);
 
             if (rand.nextInt(9) == 7) {
-                notAWinner = aGame.playerAnsweredIncorrectly();
+                notAWinner = aGame.hasPlayerNotWonAfterInCorrectAnswer();
             } else {
-                notAWinner = aGame.playerAnsweredCorrectlyAndIsNotAWinner();
+                notAWinner = aGame.hasPlayerNotWonAfterCorrectAnswer();
             }
 
 

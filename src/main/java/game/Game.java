@@ -59,7 +59,7 @@ class QuestionStack {
     }
 
 
-    public void askQuestion(Category category) {
+    public void removeFirstQuestionFromStack(Category category) {
         List<QuestionCard> questions = questionsByCategory.get(category);
         QuestionCard question = questions.remove(0);
         System.out.println(question);
@@ -145,7 +145,7 @@ class GameBoard {
 
 
 class Treasurer {
-    private static final int COINS_NEEDED_TO_WIN = 6;
+    private static final int MAX_COINS = 6;
     private final int[] playersPurse = new int[6];
 
 
@@ -158,7 +158,7 @@ class Treasurer {
     }
 
     public boolean hasPlayerNotReachedMaxCoins(int positionOfPlayer) {
-        return playersPurse[positionOfPlayer] != COINS_NEEDED_TO_WIN;
+        return playersPurse[positionOfPlayer] != MAX_COINS;
     }
 }
 
@@ -188,6 +188,19 @@ public class Game {
         }
     }
 
+    public boolean hasPlayerNotWonAfterCorrectAnswer() {
+        int playerNumber = playerInTurn.getNumber();
+        handleCorrectAnswer(playerInTurn);
+        selectNextPlayerInTurn();
+        return treasurer.hasPlayerNotReachedMaxCoins(playerNumber);
+    }
+
+    public boolean hasPlayerNotWonAfterInCorrectAnswer() {
+        handleIncorrectAnswer();
+        selectNextPlayerInTurn();
+        return true;
+    }
+
     private void handlePlayerInPenaltyBox(int rolledNumber) {
         if (isOdd(rolledNumber)) {
             playerInTurn.allowToAnswer(true);
@@ -203,36 +216,41 @@ public class Game {
         movePlayerAndAskQuestion(rolledNumber, playerInTurn);
     }
 
-    public boolean playerAnsweredCorrectlyAndIsNotAWinner() {
-        int playerNumber = playerInTurn.getNumber();
-        if (!penaltyBox.isPlayerInPenaltyBox(playerNumber)) {
+    private void handleCorrectAnswer(Player playerInTurn) {
+        if (!penaltyBox.isPlayerInPenaltyBox(playerInTurn.getNumber())) {
             System.out.println("Answer was corrent!!!!");
             giveCoinToPlayer(playerInTurn);
         } else if (playerInTurn.isAllowedToAnswer()) {
             System.out.println("Answer was correct!!!!");
             giveCoinToPlayer(playerInTurn);
         }
-        selectNextPlayerInTurn();
-        return treasurer.hasPlayerNotReachedMaxCoins(playerNumber);
     }
 
-    public boolean playerAnsweredIncorrectly() {
+    private void handleIncorrectAnswer() {
         System.out.println("Question was incorrectly answered");
         System.out.println(playerInTurn + " was sent to the penalty box");
         penaltyBox.movePlayerToPenaltyBox(playerInTurn.getNumber());
-        selectNextPlayerInTurn();
-        return true;
     }
 
+
     private void movePlayerAndAskQuestion(int rolledNumber, Player playerInTurn) {
+        int gameFieldOfPlayer = movePlayer(rolledNumber, playerInTurn);
+        askQuestion(gameFieldOfPlayer);
+    }
+
+    private int movePlayer(int rolledNumber, Player playerInTurn) {
         gameBoard.movePlayer(rolledNumber, playerInTurn.getNumber());
         int gameFieldOfPlayer = gameBoard.getGameFieldOfPlayer(playerInTurn.getNumber());
         System.out.println(playerInTurn
                 + "'s new location is "
                 + gameFieldOfPlayer);
+        return gameFieldOfPlayer;
+    }
+
+    private void askQuestion(int gameFieldOfPlayer) {
         Category category = gameBoard.getCategoryByGameField(gameFieldOfPlayer);
         System.out.println("The category is " + category);
-        questionStack.askQuestion(category);
+        questionStack.removeFirstQuestionFromStack(category);
     }
 
     private boolean isOdd(int rolledNumber) {

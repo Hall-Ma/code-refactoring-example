@@ -50,7 +50,7 @@ class GameTest {
     void testRollDontGetOutOfPenaltyBox(int parameter) {
         Game game = new Game();
         game.addPlayer("David");
-        game.playerAnsweredIncorrectly();
+        game.hasPlayerNotWonAfterInCorrectAnswer();
 
         game.handlePlayersTurn(parameter);
 
@@ -62,7 +62,7 @@ class GameTest {
     void testRollGetOutOfPenaltyBox(int parameter) {
         Game game = new Game();
         game.addPlayer("David");
-        game.playerAnsweredIncorrectly();
+        game.hasPlayerNotWonAfterInCorrectAnswer();
 
         game.handlePlayersTurn(parameter);
 
@@ -73,7 +73,7 @@ class GameTest {
     void testRollGetOutOfPenaltyBoxAndResetPlaces() {
         Game game = new Game();
         game.addPlayer("David");
-        game.playerAnsweredIncorrectly();
+        game.hasPlayerNotWonAfterInCorrectAnswer();
 
         // Only for test purposes a 13 is rolled here, this will not happen in production
         game.handlePlayersTurn(13);
@@ -86,7 +86,7 @@ class GameTest {
         Game game = new Game();
         game.addPlayer("David");
 
-        boolean hasPlayerNotWon = game.playerAnsweredCorrectlyAndIsNotAWinner();
+        boolean hasPlayerNotWon = game.hasPlayerNotWonAfterCorrectAnswer();
 
         assertTrue(hasPlayerNotWon);
         verify(baos.toString());
@@ -99,7 +99,7 @@ class GameTest {
         boolean hasPlayerNotWon = true;
 
         for (int i = 0; i < 6; i++) {
-            hasPlayerNotWon = game.playerAnsweredCorrectlyAndIsNotAWinner();
+            hasPlayerNotWon = game.hasPlayerNotWonAfterCorrectAnswer();
         }
 
         assertFalse(hasPlayerNotWon);
@@ -110,10 +110,10 @@ class GameTest {
     void testPlayerCannotAnswerQuestion() {
         Game game = new Game();
         game.addPlayer("David");
-        game.playerAnsweredIncorrectly();
+        game.hasPlayerNotWonAfterInCorrectAnswer();
         game.handlePlayersTurn(2);
 
-        boolean hasPlayerNotWon = game.playerAnsweredCorrectlyAndIsNotAWinner();
+        boolean hasPlayerNotWon = game.hasPlayerNotWonAfterCorrectAnswer();
 
         assertTrue(hasPlayerNotWon);
         verify(baos.toString());
@@ -123,10 +123,10 @@ class GameTest {
     void testAnswerCorrectQuestionAfterGettingOutOfPenaltyBox() {
         Game game = new Game();
         game.addPlayer("David");
-        game.playerAnsweredIncorrectly();
+        game.hasPlayerNotWonAfterInCorrectAnswer();
         game.handlePlayersTurn(3);
 
-        boolean hasPlayerNotWon = game.playerAnsweredCorrectlyAndIsNotAWinner();
+        boolean hasPlayerNotWon = game.hasPlayerNotWonAfterCorrectAnswer();
 
         assertTrue(hasPlayerNotWon);
         verify(baos.toString());
@@ -138,7 +138,7 @@ class GameTest {
         game.addPlayer("David");
         game.addPlayer("Julia");
 
-        boolean hasPlayerNotWon = game.playerAnsweredCorrectlyAndIsNotAWinner();
+        boolean hasPlayerNotWon = game.hasPlayerNotWonAfterCorrectAnswer();
 
         assertTrue(hasPlayerNotWon);
         verify(baos.toString());
