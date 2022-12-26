@@ -1,9 +1,6 @@
 package game;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.util.Map.entry;
 
@@ -40,41 +37,25 @@ class QuestionCard {
 
 class QuestionStack {
     private static final int QUESTIONS_PER_CATEGORY = 50;
-    private final List<QuestionCard> popQuestion = new LinkedList<>();
-    private final List<QuestionCard> scienceQuestion = new LinkedList<>();
-    private final List<QuestionCard> sportsQuestion = new LinkedList<>();
-    private final List<QuestionCard> rockQuestion = new LinkedList<>();
+    private final Map<Category, List<QuestionCard>> questionsByCategory = new EnumMap<>(Category.class);
 
     QuestionStack() {
         generateQuestionsByCategory();
     }
 
     private void generateQuestionsByCategory() {
-        for (int i = 0; i < QUESTIONS_PER_CATEGORY; i++) {
-            String question = "Question";
-            popQuestion.add(new QuestionCard(Category.POP, question, i));
-            scienceQuestion.add(new QuestionCard(Category.SCIENCE, question, i));
-            sportsQuestion.add(new QuestionCard(Category.SPORTS, question, i));
-            rockQuestion.add(new QuestionCard(Category.ROCK, question, i));
+        for (Category category : Category.values()) {
+            List<QuestionCard> questions = new LinkedList<>();
+            for (int i = 0; i < QUESTIONS_PER_CATEGORY; i++) {
+                String question = "Question";
+                questions.add(new QuestionCard(category, question, i));
+            }
+            this.questionsByCategory.put(category, questions);
         }
     }
 
     public void askQuestion(Category category) {
-        if (category == Category.POP) {
-            removeFirstQuestionFromStack(popQuestion);
-        }
-        if (category == Category.SCIENCE) {
-            removeFirstQuestionFromStack(scienceQuestion);
-        }
-        if (category == Category.SPORTS) {
-            removeFirstQuestionFromStack(sportsQuestion);
-        }
-        if (category == Category.ROCK) {
-            removeFirstQuestionFromStack(rockQuestion);
-        }
-    }
-
-    private void removeFirstQuestionFromStack(List<QuestionCard> questions) {
+        List<QuestionCard> questions = questionsByCategory.get(category);
         QuestionCard question = questions.remove(0);
         System.out.println(question);
     }
