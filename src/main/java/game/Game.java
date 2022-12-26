@@ -3,6 +3,9 @@ package game;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+
+import static java.util.Map.entry;
 
 enum Category {
     POP("Pop"), SCIENCE("Science"), SPORTS("Sports"), ROCK("Rock");
@@ -134,16 +137,21 @@ class GameBoard {
     }
 
     public Category getCategoryByGameField(int gameField) {
-        if (gameField == 0) return Category.POP;
-        if (gameField == 4) return Category.POP;
-        if (gameField == 8) return Category.POP;
-        if (gameField == 1) return Category.SCIENCE;
-        if (gameField == 5) return Category.SCIENCE;
-        if (gameField == 9) return Category.SCIENCE;
-        if (gameField == 2) return Category.SPORTS;
-        if (gameField == 6) return Category.SPORTS;
-        if (gameField == 10) return Category.SPORTS;
-        return Category.ROCK;
+        Map<Integer, Category> gameFieldByCategory = Map.ofEntries(
+                entry(0, Category.POP),
+                entry(1, Category.SCIENCE),
+                entry(2, Category.SPORTS),
+                entry(3, Category.ROCK),
+                entry(4, Category.POP),
+                entry(5, Category.SCIENCE),
+                entry(6, Category.SPORTS),
+                entry(7, Category.ROCK),
+                entry(8, Category.POP),
+                entry(9, Category.SCIENCE),
+                entry(10, Category.SPORTS),
+                entry(11, Category.ROCK)
+        );
+        return gameFieldByCategory.get(gameField);
     }
 }
 
