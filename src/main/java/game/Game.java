@@ -47,12 +47,17 @@ class QuestionStack {
         for (Category category : Category.values()) {
             List<QuestionCard> questions = new LinkedList<>();
             for (int i = 0; i < QUESTIONS_PER_CATEGORY; i++) {
-                String question = "Question";
-                questions.add(new QuestionCard(category, question, i));
+                questions.add(createQuestionCard(category, i));
             }
             this.questionsByCategory.put(category, questions);
         }
     }
+
+    private QuestionCard createQuestionCard(Category category, int i) {
+        String question = "Question";
+        return new QuestionCard(category, question, i);
+    }
+
 
     public void askQuestion(Category category) {
         List<QuestionCard> questions = questionsByCategory.get(category);
