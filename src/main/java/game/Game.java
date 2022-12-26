@@ -123,6 +123,20 @@ class PenaltyBox {
 class GameBoard {
     private static final int MAX_GAME_FIELDS = 12;
     private final int[] playersPosition = new int[6];
+    private final Map<Integer, Category> gameFieldByCategory = Map.ofEntries(
+            entry(0, Category.POP),
+            entry(1, Category.SCIENCE),
+            entry(2, Category.SPORTS),
+            entry(3, Category.ROCK),
+            entry(4, Category.POP),
+            entry(5, Category.SCIENCE),
+            entry(6, Category.SPORTS),
+            entry(7, Category.ROCK),
+            entry(8, Category.POP),
+            entry(9, Category.SCIENCE),
+            entry(10, Category.SPORTS),
+            entry(11, Category.ROCK)
+    );
 
     public int getGameFieldOfPlayer(int positionOfPlayer) {
         return playersPosition[positionOfPlayer];
@@ -137,20 +151,6 @@ class GameBoard {
     }
 
     public Category getCategoryByGameField(int gameField) {
-        Map<Integer, Category> gameFieldByCategory = Map.ofEntries(
-                entry(0, Category.POP),
-                entry(1, Category.SCIENCE),
-                entry(2, Category.SPORTS),
-                entry(3, Category.ROCK),
-                entry(4, Category.POP),
-                entry(5, Category.SCIENCE),
-                entry(6, Category.SPORTS),
-                entry(7, Category.ROCK),
-                entry(8, Category.POP),
-                entry(9, Category.SCIENCE),
-                entry(10, Category.SPORTS),
-                entry(11, Category.ROCK)
-        );
         return gameFieldByCategory.get(gameField);
     }
 }
