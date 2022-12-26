@@ -192,7 +192,7 @@ public class Game {
         if (isOdd(rolledNumber)) {
             playerInTurn.allowToAnswer(true);
             System.out.println(playerInTurn + " is getting out of the penalty box");
-            movePlayerAndAskQuestion(rolledNumber);
+            movePlayerAndAskQuestion(rolledNumber, playerInTurn);
         } else {
             playerInTurn.allowToAnswer(false);
             System.out.println(playerInTurn + " is not getting out of the penalty box");
@@ -200,17 +200,17 @@ public class Game {
     }
 
     private void handlePlayerNotInPenaltyBox(int rolledNumber) {
-        movePlayerAndAskQuestion(rolledNumber);
+        movePlayerAndAskQuestion(rolledNumber, playerInTurn);
     }
 
     public boolean playerAnsweredCorrectlyAndIsNotAWinner() {
         int playerNumber = playerInTurn.getNumber();
         if (!penaltyBox.isPlayerInPenaltyBox(playerNumber)) {
             System.out.println("Answer was corrent!!!!");
-            giveCoinToPlayer();
+            giveCoinToPlayer(playerInTurn);
         } else if (playerInTurn.isAllowedToAnswer()) {
             System.out.println("Answer was correct!!!!");
-            giveCoinToPlayer();
+            giveCoinToPlayer(playerInTurn);
         }
         selectNextPlayerInTurn();
         return treasurer.hasPlayerNotReachedMaxCoins(playerNumber);
@@ -224,7 +224,7 @@ public class Game {
         return true;
     }
 
-    private void movePlayerAndAskQuestion(int rolledNumber) {
+    private void movePlayerAndAskQuestion(int rolledNumber, Player playerInTurn) {
         gameBoard.movePlayer(rolledNumber, playerInTurn.getNumber());
         int gameFieldOfPlayer = gameBoard.getGameFieldOfPlayer(playerInTurn.getNumber());
         System.out.println(playerInTurn
@@ -239,7 +239,7 @@ public class Game {
         return rolledNumber % 2 != 0;
     }
 
-    private void giveCoinToPlayer() {
+    private void giveCoinToPlayer(Player playerInTurn) {
         treasurer.addCoinToPlayer(playerInTurn.getNumber());
         System.out.println(playerInTurn
                 + " now has "
