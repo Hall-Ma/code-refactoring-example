@@ -186,17 +186,25 @@ public class Game {
         System.out.println(playerInTurn + " is the current player");
         System.out.println("They have rolled a " + rolledNumber);
         if (penaltyBox.isPlayerInPenaltyBox(playerInTurn.getNumber())) {
-            if (isOdd(rolledNumber)) {
-                playerInTurn.allowToAnswer(true);
-                System.out.println(playerInTurn + " is getting out of the penalty box");
-                movePlayerAndAskQuestion(rolledNumber);
-            } else {
-                playerInTurn.allowToAnswer(false);
-                System.out.println(playerInTurn + " is not getting out of the penalty box");
-            }
+            handlePlayerInPenaltyBox(rolledNumber);
         } else {
-            movePlayerAndAskQuestion(rolledNumber);
+            handlePlayerNotInPenaltyBox(rolledNumber);
         }
+    }
+
+    private void handlePlayerInPenaltyBox(int rolledNumber) {
+        if (isOdd(rolledNumber)) {
+            playerInTurn.allowToAnswer(true);
+            System.out.println(playerInTurn + " is getting out of the penalty box");
+            movePlayerAndAskQuestion(rolledNumber);
+        } else {
+            playerInTurn.allowToAnswer(false);
+            System.out.println(playerInTurn + " is not getting out of the penalty box");
+        }
+    }
+
+    private void handlePlayerNotInPenaltyBox(int rolledNumber) {
+        movePlayerAndAskQuestion(rolledNumber);
     }
 
     public boolean playerAnsweredCorrectlyAndIsNotAWinner() {
