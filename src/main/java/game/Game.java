@@ -248,12 +248,12 @@ public class Game {
     }
 
     private void selectNextPlayerInTurn() {
-        int indexOfNextPlayer = playerInTurn.getNumber() + 1;
-        if (indexOfNextPlayer == players.size()) {
-            playerInTurn = players.get(0);
-        } else {
-            playerInTurn = players.get(indexOfNextPlayer);
-        }
+        playerInTurn = getNextPlayer(playerInTurn);
+    }
+
+    private Player getNextPlayer(Player playerInTurn) {
+        int indexOfNextPlayer = (playerInTurn.getNumber() + 1) % players.size();
+        return players.get(indexOfNextPlayer);
     }
 
 }
