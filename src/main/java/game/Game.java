@@ -204,16 +204,16 @@ public class Game {
     }
 
     public boolean playerAnsweredCorrectlyAndIsNotAWinner() {
-        boolean isNotAWinner = true;
-        if (!penaltyBox.isPlayerInPenaltyBox(playerInTurn.getNumber())) {
+        int playerNumber = playerInTurn.getNumber();
+        if (!penaltyBox.isPlayerInPenaltyBox(playerNumber)) {
             System.out.println("Answer was corrent!!!!");
-            isNotAWinner = giveCoinAndCheckWinCondition();
+            giveCoinToPlayer();
         } else if (playerInTurn.isAllowedToAnswer()) {
             System.out.println("Answer was correct!!!!");
-            isNotAWinner = giveCoinAndCheckWinCondition();
+            giveCoinToPlayer();
         }
         selectNextPlayerInTurn();
-        return isNotAWinner;
+        return treasurer.hasPlayerNotReachedMaxCoins(playerNumber);
     }
 
     public boolean playerAnsweredIncorrectly() {
@@ -239,13 +239,12 @@ public class Game {
         return rolledNumber % 2 != 0;
     }
 
-    private boolean giveCoinAndCheckWinCondition() {
+    private void giveCoinToPlayer() {
         treasurer.addCoinToPlayer(playerInTurn.getNumber());
         System.out.println(playerInTurn
                 + " now has "
                 + treasurer.getPlayersCoins(playerInTurn.getNumber())
                 + " Gold Coins.");
-        return treasurer.hasPlayerNotReachedMaxCoins(playerInTurn.getNumber());
     }
 
     private void selectNextPlayerInTurn() {
