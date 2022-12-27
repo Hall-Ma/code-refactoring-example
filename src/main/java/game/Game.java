@@ -163,6 +163,8 @@ class Treasurer {
 }
 
 public class Game {
+    public static final boolean GAME_CONTINUE = true;
+    public static final boolean GAME_END = false;
     private final QuestionStack questionStack = new QuestionStack();
     private final GameBoard gameBoard = new GameBoard();
     private final Treasurer treasurer = new Treasurer();
@@ -192,13 +194,13 @@ public class Game {
         int playerNumber = playerInTurn.getNumber();
         handleCorrectAnswer(playerInTurn);
         selectNextPlayerInTurn();
-        return treasurer.hasPlayerNotReachedMaxCoins(playerNumber);
+        return treasurer.hasPlayerNotReachedMaxCoins(playerNumber) ? GAME_CONTINUE : GAME_END;
     }
 
     public boolean hasPlayerNotWonAfterInCorrectAnswer() {
         handleIncorrectAnswer();
         selectNextPlayerInTurn();
-        return true;
+        return GAME_CONTINUE;
     }
 
     private void handlePlayerInPenaltyBox(int rolledNumber) {
