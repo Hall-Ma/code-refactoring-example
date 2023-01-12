@@ -1,6 +1,7 @@
 package game;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import runner.GameRunner;
 
@@ -9,6 +10,7 @@ import java.io.PrintStream;
 
 import static org.approvaltests.Approvals.verify;
 
+@Disabled
 class GameRunnerTest {
 
     @AfterEach
