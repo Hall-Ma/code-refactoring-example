@@ -1,4 +1,3 @@
-/*
 package game.unrefactored;
 
 import java.util.ArrayList;
@@ -167,4 +166,3 @@ public class OriginalGame {
         return !(purses[currentPlayer] == 6);
     }
 }
-*/
