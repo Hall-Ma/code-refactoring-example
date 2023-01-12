@@ -2,31 +2,47 @@ package game;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Game {
+    public static final int SIZE_PLAYGROUND = 12;
+
+    enum TypeOfQuestions {
+        POP("Pop"), SCIENCE("Science"), SPORTS("Sports"), ROCK("Rock");
+        String stringValue;
+
+        TypeOfQuestions(String stringValue) {
+            this.stringValue = stringValue;
+        }
+
+        public String toString() {
+            return stringValue;
+        }
+    }
+
     ArrayList players = new ArrayList();
     int[] places = new int[6];
-    int[] purses  = new int[6];
-    boolean[] inPenaltyBox  = new boolean[6];
+    int[] purses = new int[6];
+    boolean[] inPenaltyBox = new boolean[6];
 
-    LinkedList popQuestions = new LinkedList();
-    LinkedList scienceQuestions = new LinkedList();
-    LinkedList sportsQuestions = new LinkedList();
-    LinkedList rockQuestions = new LinkedList();
+    List<String> popQuestions = new LinkedList<>();
+    List<String> scienceQuestions = new LinkedList<>();
+    List<String> sportsQuestions = new LinkedList<>();
+    List<String> rockQuestions = new LinkedList<>();
 
     int currentPlayer = 0;
     boolean isGettingOutOfPenaltyBox;
 
-    public  Game(){
+    public Game() {
         for (int i = 0; i < 50; i++) {
-            popQuestions.addLast("Pop Question " + i);
-            scienceQuestions.addLast(("Science Question " + i));
-            sportsQuestions.addLast(("Sports Question " + i));
-            rockQuestions.addLast(createRockQuestion(i));
+            popQuestions.add("Pop Question " + i);
+            scienceQuestions.add(("Science Question " + i));
+            sportsQuestions.add(("Sports Question " + i));
+            rockQuestions.add(createRockQuestion(i));
         }
     }
 
-    public String createRockQuestion(int index){
+    public String createRockQuestion(int index) {
         return "Rock Question " + index;
     }
 
@@ -60,8 +76,7 @@ public class Game {
                 isGettingOutOfPenaltyBox = true;
 
                 System.out.println(players.get(currentPlayer) + " is getting out of the penalty box");
-                places[currentPlayer] = places[currentPlayer] + roll;
-                if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
+                movePlayer(roll);
 
                 System.out.println(players.get(currentPlayer)
                         + "'s new location is "
@@ -75,8 +90,7 @@ public class Game {
 
         } else {
 
-            places[currentPlayer] = places[currentPlayer] + roll;
-            if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
+            movePlayer(roll);
 
             System.out.println(players.get(currentPlayer)
                     + "'s new location is "
@@ -87,83 +101,86 @@ public class Game {
 
     }
 
+    private void movePlayer(int roll) {
+        places[currentPlayer] = places[currentPlayer] + roll;
+        places[currentPlayer] = places[currentPlayer] % SIZE_PLAYGROUND;
+    }
+
     private void askQuestion() {
-        if (currentCategory() == "Pop")
-            System.out.println(popQuestions.removeFirst());
-        if (currentCategory() == "Science")
-            System.out.println(scienceQuestions.removeFirst());
-        if (currentCategory() == "Sports")
-            System.out.println(sportsQuestions.removeFirst());
-        if (currentCategory() == "Rock")
-            System.out.println(rockQuestions.removeFirst());
+        List<String> questions = null;
+        switch (currentCategory()) {
+            case POP:
+                questions = popQuestions;
+                break;
+            case SCIENCE:
+                questions = scienceQuestions;
+                break;
+            case SPORTS:
+                questions = sportsQuestions;
+                break;
+            case ROCK:
+                questions = rockQuestions;
+        }
+        System.out.println(questions.remove(0));
     }
 
 
-    private String currentCategory() {
-        if (places[currentPlayer] == 0) return "Pop";
-        if (places[currentPlayer] == 4) return "Pop";
-        if (places[currentPlayer] == 8) return "Pop";
-        if (places[currentPlayer] == 1) return "Science";
-        if (places[currentPlayer] == 5) return "Science";
-        if (places[currentPlayer] == 9) return "Science";
-        if (places[currentPlayer] == 2) return "Sports";
-        if (places[currentPlayer] == 6) return "Sports";
-        if (places[currentPlayer] == 10) return "Sports";
-        return "Rock";
-    }
-
-    public boolean wasCorrectlyAnswered() {
-        if (inPenaltyBox[currentPlayer]){
-            if (isGettingOutOfPenaltyBox) {
-                System.out.println("Answer was correct!!!!");
-                purses[currentPlayer]++;
-                System.out.println(players.get(currentPlayer)
-                        + " now has "
-                        + purses[currentPlayer]
-                        + " Gold Coins.");
-
-                boolean winner = didPlayerWin();
-                currentPlayer++;
-                if (currentPlayer == players.size()) currentPlayer = 0;
-
-                return winner;
-            } else {
-                currentPlayer++;
-                if (currentPlayer == players.size()) currentPlayer = 0;
-                return true;
-            }
-
-
-
-        } else {
-
-            System.out.println("Answer was corrent!!!!");
-            purses[currentPlayer]++;
-            System.out.println(players.get(currentPlayer)
-                    + " now has "
-                    + purses[currentPlayer]
-                    + " Gold Coins.");
-
-            boolean winner = didPlayerWin();
-            currentPlayer++;
-            if (currentPlayer == players.size()) currentPlayer = 0;
-
-            return winner;
+    private TypeOfQuestions currentCategory() {
+        switch (places[currentPlayer]) {
+            case 0:
+            case 4:
+            case 8:
+                return TypeOfQuestions.POP;
+            case 1:
+            case 5:
+            case 9:
+                return TypeOfQuestions.SCIENCE;
+            case 2:
+            case 6:
+            case 10:
+                return TypeOfQuestions.SPORTS;
+            case 3:
+            case 7:
+            case 11:
+                return TypeOfQuestions.ROCK;
+            default:
+                throw new IllegalStateException();
         }
     }
 
-    public boolean wrongAnswer(){
+    public boolean currentPlayerGaveCorrectAnswer() {
+        if (inPenaltyBox[currentPlayer] && !isGettingOutOfPenaltyBox) {
+            nextPlayer();
+            return false;
+        }
+        System.out.println("Answer was correct!!!!");
+        purses[currentPlayer]++;
+        System.out.println(players.get(currentPlayer)
+                + " now has "
+                + purses[currentPlayer]
+                + " Gold Coins.");
+
+        boolean winner = didPlayerWin();
+        nextPlayer();
+
+        return winner;
+    }
+
+    public void currentPlayGaveWrongAnswer() {
         System.out.println("Question was incorrectly answered");
-        System.out.println(players.get(currentPlayer)+ " was sent to the penalty box");
+        System.out.println(players.get(currentPlayer) + " was sent to the penalty box");
         inPenaltyBox[currentPlayer] = true;
 
+        nextPlayer();
+    }
+
+    private void nextPlayer() {
         currentPlayer++;
         if (currentPlayer == players.size()) currentPlayer = 0;
-        return true;
     }
 
 
     private boolean didPlayerWin() {
-        return !(purses[currentPlayer] == 6);
+        return purses[currentPlayer] >= 6;
     }
 }
