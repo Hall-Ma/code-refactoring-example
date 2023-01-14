@@ -197,7 +197,7 @@ public class Game {
         Rock
     }
 
-    class PlayerName {
+    private class PlayerName {
         private final String name;
 
         public PlayerName(String name) {
@@ -210,7 +210,7 @@ public class Game {
         }
     }
 
-    static class Question {
+    private class Question {
         private final String questionName;
 
         public Question(String questionName) {
