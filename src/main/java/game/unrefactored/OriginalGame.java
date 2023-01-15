@@ -1,5 +1,5 @@
 package game.unrefactored;
-
+/*
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -166,3 +166,4 @@ public class OriginalGame {
         return !(purses[currentPlayer] == 6);
     }
 }
+*/
